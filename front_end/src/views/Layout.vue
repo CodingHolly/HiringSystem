@@ -7,14 +7,15 @@
         <img src="@/assets/css/imgs/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
         <span style="margin-left: 35px; font-size: 22px">后台管理</span>
       </div>
+<!--      下拉菜单-->
       <div style="flex: 1; text-align: right; padding-right: 40px">
         <el-dropdown size="large">
         <span class="el-dropdown-link">
           管理员<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>系统首页</el-dropdown-item>
-            <el-dropdown-item>退出登入</el-dropdown-item>
+            <el-dropdown-item><div style="text-align: center" @click="goHome">系统首页</div></el-dropdown-item>
+            <el-dropdown-item><div style="text-align: center" @click="logout">退出登入</div></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -63,10 +64,30 @@
 <script>
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
-  name: "Layout"
+  name: "Layout",
+  data() {
+    return {
+
+    }
+  },
+  methods: {
+    logout() {
+      this.$router.push('/login')
+      //清楚浏览器用户数据
+    },
+    goHome() {
+      this.$router.push('/home')
+    }
+  }
 }
 </script>
 
 <style scoped>
-
+.el-dropdown-link {
+  cursor: pointer;
+  color: #6495ED;
+}
+.el-icon-arrow-down {
+  font-size: 20px;
+}
 </style>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 
 const request = axios.create({
     baseURL: 'http://localhost:9090',
@@ -12,6 +13,7 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
+    router.push('/login')
     // config.headers['token'] = user.token;  // 设置请求头
     return config
 }, error => {
