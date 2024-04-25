@@ -2,9 +2,22 @@
 <template>
   <div>
     <!--    头部区域-->
-    <div style="height: 60px; line-height: 60px; background-color: #ecf5ff; margin-bottom: 5px">
-      <img src="@/assets/css/imgs/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
-      <span style="margin-left: 35px; font-size: 22px">后台管理</span>
+    <div style="height: 60px; line-height: 60px; background-color: #ecf5ff; margin-bottom: 5px; display: flex">
+      <div style="width: 300px">
+        <img src="@/assets/css/imgs/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
+        <span style="margin-left: 35px; font-size: 22px">后台管理</span>
+      </div>
+      <div style="flex: 1; text-align: right; padding-right: 40px">
+        <el-dropdown size="large">
+        <span class="el-dropdown-link">
+          管理员<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>系统首页</el-dropdown-item>
+            <el-dropdown-item>退出登入</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
     </div>
 
     <!--    侧边栏和主体-->
@@ -41,7 +54,7 @@
 
       <!--    主体-->
       <div style="flex: 1;background-color: white; padding: 30px">
-        <router-view />
+        <router-view/>
       </div>
     </div>
   </div>
