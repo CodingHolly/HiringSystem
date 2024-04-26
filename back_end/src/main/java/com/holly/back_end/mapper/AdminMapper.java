@@ -22,5 +22,9 @@ public interface AdminMapper {
 
     void deleteById(Integer id);
 
+    // 根据手机号和密码查询，用于用户登录认证
     Admin getByPhoneAndPassword(LoginRequest loginRequest);
+
+    // 根据手机号查询，用于确定手机号唯一
+    Admin getByPhone(String phone);
 }

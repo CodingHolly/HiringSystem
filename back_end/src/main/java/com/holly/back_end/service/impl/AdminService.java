@@ -1,3 +1,4 @@
+// 系统管理员
 package com.holly.back_end.service.impl;
 
 import cn.hutool.core.date.DateUtil;
@@ -16,6 +17,7 @@ import com.holly.back_end.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -31,13 +33,13 @@ public class AdminService implements IAdminService {
     private static final String DEFAULT_PASSWORD = "666666";
     private static final String PASSWORD_SALT = "work happily";
 
-    //列表所有
+    // 列表所有
     @Override
     public List<Admin> list() {
         return adminMapper.list();
     }
 
-    //分页展示
+    // 分页展示
     @Override
     public PageInfo<Admin> page(BaseRequest baseRequest) {
         PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
@@ -54,7 +56,7 @@ public class AdminService implements IAdminService {
         return SecureUtil.md5(password + PASSWORD_SALT);
     }
 
-    //新增或更新
+    // 新增或更新
     @Override
     public void save(Admin admin) {
         if (admin.getId() == null) {    //没有id，新增
@@ -73,11 +75,22 @@ public class AdminService implements IAdminService {
             }
             //设置md5加密，加盐
             //admin.setPassword(securePassword(admin.getPassword()));
-            adminMapper.insert(admin);
+            try {
+                adminMapper.insert(admin);
+            } catch (DuplicateKeyException e) {
+                log.error("数据插入失败， phone:{}", admin.getPhone());
+                throw new ServiceException("该手机号已注册");
+            }
         } else {    //否则编辑
             admin.setUpdatetime(new Date());
-            //admin.setPassword(securePassword(admin.getPassword()));
-            adminMapper.update(admin);
+            // 若修改了手机号，判断数据库中是否存在该手机号的用户
+            Admin currentAdmin = adminMapper.getByPhone(admin.getPhone());
+            if (currentAdmin == null) {  //不存在
+                //admin.setPassword(securePassword(admin.getPassword()));
+                adminMapper.update(admin);
+            } else {    //若存在，则不能更新数据库，抛出错误
+                throw new ServiceException("该手机号已注册");
+            }
         }
     }
 
@@ -87,16 +100,33 @@ public class AdminService implements IAdminService {
         adminMapper.deleteById(id);
     }
 
-    //登录
+    // 登录
+    // 根据手机号唯一标识
     @Override
     public LoginDTO login(LoginRequest loginRequest) {
         loginRequest.setPassword(loginRequest.getPassword());
-        Admin admin = adminMapper.getByPhoneAndPassword(loginRequest);
+        Admin admin = null;
+
+        // 判断数据库中是否存在该手机号用户
+        try {
+            admin = adminMapper.getByPhone(loginRequest.getPhone());
+        } catch (Exception e) {
+            log.error("根据手机号{} 查询出错", loginRequest.getPhone());
+            throw new ServiceException("手机号错误");
+        }
+
+        // 判断用户是否存在
         if (admin == null) {
             throw new ServiceException("用户不存在，请检查账号和密码");
         }
+
+        // 判断密码是否正确
+        String currentPassword = loginRequest.getPassword();
+        if (!currentPassword.equals(admin.getPassword())) {
+            throw new ServiceException("手机号或密码错误");
+        }
         LoginDTO loginDTO = new LoginDTO();
-        BeanUtils.copyProperties(admin, loginDTO);//admin的属性赋值给loginDTO
+        BeanUtils.copyProperties(admin, loginDTO);  // admin的属性赋值给loginDTO
 
         //生成token
         String token = TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword()); // 用户密码为密钥
