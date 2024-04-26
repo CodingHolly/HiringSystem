@@ -34,7 +34,7 @@
                 title like concat('%', #{ title }, '%')
             </if>
         </where>
-        order by id desc
+        order by date desc
     </select>
     <select id="getById" resultType="com.holly.back_end.entity.Announcement">
         select *

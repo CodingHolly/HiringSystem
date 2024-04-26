@@ -52,7 +52,7 @@ public class AnnouncementService implements IAnnouncementService {
     }
 
     @Override
-    public Announcement getById(String id) {
+    public Announcement getById(Integer id) {
         Announcement announcements = announcementMapper.getById(id);
         return announcements;
     }

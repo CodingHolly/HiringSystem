@@ -16,7 +16,7 @@ public interface IAdminService {
 
     PageInfo<Admin> page(BaseRequest baseRequest);
 
-    Admin getById(String id);
+    Admin getById(Integer id);
 
     void save(Admin admin);
 

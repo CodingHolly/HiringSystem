@@ -14,7 +14,7 @@ public interface AdminMapper {
 
     List<Admin> listByCondition(BaseRequest basePageRequest);
 
-    Admin getById(String id);
+    Admin getById(Integer id);
 
     void insert(Admin admin);
 

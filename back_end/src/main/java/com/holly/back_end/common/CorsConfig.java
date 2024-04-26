@@ -1,4 +1,4 @@
-package com.holly.back_end.config;
+package com.holly.back_end.common;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

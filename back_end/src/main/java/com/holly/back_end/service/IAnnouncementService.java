@@ -13,7 +13,7 @@ public interface IAnnouncementService {
 
     PageInfo<Announcement> page(BaseRequest baseRequest);
 
-    Announcement getById(String id);
+    Announcement getById(Integer id);
 
     void save(Announcement announcement);
 

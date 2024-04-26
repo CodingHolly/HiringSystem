@@ -6,6 +6,10 @@ import router from './router'
 import '@/assets/global.css'
 import request from "@/utils/request";
 
+// 滑块认证
+import SlideVerify from 'vue-monoplasty-slide-verify';
+Vue.use(SlideVerify)
+
 Vue.prototype.request = request
 
 Vue.config.productionTip = false

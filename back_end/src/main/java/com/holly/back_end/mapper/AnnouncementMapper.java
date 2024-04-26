@@ -14,7 +14,7 @@ public interface AnnouncementMapper {
 
     List<Announcement> listByCondition(BaseRequest baseRequest);
 
-    Announcement getById(String id);
+    Announcement getById(Integer id);
 
     void insert(Announcement announcement);
 

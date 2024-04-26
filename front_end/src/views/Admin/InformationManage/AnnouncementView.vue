@@ -1,4 +1,4 @@
-<!--公告信息-->
+<!--公告信息管理页面-->
 <template>
   <div style="padding: 0 10px">
     <!--    搜索表单-->
@@ -44,9 +44,9 @@
           :default-sort="{prop: 'date', order:'descending'}"
           ref="multipleTable"
           tooltip-effect="dark"
-          @selection-change="handleSelectionChange">
-        style="width: 100%"
-        stripe>
+          @selection-change="handleSelectionChange"
+          style="width: 100%"
+          stripe>
         <el-table-column
             type="selection"
             width="55">
@@ -135,6 +135,7 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default {
   name: "AnnouncementView",
@@ -167,10 +168,15 @@ export default {
           {required: true, content: '请输入公告内容', trigger: 'blur'},
         ]
       },
+      //根据Cookie值中的信息，更新最新公告发布者名字
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
   },
   created() {
     this.load()
+    request.get('/admin/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   },
   methods: {
     handleSelectionChange(rows) {
@@ -214,6 +220,8 @@ export default {
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row))
       this.formVisible = true
+      //通过Cookie修改发布人名字
+      this.form.name = this.user.username
     },
     //点击保存按钮，触发新增或更新
     save() {
