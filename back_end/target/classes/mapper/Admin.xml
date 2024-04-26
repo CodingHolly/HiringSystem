@@ -57,4 +57,9 @@
         where phone = #{phone}
           and password = #{password}
     </select>
+    <select id="getByPhone" resultType="com.holly.back_end.entity.Admin">
+        select *
+        from admin
+        where phone = #{phone}
+    </select>
 </mapper>
