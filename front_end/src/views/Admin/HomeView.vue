@@ -7,7 +7,7 @@
     <!--    问候语-->
     <el-card class="box-card">
       <div class="text">
-        {{ "管理员您好！欢迎使用缺一人才招聘网站后台管理系统~" }}
+        {{ user.username }}，您好！欢迎使用缺一人才招聘网站后台管理系统~
       </div>
     </el-card>
 
@@ -47,6 +47,7 @@
 <script>
 
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 export default {
   name: "HomeView",
   data() {
@@ -61,11 +62,15 @@ export default {
         name: '',
         title: '',
         content: ''
-      }
+      },
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
   },
   created() {
     this.load()
+    request.get('/admin/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   },
   methods: {
     load() {

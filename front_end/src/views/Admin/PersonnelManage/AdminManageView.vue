@@ -29,20 +29,20 @@
           @click="handleAdd">
         新增
       </el-button>
-      <el-button
-          class="add-button"
-          style="margin-left: 10px;margin-top: 20px"
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="small"
-          @click="delBatch"
-      >批量删除
-      </el-button>
+<!--      <el-button-->
+<!--          class="add-button"-->
+<!--          style="margin-left: 10px;margin-top: 20px"-->
+<!--          type="danger"-->
+<!--          plain-->
+<!--          icon="el-icon-delete"-->
+<!--          size="small"-->
+<!--          @click="delBatch"-->
+<!--      >批量删除-->
+<!--      </el-button>-->
     </div>
 
     <!--    公告表格-->
-    <div class="table">
+    <div class="table" style="margin-top: 20px">
       <el-table
           :data="tableData"
           :cell-style="{'text-align':'center'}"
@@ -92,19 +92,18 @@
           <template v-slot="scope">
             <el-button
                 size="small"
-                @click.native.prevent="handleEdit(scope.row)"
-                style="margin-right: 10px">编辑
+                :disabled="scope.row.id !== user.id"
+                @click="handleEdit(scope.row)">编辑
             </el-button>
-            <el-button
-                size="small"
-                type="danger"
-                @click="del(scope.row.id)">删除
-            </el-button>
+<!--            <el-button-->
+<!--                size="small"-->
+<!--                type="danger"-->
+<!--                @click="del(scope.row.id)">删除-->
+<!--            </el-button>-->
           </template>
         </el-table-column>
       </el-table>
     </div>
-
 
     <!--    弹框-->
     <el-dialog title="信息" :visible.sync="formVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
@@ -121,6 +120,11 @@
         <el-form-item prop="email" label="邮箱">
           <el-input v-model="form.email" autocomplete="off"></el-input>
         </el-form-item>
+        <span style="margin-left: 100px; font-size: small; color: brown">若要修改密码，输入初始密码</span>
+        <el-form-item prop="password" label="密码">
+          <el-input v-model="form.password"></el-input>
+        </el-form-item>
+        <span style="margin-left: 100px; font-size: small; color: brown">注意：修改密码后系统会自动加密，并在此处展示加密密码</span>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
@@ -145,15 +149,11 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default {
-  name: "AdminManageVue",
+  name: "AdminManageView",
   data() {
-    const checkPhone = (rule, value, callback) => {
-      if(!/^[1][3,4,5,6,7,8,9][0-9]{9}$/.test(value)){
-        callback(new Error('请输入合法的电话号码'))
-      }
-    };
     return {
       tableData: [],
       total: 0,
@@ -176,21 +176,23 @@ export default {
       rules: {
         username: [
           {required: true, username: '请输入管理员姓名', trigger: 'blur'},
-          {min: 2, trigger: 'blur'}
         ],
         phone: [
-          {required: true, phone: '请输入电话号码', trigger: 'blur'},
-          {validator: checkPhone, trigger: 'blur'}
+          {required: true, phone: '请输入手机号', trigger: 'blur'}
         ],
         email: [
           {required: true, email: '请输入邮箱地址', trigger: 'blur'},
-
         ],
       },
+      //根据Cookie值中的信息，判断是否具有编辑当前管理员信息的权限
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
   },
   created() {
     this.load()
+    request.get('/admin/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   },
   methods: {
     handleSelectionChange(rows) {
@@ -237,20 +239,15 @@ export default {
     },
     //点击保存按钮，触发新增或更新
     save() {
-      this.$refs["formRef"].validate((valid) => {
-        if (valid) {
-          this.request.post('admin/save', this.form).then(res => {
-            if (res.code === '200') {
-              this.$message.success('保存成功')
-              this.load()
-              this.formVisible = false
-            } else {
-              this.$message.error(res.msg)
-            }
-          })
+      this.request.post('/admin/save', this.form).then(res => {
+        if (res.code === '200') {
+          this.$message.success('保存成功')
+          this.load()
+          this.formVisible = false
+        } else {
+          this.$message.error(res.msg)
         }
       })
-
     },
     //删除单个
     del(id) {
@@ -264,7 +261,7 @@ export default {
             this.$message.error(res.msg)
           }
         }).catch(() => {
-
+          console.log('失败')
         })
       })
     },

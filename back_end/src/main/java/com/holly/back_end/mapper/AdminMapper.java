@@ -1,10 +1,8 @@
 package com.holly.back_end.mapper;
 
-import com.holly.back_end.controller.request.AnnouncementPageRequest;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.controller.request.LoginRequest;
 import com.holly.back_end.entity.Admin;
-import com.holly.back_end.entity.Announcement;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -24,5 +22,5 @@ public interface AdminMapper {
 
     void deleteById(Integer id);
 
-    Admin getByUsernameAndPassword(LoginRequest loginRequest);
+    Admin getByPhoneAndPassword(LoginRequest loginRequest);
 }

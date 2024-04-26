@@ -11,7 +11,7 @@
       <div style="flex: 1; text-align: right; padding-right: 40px">
         <el-dropdown size="large">
         <span class="el-dropdown-link">
-          管理员<i class="el-icon-arrow-down el-icon--right"></i>
+          {{user.username}} ，你好！<i class="el-icon-arrow-down el-icon--right"></i>
         </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item><div style="text-align: center" @click="goHome">系统首页</div></el-dropdown-item>
@@ -62,18 +62,20 @@
 </template>
 
 <script>
+import Cookies from "js-cookie";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Layout",
   data() {
     return {
-
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
   },
   methods: {
     logout() {
+      //清除浏览器用户数据，再返回
+      Cookies.remove('user')
       this.$router.push('/login')
-      //清楚浏览器用户数据
     },
     goHome() {
       this.$router.push('/home')

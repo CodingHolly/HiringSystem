@@ -219,7 +219,7 @@ export default {
     save() {
       this.$refs["formRef"].validate((valid) => {
         if (valid) {
-          this.request.post('announcement/save', this.form).then(res => {
+          this.request.post('/announcement/save', this.form).then(res => {
             if (res.code === '200') {
               this.$message.success('保存成功')
               this.load()
@@ -230,7 +230,6 @@ export default {
           })
         }
       })
-
     },
     //删除单个
     del(id) {

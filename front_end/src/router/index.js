@@ -20,7 +20,7 @@ const routes = [
         component: Layout,
         redirect: '/home',
         children: [     //子路由，Layout.vue主体中的<router-view />
-                        //  ===== Home后台管理主页 =====
+            //  ===== Home后台管理主页 =====
             {
                 path: 'home',
                 name: 'Home',
@@ -60,5 +60,4 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
-
 export default router

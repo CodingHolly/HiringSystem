@@ -27,9 +27,9 @@
             <!--                <el-option label="客服管理" value="ADMIN"></el-option>-->
             <!--              </el-select>-->
             <!--            </el-form-item>-->
-            <el-form-item prop="username">
-              <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入账号"
-                        v-model="form.username"></el-input>
+            <el-form-item prop="phone">
+              <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入手机号"
+                        v-model="form.phone"></el-input>
             </el-form-item>
             <el-form-item prop="password">
               <el-input size="large" prefix-icon="el-icon-lock" placeholder="请输入密码" show-password
@@ -56,6 +56,7 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default {
 
@@ -65,8 +66,8 @@ export default {
     return {
       form: {},
       rules: {
-        name: [
-          {required: true, name: '请输入用户名', trigger: 'blur'},
+        phone: [
+          {required: true, phone: '请输入手机号', trigger: 'blur'},
         ],
         password: [
           {required: true, password: '请输入密码', trigger: 'blur'},
@@ -84,6 +85,9 @@ export default {
             if (res.code === '200') {
               this.$notify.success('登录成功')
               this.$router.push('/')
+              if (res.data !== null) {
+                Cookies.set('user', JSON.stringify(res.data))
+              }
             } else {
               this.$notify.error(res.msg)
             }
