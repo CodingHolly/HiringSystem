@@ -154,7 +154,7 @@ export default {
       admin: JSON.parse(localStorage.getItem('admin') || '{}'),
       params: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 8,
         id: '',
         uid: '',
         username: '',

@@ -1,6 +1,5 @@
 import axios from "axios";
 import router from "@/router";
-import Cookies from "js-cookie";
 
 const request = axios.create({
     baseURL: 'http://localhost:9090/api',
@@ -13,11 +12,11 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
-    const userJSON = Cookies.get('user')
-    if (userJSON) {
-        //设置请求头
-        config.headers['token'] = JSON.parse(userJSON).token
-    }
+    // const userJSON = Cookies.get('user')
+    // if (userJSON) {
+    //     //设置请求头
+    //     config.headers['token'] = JSON.parse(userJSON).token
+    // }
     return config
 }, error => {
     return Promise.reject(error)

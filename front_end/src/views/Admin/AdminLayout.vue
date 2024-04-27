@@ -27,7 +27,7 @@
       <div
           style="width: 200px; min-height: calc(100vh - 65px); overflow: hidden; margin-right: 15px;background-color: white">
         <el-menu :default-active="$route.path" :default-openeds="['2','3']" router class="el-menu-demo">
-          <el-menu-item index="/">
+          <el-menu-item index="/admin/home">
             <i class="el-icon-s-home"></i>
             <span>系统首页</span>
           </el-menu-item>
@@ -36,19 +36,19 @@
               <i class="el-icon-menu"></i>
               <span>信息管理</span>
             </template>
-            <el-menu-item index="/announcement">公告信息</el-menu-item>
-            <el-menu-item index="/position_classification">职位分类</el-menu-item>
-            <el-menu-item index="/position_information">职位信息</el-menu-item>
-            <el-menu-item index="/comment_management">评论管理</el-menu-item>
+            <el-menu-item index="/admin/announcement">公告信息</el-menu-item>
+            <el-menu-item index="/admin/position_type">职位分类</el-menu-item>
+            <el-menu-item index="/admin/position_information">职位信息</el-menu-item>
+            <el-menu-item index="/admin/comment_management">评论管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
               <i class="el-icon-menu"></i>
               <span>人员管理</span>
             </template>
-            <el-menu-item index="/admin_information">管理员信息</el-menu-item>
-            <el-menu-item index="/company_information">企业信息</el-menu-item>
-            <el-menu-item index="/user_information">用户信息</el-menu-item>
+            <el-menu-item index="/admin/admin_information">管理员信息</el-menu-item>
+            <el-menu-item index="/admin/company_information">企业信息</el-menu-item>
+            <el-menu-item index="/admin/user_information">用户信息</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -78,7 +78,7 @@ export default {
       this.$router.push('/login')
     },
     goHome() {
-      this.$router.push('/admin_home')
+      this.$router.push('/admin/home')
     }
   }
 }

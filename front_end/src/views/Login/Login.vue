@@ -35,13 +35,13 @@
             </a>
           </div>
           <el-form :model="form" :rules="rules" ref="formRef">
-            <!--            <el-form-item prop="role">-->
-            <!--              <el-select size="large" v-model="form.role" style="width: 100%">-->
-            <!--                <el-option label="个人用户" value="USER"></el-option>-->
-            <!--                <el-option label="企业公司" value="COMPANY"></el-option>-->
-            <!--                <el-option label="客服管理" value="ADMIN"></el-option>-->
-            <!--              </el-select>-->
-            <!--            </el-form-item>-->
+            <el-form-item prop="role">
+              <el-select size="large" v-model="form.role" style="width: 100%">
+                <el-option label="个人用户" value="USER"></el-option>
+                <el-option label="企业公司" value="COMPANY"></el-option>
+                <el-option label="客服管理" value="ADMIN"></el-option>
+              </el-select>
+            </el-form-item>
             <el-form-item prop="phone">
               <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入手机号"
                         v-model="form.phone"></el-input>
@@ -79,7 +79,7 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {},
+      form: {role: 'USER'},
       rules: {
         phone: [
           {required: true, phone: '请输入手机号', trigger: 'blur'},
@@ -109,7 +109,7 @@ export default {
     },
     onSuccess() {
       Cookies.set('user', JSON.stringify(this.loginUser)) //设置Cookie
-      this.$router.push('/admin_home')  //跳转主页
+      this.$router.push('/admin/home')  //跳转主页
       this.$notify.success('登录成功')
     },
     onFail() {

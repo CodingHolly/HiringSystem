@@ -1,51 +1,40 @@
 <!--公告信息管理页面-->
 <template>
   <div style="padding: 0 10px">
-    <!--    搜索表单-->
-    <div class="search">
-      <el-input style="width: 240px; margin-left: 15px" placeholder="请输入标题" size="small"
-                v-model="params.title"></el-input>
+
+    <div class="operation">
+      <!--    搜索表单-->
+      <el-input style="width: 240px; margin-left: 10px" placeholder="请输入一级分类名称" size="small"
+                v-model="params.category"></el-input>
+      <el-input style="width: 240px; margin-left: 15px" placeholder="请输入二级分类名称" size="small"
+                v-model="params.type"></el-input>
       <el-button style="margin-left: 15px" plain type="primary" size="small" @click="load">
         <i class="el-icon-search"></i>搜索
       </el-button>
       <el-button style="margin-left: 15px" size="small" @click="reset">重置</el-button>
-    </div>
-
-    <!--    添加批量删除按钮-->
-    <div class="operation">
+      <!--    添加按钮-->
       <el-button
           plain
           class="add-button"
-          style="margin-left: 10px;margin-top: 20px"
+          style="margin-left: 410px"
           type="primary"
           icon="el-icon-edit"
           size="small"
           @click="handleAdd">
         新增
       </el-button>
-      <el-button
-          class="add-button"
-          style="margin-left: 10px;margin-top: 20px"
-          type="danger"
-          plain
-          icon="el-icon-delete"
-          size="small"
-          @click="delBatch"
-      >批量删除
-      </el-button>
     </div>
-    <!--    公告表格-->
+
+    <!--    分类数据表格-->
     <div class="table">
       <el-table
           :data="tableData"
-          :date="params.date"
           :cell-style="{'text-align':'center'}"
           :header-cell-style="{'text-align':'center'}"
-          :default-sort="{prop: 'date', order:'descending'}"
           ref="multipleTable"
           tooltip-effect="dark"
           @selection-change="handleSelectionChange"
-          style="width: 100%"
+          style="width: 100%; margin-top: 20px"
           stripe>
         <el-table-column
             type="selection"
@@ -54,9 +43,9 @@
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
-              <el-form-item label="内容">
+              <el-form-item label="分类描述">
                 <br>
-                <span>{{ props.row.content }}</span>
+                <span>{{ props.row.description }}</span>
               </el-form-item>
             </el-form>
           </template>
@@ -67,21 +56,15 @@
             width=60>
         </el-table-column>
         <el-table-column
-            label="发布时间"
-            prop="date"
-            sortable>
+            label="一级分类"
+            prop="category">
         </el-table-column>
         <el-table-column
-            label="标题"
-            prop="title">
-        </el-table-column>
-        <el-table-column
-            label="发布者"
-            prop="name"
-            width=120>
+            label="二级分类"
+            prop="type">
         </el-table-column>
 
-        <el-table-column label="操作">
+        <el-table-column label="操作" width="300">
           <template v-slot="scope">
             <el-button
                 size="small"
@@ -98,18 +81,17 @@
       </el-table>
     </div>
 
-
     <!--    弹框-->
-    <el-dialog title="信息" :visible.sync="formVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
+    <el-dialog title="分类信息" :visible.sync="formVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
       <el-form label-width="100px" :model="form" :rules="rules" ref="formRef">
-        <el-form-item prop="name" label="发布者姓名">
-          <el-input v-model="form.name"></el-input>
+        <el-form-item prop="category" label="一级分类">
+          <el-input v-model="form.category" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="title" label="公告标题">
-          <el-input v-model="form.title" autocomplete="off"></el-input>
+        <el-form-item prop="type" label="二级分类">
+          <el-input v-model="form.type" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item prop="content" label="公告内容">
-          <el-input type="textarea" :rows="4" v-model="form.content" autocomplete="off"></el-input>
+        <el-form-item prop="description" label="分类描述">
+          <el-input v-model="form.description" type="textarea" :rows="4"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -135,48 +117,34 @@
 
 <script>
 import request from "@/utils/request";
-import Cookies from "js-cookie";
 
 export default {
-  name: "AnnouncementView",
+  name: "PositionTypeView",
   data() {
     return {
       tableData: [],
       total: 0,
-      title: null,
       formVisible: false,
       form: {},
       ids: [],
-      announcement: JSON.parse(localStorage.getItem('announcement') || '{}'),
+      positionType: JSON.parse(localStorage.getItem('positionType') || '{}'),
       params: {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 8,
         id: '',
-        date: '',
-        name: '',
-        title: '',
-        content: ''
+        type: '',
+        category: '',
+        description: '',
       },
       rules: {
-        name: [
-          {required: true, name: '请输入发布者姓名', trigger: 'blur'},
+        category: [
+          {required: true, category: '请输入一级分类名称', trigger: 'blur'},
         ],
-        title: [
-          {required: true, title: '请输入公告名称', trigger: 'blur'},
-        ],
-        content: [
-          {required: true, content: '请输入公告内容', trigger: 'blur'},
-        ]
       },
-      //根据Cookie值中的信息，更新最新公告发布者名字
-      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
   },
   created() {
     this.load()
-    request.get('/admin/' + this.user.id).then(res => {
-      this.user = res.data
-    })
   },
   methods: {
     handleSelectionChange(rows) {
@@ -184,7 +152,7 @@ export default {
     },
     //加载页面
     load() {
-      request.get('/announcement/page', {
+      request.get('/position_type/page', {
         params: this.params
       }).then(res => {
         if (res.code === '200') {
@@ -197,12 +165,11 @@ export default {
     reset() {
       this.params = {
         pageNum: 1,
-        pageSize: 8,
+        pageSize: 10,
         id: '',
-        date: '',
-        name: '',
-        title: '',
-        content: ''
+        category: '', // 一级分类
+        type: '',  // 二级分类
+        description: '',
       }
       this.load()
     },
@@ -220,14 +187,12 @@ export default {
     handleEdit(row) {
       this.form = JSON.parse(JSON.stringify(row))
       this.formVisible = true
-      //通过Cookie修改发布人名字
-      this.form.name = this.user.username
     },
     //点击保存按钮，触发新增或更新
     save() {
       this.$refs["formRef"].validate((valid) => {
         if (valid) {
-          this.request.post('/announcement/save', this.form).then(res => {
+          this.request.post('/position_type/save', this.form).then(res => {
             if (res.code === '200') {
               this.$message.success('保存成功')
               this.load()
@@ -243,7 +208,7 @@ export default {
     del(id) {
       // eslint-disable-next-line no-unused-vars
       this.$confirm('您确定要删除吗？', '确认删除', {type: "warning"}).then(() => {
-        this.request.delete('/announcement/delete/' + id).then(res => {
+        this.request.delete('/position_type/delete/' + id).then(res => {
           if (res.code === '200') {
             this.$message.success('操作成功')
             this.load()
@@ -251,28 +216,10 @@ export default {
             this.$message.error(res.msg)
           }
         }).catch(() => {
-
         })
       })
     },
-    delBatch() {
-      if (!this.ids.length) {
-        this.$message.warning('请选择数据')
-        return
-      }
-      // eslint-disable-next-line no-unused-vars
-      this.$confirm('您确定批量删除这些数据吗？', '确认删除', {type: "warning"}).then(() => {
-        this.request.delete('/announcement/delete/batch', {data: this.ids}).then(res => {
-          if (res.code === '200') {
-            this.$message.success('操作成功')
-            this.load()
-          } else {
-            this.$message.error(res.msg)
-          }
-        }).catch(() => {
-        })
-      })
-    }
+
   }
 }
 </script>

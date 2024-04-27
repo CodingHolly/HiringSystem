@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Layout from "@/views/Layout.vue";
 import Login from "@/views/Login/Login.vue";
-import Cookies from "js-cookie";
+import AdminLayout from "@/views/Admin/AdminLayout.vue";
+import UserLayout from "@/views/User/UserLayout.vue";
 
 Vue.use(VueRouter)
 
@@ -16,16 +16,16 @@ const routes = [
     },
     //  ===== Home后台管理主页 =====
     {
-        path: '/',
-        name: 'Layout',
-        component: Layout,
-        redirect: '/admin_home',
+        path: '/admin/',
+        name: 'AdminLayout',
+        component: AdminLayout,
+        redirect: '/admin/home',
         children: [     //子路由，Layout.vue主体中的<router-view />
-            //  ===== Home后台管理主页 =====
+            //  ===== AdminHome后台管理主页 =====
             {
-                path: 'admin_home',
+                path: 'home',
                 name: 'Home',
-                component: () => import('@/views/Admin/HomeView.vue')
+                component: () => import('@/views/Admin/AdminHomeView.vue')
             },
             //  ===== Admin后台管理 =====
             {
@@ -37,8 +37,8 @@ const routes = [
                 // name: 'comment',
                 component: () => import('@/views/Admin/InformationManage/CommentManage.vue')
             }, {
-                path: 'position_classification',
-                component: () => import('@/views/Admin/InformationManage/PositionClassificationView.vue')
+                path: 'position_type',
+                component: () => import('@/views/Admin/InformationManage/PositionTypeView.vue')
             }, {
                 path: 'position_information',
                 component: () => import('@/views/Admin/InformationManage/PositionInformationView.vue')
@@ -58,6 +58,16 @@ const routes = [
     {
         path: "*",
         component: () => import('@/views/404.vue')
+    },
+    //  ===== 用户前台页面 =====
+    {
+        path: '/user/',
+        component: UserLayout,
+        children: [{
+            path: 'home',
+            name: 'Home',
+            component: () => import('@/views/User/UserHomeView.vue')
+        }]
     }
 ]
 
@@ -68,16 +78,16 @@ const router = new VueRouter({
 })
 
 // 路由守卫
-router.beforeEach((to, from, next) => {
-    // 若跳转路径是登录路径，则放行
-    if (to.path === '/login')
-        next()
-    //获取当前cookie数据
-    const user = Cookies.get("user")
-    //若没有cookie数据，并且跳转其他路径，则强制跳转到登录路径
-    if (!user && to.path !== '/login')
-        return next("/login")
-    //访问/home，并且cookie中存在数据，则放行
-    next()
-})
+// router.beforeEach((to, from, next) => {
+//     // 若跳转路径是登录路径，则放行
+//     if (to.path === '/login')
+//         next()
+//     //获取当前cookie数据
+//     const user = Cookies.get("user")
+//     //若没有cookie数据，并且跳转其他路径，则强制跳转到登录路径
+//     if (!user && to.path !== '/login')
+//         return next("/login")
+//     //访问/home，并且cookie中存在数据，则放行
+//     next()
+// })
 export default router

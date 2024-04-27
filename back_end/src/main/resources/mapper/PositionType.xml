@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holly.back_end.mapper.PositionTypeMapper">
+
+    <insert id="insert">
+        insert into position_type(id, category, type, description)
+        values (#{id},#{category} ,#{type}, #{description})
+    </insert>
+    <update id="update">
+        update position_type
+        set type=#{type},
+            category=#{category},
+            description=#{description}
+        where id = #{id}
+    </update>
+    <select id="list" resultType="com.holly.back_end.entity.PositionType">
+        select * from position_type
+    </select>
+    <select id="listByCondition" resultType="com.holly.back_end.entity.PositionType">
+        select *
+        from position_type
+        <where>
+            <if test="category != null and category != ''">
+                category like concat('%', #{category}, '%')
+            </if>
+            <if test="type != null and type != ''">
+                type like concat('%', #{type}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>

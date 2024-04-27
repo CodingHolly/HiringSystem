@@ -26,7 +26,7 @@ public class WebConfig implements  WebMvcConfigurer {
         //所有验证（JwtInterceptor::preHandle）通过后才能访问数据
         registry.addInterceptor(jwtInterceptor)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/admin/login","/api/register");
+                .excludePathPatterns("/api/login","/api/register");
     }
 
 }

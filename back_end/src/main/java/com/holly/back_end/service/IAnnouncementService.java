@@ -1,7 +1,6 @@
 package com.holly.back_end.service;
 
 import com.github.pagehelper.PageInfo;
-import com.holly.back_end.controller.request.AnnouncementPageRequest;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Announcement;
 

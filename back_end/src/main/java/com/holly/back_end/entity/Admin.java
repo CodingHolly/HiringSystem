@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.util.Date;
-
+/**
+ * 客服后台管理
+ * 管理员信息
+ * */
 @Data
 public class Admin {
     private Integer id;

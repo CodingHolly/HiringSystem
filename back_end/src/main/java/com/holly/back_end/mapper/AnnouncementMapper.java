@@ -1,6 +1,5 @@
 package com.holly.back_end.mapper;
 
-import com.holly.back_end.controller.request.AnnouncementPageRequest;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Announcement;
 import org.apache.ibatis.annotations.Mapper;

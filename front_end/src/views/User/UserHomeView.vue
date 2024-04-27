@@ -1,13 +1,12 @@
-<!--职位分类-->
 <template>
   <div>
-
+USER
   </div>
 </template>
 
 <script>
 export default {
-  name: "PositionClassificationView"
+  name: "UserHomeView"
 }
 </script>
 
