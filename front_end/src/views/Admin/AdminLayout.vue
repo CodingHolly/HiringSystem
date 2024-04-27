@@ -75,7 +75,7 @@ export default {
     logout() {
       //清除浏览器用户数据，再返回
       Cookies.remove('user')
-      this.$router.push('/login')
+      this.$router.push('/')
     },
     goHome() {
       this.$router.push('/admin/home')

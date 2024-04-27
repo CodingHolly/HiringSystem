@@ -10,7 +10,7 @@ Vue.use(VueRouter)
 const routes = [
     //  ===== Login登录 =====
     {
-        path: '/login',
+        path: '/',
         name: 'Login',
         component: Login
     },
