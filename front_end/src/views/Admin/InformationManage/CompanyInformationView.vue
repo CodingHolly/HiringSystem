@@ -7,15 +7,15 @@
                 v-model="params.companyName"></el-input>
       <el-input style="width: 200px; margin-left: 15px" placeholder="请输入公司地址" size="small"
                 v-model="params.companyAddress"></el-input>
-      <el-select v-model="params.managementStatus" placeholder="请选择经营状态"
+      <el-select v-model="params.companyCategory" placeholder="请选择公司类别"
                  style="width: 150px; margin-left: 15px"
                  size="small"
-                 @change="handleChangeStatus">
+                 @change="handleChangeCategory">
         <el-option
-            v-for="item in statuses"
+            v-for="item in categories"
             :key="item.id"
-            :label="item.label"
-            :value="item.id">
+            :label="item.companyCategory"
+            :value="item.companyCategory">
         </el-option>
       </el-select>
 
@@ -86,7 +86,7 @@
     <!--    公司地址弹框-->
     <el-dialog title="公司地址" :visible.sync="formVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
       <div v-for="(item, index) in companyAddresses" :key="index">
-        <div style="margin-left: 10px;font-size: 14px;">{{ item.companyAddress }}</div>
+        <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px;">{{ item.companyAddress }}</div>
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">关 闭</el-button>
@@ -116,6 +116,7 @@ export default {
     return {
       tableData: [],
       companyAddresses: [],
+      categories: [],
       total: 0,
       formVisible: false,
       companyInfo: JSON.parse(localStorage.getItem('companyInfo') || '{}'),
@@ -168,6 +169,13 @@ export default {
       request.get('/company_info/address/' + companyName).then(res => {
         if (res.code === '200') {
           this.companyAddresses = res.data
+        }
+      })
+    },
+    handleChangeCategory() {
+      request.get('company_info/category').then(res => {
+        if(res.code === '200') {
+          this.categories = res.data
         }
       })
     }
