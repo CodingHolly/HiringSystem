@@ -102,6 +102,9 @@
         <el-form-item prop="uid" label="用户id">
           <el-input v-model="form.uid" disabled></el-input>
         </el-form-item>
+        <el-form-item prop="role" label="角色标识">
+          <el-input v-model="form.role" disabled></el-input>
+        </el-form-item>
         <el-form-item prop="username" label="姓名">
           <el-input v-model="form.username"></el-input>
         </el-form-item>
@@ -161,7 +164,8 @@ export default {
         phone: '',
         email: '',
         createtime: '',
-        updatetime: ''
+        updatetime: '',
+        role:''
       },
       //表单校验规则
       rules: {

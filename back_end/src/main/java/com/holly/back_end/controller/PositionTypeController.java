@@ -1,7 +1,7 @@
 package com.holly.back_end.controller;
 
 import com.holly.back_end.common.Result;
-import com.holly.back_end.controller.request.PositionTypeRequest;
+import com.holly.back_end.controller.request.PositionTypePageRequest;
 import com.holly.back_end.entity.PositionType;
 import com.holly.back_end.service.IPositionTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class PositionTypeController {
      * 页面展示
      * */
     @GetMapping("/page")
-    public Result page(PositionTypeRequest positionTypeRequest) {
+    public Result page(PositionTypePageRequest positionTypeRequest) {
         return Result.success(positionTypeService.page(positionTypeRequest));
     }
     /**
@@ -37,6 +37,13 @@ public class PositionTypeController {
         positionTypeService.save(positionType);
         return Result.success(positionType);
     }
-
+    /**
+     *  展示所有一级分类
+     */
+    @GetMapping("/listCategory")
+    public Result listCategory() {
+        List<PositionType> positionTypes = positionTypeService.listCategory();
+        return Result.success(positionTypes);
+    }
 
 }

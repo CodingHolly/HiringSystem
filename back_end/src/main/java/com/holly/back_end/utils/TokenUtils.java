@@ -5,13 +5,17 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.Admin;
+import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.service.IAdminService;
+import com.holly.back_end.service.ICompanyInfoService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.Date;
@@ -21,13 +25,16 @@ import java.util.Date;
 public class TokenUtils {
 
     private static IAdminService staticAdminService;
+//    private static ICompanyService staticCompanyService;
 
     @Resource
     private IAdminService adminService;
+//    private ICompanyService companyService;
 
     @PostConstruct
     public void setUserService() {
         staticAdminService = adminService;
+//        staticCompanyService = companyService;
     }
 
     /**
@@ -47,24 +54,28 @@ public class TokenUtils {
      * @return user对象
      * /admin?token=xxxx
      */
-    public static Admin getCurrentAdmin() {
+    public static Account getCurrentUser() {
         String token = null;
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             token = request.getHeader("token");
             if (StrUtil.isNotBlank(token)) {
-                token = request.getParameter("token");
+                //解析token获取存储的数据
+                String userRole = JWT.decode(token).getAudience().get(0);
+                String userId = userRole.split("-")[0];
+                String role = userRole.split("-")[1];
+                if (RoleEnum.ADMIN.name().equals(role)) {
+                    return staticAdminService.getById(Integer.valueOf(userId));
+                }
+//                if (RoleEnum.COMPANY.name().equals(role)) {
+//                    return staticCompanyService.getById(Integer.valueOf(userId));
+//                }
             }
-            if (StrUtil.isBlank(token)) {
-                log.error("获取当前登录的token失败， token: {}", token);
-                return null;
-            }
-            String adminId = JWT.decode(token).getAudience().get(0);
-            return staticAdminService.getById(Integer.valueOf(adminId));
         } catch (Exception e) {
-            log.error("获取当前登录的管理员信息失败, token={}", token, e);
+            log.error("获取当前登录信息失败", e);
             return null;
         }
+        return new Account();
     }
 }
 

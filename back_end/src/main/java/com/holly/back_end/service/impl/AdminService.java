@@ -68,7 +68,8 @@ public class AdminService implements IAdminService {
             int randomNum = Math.abs(rand.nextInt(100000));
             String last = String.format("%05d", randomNum);
             admin.setUid("10" + DateUtil.format(date, "yyyyMMdd") + last);
-
+            //设置角色
+            admin.setRole("ADMIN");
             //设置默认密码666666
             if (StrUtil.isBlank(admin.getPassword())) {
                 admin.setPassword(DEFAULT_PASSWORD);

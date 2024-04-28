@@ -3,5 +3,30 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.CompanyInfoMapper">
+    <select id="listByCondition" resultType="com.holly.back_end.entity.CompanyInfo">
+        select distinct company_info.id, company_info.company_name, company_info.company_profile,
+        company_info.legal_representative,
+        company_info.founding_time,company_info.company_category,company_info.registered_capital,company_info.register_address
+        from company_info
+        join company_info_address
+        on company_info.company_name = company_info_address.company_name
+        <where>
+            <if test="companyName != null and companyName != ''">
+                company_info.company_name like concat('%', #{companyName}, '%')
+            </if>
+            <if test="companyAddress != null and companyAddress != ''">
+                company_info_address.company_address like concat('%', #{companyAddress}, '%')
+            </if>
+            <if test="companyCategory != null and companyCategory != ''">
+                company_info.company_category like concat('%', #{companyCategory}, '%')
+            </if>
+        </where>
+        order by company_info.id desc
+    </select>
 
+    <select id="getAddressByCompanyName" resultType="com.holly.back_end.entity.CompanyInfoAddress">
+        select *
+        from company_info_address
+        where company_name = #{companyName}
+    </select>
 </mapper>

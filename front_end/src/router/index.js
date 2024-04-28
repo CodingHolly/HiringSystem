@@ -43,13 +43,16 @@ const routes = [
                 path: 'position_information',
                 component: () => import('@/views/Admin/InformationManage/PositionInformationView.vue')
             }, {
-                path: 'admin_information',
+                path: 'company_information',
+                component: () => import('@/views/Admin/InformationManage/CompanyInformationView.vue')
+            }, {
+                path: 'admin_manage',
                 component: () => import('@/views/Admin/PersonnelManage/AdminManageView.vue')
             }, {
-                path: 'company_information',
+                path: 'company_manage',
                 component: () => import('@/views/Admin/PersonnelManage/CompanyManageView.vue')
             }, {
-                path: 'user_information',
+                path: 'user_manage',
                 component: () => import('@/views/Admin/PersonnelManage/UserManageView.vue')
             },
         ]

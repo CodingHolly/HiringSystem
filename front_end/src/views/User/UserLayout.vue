@@ -4,14 +4,14 @@
     <!--    头部区域-->
     <div class="front-header">
       <div class="front-header-left">
-        <img src="@/assets/css/imgs/logo.png" alt="">
-        <div class="title">缺一人才招聘网站</div>
+        <img src="@/assets/css/imgs/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
+        <span class="title">缺一人才招聘网站</span>
       </div>
 
       <div class="front-header-center">
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
-            <el-menu-item index="/user/home">前台</el-menu-item>
+            <el-menu-item index="/user/home">首页</el-menu-item>
             <el-menu-item index="/user/person">个人中心</el-menu-item>
           </el-menu>
         </div>
@@ -19,23 +19,37 @@
 
       <div class="front-header-right">
         <div v-if="!user.username">
-          <el-button @click="$router.push('/login')">登录</el-button>
-          <el-button @click="$router.push('/register')">注册</el-button>
+          <el-button type="text" @click="$router.push('/')">登录</el-button>
+          <el-button type="text" @click="$router.push('/register')">注册</el-button>
         </div>
         <div v-else>
           <el-dropdown>
             <div class="front-header-dropdown">
               <div style="">
-                <span>{{user.username}}</span>
+                <span>{{ user.username }}</span><i class="el-icon-arrow-down" style="margin-left: 10px;"></i>
               </div>
             </div>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>
+                <div style="text-align: center" @click="goUserHome">招聘首页</div>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <div style="text-align: center" @click="myResume">我的简历</div>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <div style="text-align: center" @click="myMessage">消息通知</div>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <div style="text-align: center" @click="logout">退出登录</div>
+              </el-dropdown-item>
+            </el-dropdown-menu>
           </el-dropdown>
         </div>
       </div>
     </div>
     <div>
       <!--    主体-->
-      <div style="flex: 1;background-color: white; padding: 30px">
+      <div class="main-body">
         <router-view/>
       </div>
     </div>
@@ -57,22 +71,57 @@ export default {
     logout() {
       //清除浏览器用户数据，再返回
       Cookies.remove('user')
-      this.$router.push('/login')
+      this.$router.push('/')
     },
-    goHome() {
-      this.$router.push('/admin/home')
+    goUserHome() {
+      this.$router.push('/user/home')
     }
   }
 }
 </script>
 
 <style scoped>
-.el-dropdown-link {
+.front-header {
+  display: flex;
+  height: 60px;
+  line-height: 60px;
+  margin-bottom: 5px;
+  border-bottom-color: #eeeeee;
+  background-color: rgb(255, 255, 255);
+}
+
+.front-header-left {
+  width: 350px;
+
+}
+
+.front-header-left .title {
+  flex: 1;
+  color: #355476;
   cursor: pointer;
-  color: #6495ED;
+  margin-left: 35px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.front-header-center {
+  flex: 1;
+}
+
+.front-header-right {
+  width: 250px;
+  padding-right: 20px;
+  text-align: right;
+}
+
+.el-dropdown {
+  display: inline-block;
+  position: relative;
+  color: #606266;
+  font-size: 14px;
 }
 
 .el-icon-arrow-down {
-  font-size: 20px;
+  margin-left: 5px;
 }
 </style>

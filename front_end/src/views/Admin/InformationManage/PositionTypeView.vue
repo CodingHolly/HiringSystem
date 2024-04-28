@@ -26,7 +26,7 @@
     </div>
 
     <!--    分类数据表格-->
-    <div class="table">
+    <div class="table" style="margin-top: 20px">
       <el-table
           :data="tableData"
           :cell-style="{'text-align':'center'}"

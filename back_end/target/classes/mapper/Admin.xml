@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.AdminMapper">
     <insert id="insert">
-        insert into admin(id, uid, username, phone, email, createtime, updatetime, password)
-        values (#{id}, #{uid}, #{username}, #{phone}, #{email},  #{createtime}, #{updatetime}, #{password})
+        insert into admin(id, uid, username, phone, email, createtime, updatetime, password, role)
+        values (#{id}, #{uid}, #{username}, #{phone}, #{email},  #{createtime}, #{updatetime}, #{password}, #{role})
     </insert>
 
     <update id="update">

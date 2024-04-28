@@ -15,7 +15,7 @@
         </span>
           <el-dropdown-menu slot="dropdown">
             <el-dropdown-item><div style="text-align: center" @click="goHome">系统首页</div></el-dropdown-item>
-            <el-dropdown-item><div style="text-align: center" @click="logout">退出登入</div></el-dropdown-item>
+            <el-dropdown-item><div style="text-align: center" @click="logout">退出登录</div></el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -37,6 +37,7 @@
               <span>信息管理</span>
             </template>
             <el-menu-item index="/admin/announcement">公告信息</el-menu-item>
+            <el-menu-item index="/admin/company_information">企业信息</el-menu-item>
             <el-menu-item index="/admin/position_type">职位分类</el-menu-item>
             <el-menu-item index="/admin/position_information">职位信息</el-menu-item>
             <el-menu-item index="/admin/comment_management">评论管理</el-menu-item>
@@ -46,9 +47,9 @@
               <i class="el-icon-menu"></i>
               <span>人员管理</span>
             </template>
-            <el-menu-item index="/admin/admin_information">管理员信息</el-menu-item>
-            <el-menu-item index="/admin/company_information">企业信息</el-menu-item>
-            <el-menu-item index="/admin/user_information">用户信息</el-menu-item>
+            <el-menu-item index="/admin/admin_manage">管理员管理</el-menu-item>
+            <el-menu-item index="/admin/company_manage">企业人员管理</el-menu-item>
+            <el-menu-item index="/admin/user_manage">个人用户管理</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>

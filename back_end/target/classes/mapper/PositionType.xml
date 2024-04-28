@@ -30,4 +30,8 @@
             </if>
         </where>
     </select>
+    <select id="listCategory" resultType="com.holly.back_end.entity.PositionType">
+        select distinct category
+        from position_type
+    </select>
 </mapper>

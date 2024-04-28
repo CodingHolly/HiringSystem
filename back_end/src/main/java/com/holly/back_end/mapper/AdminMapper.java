@@ -12,7 +12,7 @@ public interface AdminMapper {
     //@Select("select * from announcement")
     List<Admin> list();
 
-    List<Admin> listByCondition(BaseRequest basePageRequest);
+    List<Admin> listByCondition(BaseRequest baseRequest);
 
     Admin getById(Integer id);
 

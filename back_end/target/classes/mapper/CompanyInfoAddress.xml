@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holly.back_end.mapper.CompanyInfoAddressMapper">
+    <select id="getAddressByCompanyName" resultType="com.holly.back_end.entity.CompanyInfoAddress">
+        select *
+        from company_info_address
+        where company_name = #{companyName}
+    </select>
+</mapper>

@@ -3,7 +3,6 @@ package com.holly.back_end.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
-import com.holly.back_end.controller.request.PositionTypeRequest;
 import com.holly.back_end.entity.PositionType;
 import com.holly.back_end.mapper.PositionTypeMapper;
 import com.holly.back_end.service.IPositionTypeService;
@@ -36,5 +35,10 @@ public class PositionTypeService implements IPositionTypeService {
         PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
         List<PositionType> positionTypes = positionTypeMapper.listByCondition(baseRequest);
         return new PageInfo<>(positionTypes);
+    }
+
+    @Override
+    public List<PositionType> listCategory() {
+        return positionTypeMapper.listCategory();
     }
 }
