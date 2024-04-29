@@ -5,7 +5,7 @@
 <mapper namespace="com.holly.back_end.mapper.CompanyInfoMapper">
     <select id="listByCondition" resultType="com.holly.back_end.entity.CompanyInfo">
         select distinct company_info.id, company_info.company_name, company_info.company_profile,
-        company_info.legal_representative,
+        company_info.legal_representative,company_info.logo,
         company_info.founding_time,company_info.company_category,company_info.registered_capital,company_info.register_address
         from company_info
         join company_info_address
@@ -28,5 +28,10 @@
         select *
         from company_info_address
         where company_name = #{companyName}
+    </select>
+
+    <select id="getAllCompanyCategories" resultType="com.holly.back_end.entity.CompanyInfo">
+        select distinct *
+        from company_info
     </select>
 </mapper>

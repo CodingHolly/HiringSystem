@@ -14,4 +14,6 @@ public interface ICompanyInfoService {
     PageInfo<CompanyInfo> page(BaseRequest baseRequest);
 
     List<CompanyInfoAddress> getAddressByCompanyName(String companyName);
+
+    List<CompanyInfo> getAllCompanyCategories();
 }

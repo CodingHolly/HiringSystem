@@ -13,4 +13,6 @@ public interface CompanyInfoMapper {
     List<CompanyInfo> listByCondition(BaseRequest baseRequest);
 
     List<CompanyInfoAddress> getAddressByCompanyName(String companyName);
+
+    List<CompanyInfo> getAllCompanyCategories();
 }

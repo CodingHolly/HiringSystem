@@ -6,16 +6,15 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.holly.back_end.controller.dto.LoginDTO;
 import com.holly.back_end.controller.request.BaseRequest;
-import com.holly.back_end.controller.request.LoginRequest;
+import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.Admin;
+import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.exception.ServiceException;
 import com.holly.back_end.mapper.AdminMapper;
 import com.holly.back_end.service.IAdminService;
 import com.holly.back_end.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -104,35 +103,32 @@ public class AdminService implements IAdminService {
     // 登录
     // 根据手机号唯一标识
     @Override
-    public LoginDTO login(LoginRequest loginRequest) {
-        loginRequest.setPassword(loginRequest.getPassword());
-        Admin admin = null;
+    public Admin login(Account account) {
+        Admin dbAdmin = null;
 
         // 判断数据库中是否存在该手机号用户
         try {
-            admin = adminMapper.getByPhone(loginRequest.getPhone());
+            dbAdmin = adminMapper.getByPhone(account.getPhone());
         } catch (Exception e) {
-            log.error("根据手机号{} 查询出错", loginRequest.getPhone());
+            log.error("根据手机号{} 查询出错", account.getPhone());
             throw new ServiceException("手机号错误");
         }
 
         // 判断用户是否存在
-        if (admin == null) {
+        if (dbAdmin == null) {
             throw new ServiceException("用户不存在，请检查账号和密码");
         }
 
         // 判断密码是否正确
-        String currentPassword = loginRequest.getPassword();
-        if (!currentPassword.equals(admin.getPassword())) {
+        String currentPassword = account.getPassword();
+        if (!currentPassword.equals(dbAdmin.getPassword())) {
             throw new ServiceException("手机号或密码错误");
         }
-        LoginDTO loginDTO = new LoginDTO();
-        BeanUtils.copyProperties(admin, loginDTO);  // admin的属性赋值给loginDTO
-
         //生成token
-        String token = TokenUtils.genToken(String.valueOf(admin.getId()), admin.getPassword()); // 用户密码为密钥
-        loginDTO.setToken(token);
-        return loginDTO;
+        String tokenData = dbAdmin.getId()+"-"+ RoleEnum.ADMIN.name();
+        String token = TokenUtils.genToken(tokenData,dbAdmin.getPassword());
+        dbAdmin.setToken(token);
+        return dbAdmin;
     }
 
     //id查询

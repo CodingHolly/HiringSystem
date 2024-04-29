@@ -28,4 +28,10 @@ public class CompanyInfoController {
         List<CompanyInfoAddress> companyInfoAddresses = companyInfoService.getAddressByCompanyName(companyName);
         return Result.success(companyInfoAddresses);
     }
+
+    @GetMapping("/category")
+    public Result getAllCompanyCategories() {
+        List<CompanyInfo> companyInfoList = companyInfoService.getAllCompanyCategories();
+        return Result.success(companyInfoList);
+    }
 }

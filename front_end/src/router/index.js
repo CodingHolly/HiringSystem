@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Login from "@/views/Login/Login.vue";
 import AdminLayout from "@/views/Admin/AdminLayout.vue";
 import UserLayout from "@/views/User/UserLayout.vue";
+import CompanyLayout from "@/views/Company/CompanyLayout.vue";
 
 Vue.use(VueRouter)
 
@@ -19,7 +20,6 @@ const routes = [
         path: '/admin/',
         name: 'AdminLayout',
         component: AdminLayout,
-        redirect: '/admin/home',
         children: [     //子路由，Layout.vue主体中的<router-view />
             //  ===== AdminHome后台管理主页 =====
             {
@@ -62,7 +62,7 @@ const routes = [
         path: "*",
         component: () => import('@/views/404.vue')
     },
-    //  ===== 用户前台页面 =====
+    //  ===== User用户前台页面 =====
     {
         path: '/user/',
         component: UserLayout,
@@ -71,7 +71,28 @@ const routes = [
             name: 'Home',
             component: () => import('@/views/User/UserHomeView.vue')
         }]
-    }
+    },
+    //  ===== Company企业后台页面 =====
+    {
+        path: '/company/',
+        component: CompanyLayout,
+        children: [{
+            path: 'home',
+            component: () => import('@/views/Company/CompanyHomeView.vue')
+        }, {
+            path: 'company_information',
+            component: () => import('@/views/Company/InformationManage/CompanyInformationView.vue')
+        }, {
+            path: 'position_information',
+            component: () => import('@/views/Company/InformationManage/PositionInformationView.vue')
+        }, {
+            path: 'resume_management',
+            component: () => import('@/views/Company/InformationManage/ResumeManagementView.vue')
+        }, {
+            path: 'company_manage',
+            component: () => import('@/views/Company/PersonnelManage/CompanyManageView.vue')
+        }]
+    },
 ]
 
 const router = new VueRouter({

@@ -79,7 +79,7 @@ export default {
   name: "Login",
   data() {
     return {
-      form: {role: 'USER'},
+      form: {},
       rules: {
         phone: [
           {required: true, phone: '请输入手机号', trigger: 'blur'},
@@ -87,6 +87,9 @@ export default {
         password: [
           {required: true, password: '请输入密码', trigger: 'blur'},
         ],
+        role: [
+          {required: true, role: '请选择角色', trigger: 'blur'}
+        ]
       },
       loginUser: {},
       created() {
@@ -97,9 +100,17 @@ export default {
     login() {
       this.$refs["formRef"].validate((valid) => {
         if (valid) {
-          request.post('/admin/login', this.form).then(res => {
+          request.post('/login', this.form).then(res => {
             if (res.code === '200') {
+              // localStorage.setItem("xm-user", JSON.stringfy(res.data))
               this.loginUser = res.data   //跳出滑块组件，认证
+              if (this.loginUser.role === 'USER') {
+                location.href = '/user/home'
+              } else if (this.loginUser.role === 'COMPANY'){
+                location.href = '/company/home'
+              } else {
+                location.href = '/admin/home'
+              }
             } else {
               this.$notify.error(res.msg)
             }

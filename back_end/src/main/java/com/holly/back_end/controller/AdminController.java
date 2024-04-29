@@ -18,12 +18,6 @@ public class AdminController {
     @Autowired
     IAdminService adminService;
 
-    @PostMapping("/login")
-    public Result login(@RequestBody LoginRequest loginRequest) {
-        LoginDTO login = adminService.login(loginRequest);
-        return Result.success(login);
-    }
-
     @PostMapping("/save")
     public Result save(@RequestBody Admin admin) {
         adminService.save(admin);

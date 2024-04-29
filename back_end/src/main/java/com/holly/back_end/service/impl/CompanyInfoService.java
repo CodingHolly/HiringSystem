@@ -39,7 +39,11 @@ public class CompanyInfoService implements ICompanyInfoService {
 
     @Override
     public List<CompanyInfoAddress> getAddressByCompanyName(String companyName) {
-        List<CompanyInfoAddress> companyInfoAddressList = companyInfoMapper.getAddressByCompanyName(companyName);
-        return companyInfoAddressList;
+        return companyInfoMapper.getAddressByCompanyName(companyName);
+    }
+
+    @Override
+    public List<CompanyInfo> getAllCompanyCategories() {
+        return companyInfoMapper.getAllCompanyCategories();
     }
 }

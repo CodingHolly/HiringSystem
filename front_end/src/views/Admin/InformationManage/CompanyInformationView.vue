@@ -8,9 +8,9 @@
       <el-input style="width: 200px; margin-left: 15px" placeholder="请输入公司地址" size="small"
                 v-model="params.companyAddress"></el-input>
       <el-select v-model="params.companyCategory" placeholder="请选择公司类别"
-                 style="width: 150px; margin-left: 15px"
+                 style="width: 200px; margin-left: 15px"
                  size="small"
-                 @change="handleChangeCategory">
+                 >
         <el-option
             v-for="item in categories"
             :key="item.id"
@@ -76,9 +76,13 @@
             label="企业类别"
             prop="companyCategory">
         </el-table-column>
-        <el-table-column
-            label="注册资金"
-            prop="registeredCapital">
+        <el-table-column label="企业logo">
+          <template v-slot="scope">
+            <div>
+              <el-image style="width: 40px;height: 40px" v-if="scope.row.logo"
+                        :src="scope.row.logo" :preview-src-list="[scope.row.logo]"></el-image>
+            </div>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -131,12 +135,14 @@ export default {
         managementStatue: '',
         companyProfile: '',
         registerTime: '',
+        logo: '',
         companyAddresses: [],
       },
     }
   },
   created() {
     this.load()
+    this.getCategory()
   },
   methods: {
     load() {
@@ -157,6 +163,7 @@ export default {
         legalRepresentative: '',
         foundingTime: '',
         companyCategory: '',
+        logo: '',
         registeredCapital: ''
       }
     },
@@ -172,9 +179,9 @@ export default {
         }
       })
     },
-    handleChangeCategory() {
+    getCategory(){
       request.get('company_info/category').then(res => {
-        if(res.code === '200') {
+        if (res.code === '200') {
           this.categories = res.data
         }
       })

@@ -24,4 +24,5 @@ public class CompanyInfo{
     private String companyCategory; // 公司行业/领域类别
     private String registeredCapital; // 注册资本
     private String registerAddress;  // 注册地址
+    private String logo; // 企业logo
 }
