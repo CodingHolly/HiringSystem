@@ -20,9 +20,10 @@ public class CompanyInfo{
     private Date foundingTime; // 成立时间
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date registerTime; // 网站注册时间
-    private String managementStatus; // 经营状态，1：在营，0：停业
+    private String managementStatus; // 经营状态
     private String companyCategory; // 公司行业/领域类别
     private String registeredCapital; // 注册资本
     private String registerAddress;  // 注册地址
     private String logo; // 企业logo
+    private String companyScale; // 人数规模
 }

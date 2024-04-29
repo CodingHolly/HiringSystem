@@ -9,4 +9,9 @@
         from company_admin
         where phone = #{phone}
     </select>
+    <select id="getById" resultType="com.holly.back_end.entity.CompanyAdmin">
+        select *
+        from company_admin
+        where id = #{id}
+    </select>
 </mapper>

@@ -34,4 +34,11 @@ public class CompanyInfoController {
         List<CompanyInfo> companyInfoList = companyInfoService.getAllCompanyCategories();
         return Result.success(companyInfoList);
     }
+
+    @GetMapping("/{companyName}")
+    public Result getAllCompanyInfoByCompanyName(@PathVariable(value = "companyName") String companyName) {
+        CompanyInfo companyInfo = companyInfoService.getAllCompanyInfoByCompanyName(companyName);
+        return Result.success(companyInfo);
+    }
+
 }

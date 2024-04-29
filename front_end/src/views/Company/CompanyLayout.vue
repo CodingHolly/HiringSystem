@@ -27,14 +27,14 @@
         <el-menu :default-active="$route.path" :default-openeds="['2','3']" router class="el-menu-demo">
           <el-menu-item index="/company/home">
             <i class="el-icon-s-home"></i>
-            <span>企业系统首页</span>
+            <span>企业信息</span>
           </el-menu-item>
           <el-submenu index="2">
             <template slot="title">
               <i class="el-icon-menu"></i>
               <span>信息管理</span>
             </template>
-            <el-menu-item index="/company/company_information">企业信息</el-menu-item>
+            <el-menu-item index="/company/company_information">企业信息管理</el-menu-item>
             <el-menu-item index="/company/position_information">岗位信息</el-menu-item>
             <el-menu-item index="/company/resume_management">简历管理</el-menu-item>
           </el-submenu>
@@ -49,7 +49,7 @@
       </div>
 
       <!--    主体-->
-      <div style="flex: 1;background-color: white; padding: 30px">
+      <div style="flex: 1;background-color: white; padding: 5px 20px 0 20px">
         <router-view/>
       </div>
     </div>
@@ -58,6 +58,7 @@
 
 <script>
 import Cookies from "js-cookie";
+import request from "@/utils/request";
 
 export default {
   name: "CompanyLayout",
@@ -65,6 +66,11 @@ export default {
     return {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
     }
+  },
+  created() {
+    request.get('/company/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   },
   methods: {
     goCompanyHome() {

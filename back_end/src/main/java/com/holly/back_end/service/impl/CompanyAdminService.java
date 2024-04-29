@@ -46,4 +46,9 @@ public class CompanyAdminService implements ICompanyAdminService {
         dbCompanyAdmin.setToken(token);
         return dbCompanyAdmin;
     }
+
+    @Override
+    public CompanyAdmin getById(Integer id) {
+        return companyAdminMapper.getById(id);
+    }
 }

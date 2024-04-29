@@ -36,10 +36,6 @@
           @selection-change="handleSelectionChange"
           style="width: 100%; margin-top: 20px"
           stripe>
-        <el-table-column
-            type="selection"
-            width="55">
-        </el-table-column>
         <el-table-column type="expand">
           <template slot-scope="props">
             <el-form label-position="left" inline class="demo-table-expand">

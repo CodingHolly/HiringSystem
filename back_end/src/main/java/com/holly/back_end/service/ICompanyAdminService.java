@@ -5,4 +5,6 @@ import com.holly.back_end.entity.CompanyAdmin;
 
 public interface ICompanyAdminService {
     CompanyAdmin login(Account account);
+
+    CompanyAdmin getById(Integer id);
 }

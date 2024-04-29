@@ -1,13 +1,13 @@
-<!--职位分类-->
+<!--评论管理-->
 <template>
   <div>
-
+    评
   </div>
 </template>
 
 <script>
 export default {
-  name: "PositionClassificationView"
+  name: "CommentManageView"
 }
 </script>
 

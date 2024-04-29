@@ -104,13 +104,6 @@ export default {
             if (res.code === '200') {
               // localStorage.setItem("xm-user", JSON.stringfy(res.data))
               this.loginUser = res.data   //跳出滑块组件，认证
-              if (this.loginUser.role === 'USER') {
-                location.href = '/user/home'
-              } else if (this.loginUser.role === 'COMPANY'){
-                location.href = '/company/home'
-              } else {
-                location.href = '/admin/home'
-              }
             } else {
               this.$notify.error(res.msg)
             }
@@ -120,7 +113,13 @@ export default {
     },
     onSuccess() {
       Cookies.set('user', JSON.stringify(this.loginUser)) //设置Cookie
-      this.$router.push('/admin/home')  //跳转主页
+      if (this.loginUser.role === 'USER') {
+        location.href = '/user/home'
+      } else if (this.loginUser.role === 'COMPANY'){
+        location.href = '/company/home'
+      } else {
+        location.href = '/admin/home'
+      }
       this.$notify.success('登录成功')
     },
     onFail() {

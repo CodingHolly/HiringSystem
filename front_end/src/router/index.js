@@ -35,7 +35,7 @@ const routes = [
             }, {
                 path: 'comment_management',
                 // name: 'comment',
-                component: () => import('@/views/Admin/InformationManage/CommentManage.vue')
+                component: () => import('@/views/Admin/InformationManage/CommentManageView.vue')
             }, {
                 path: 'position_type',
                 component: () => import('@/views/Admin/InformationManage/PositionTypeView.vue')

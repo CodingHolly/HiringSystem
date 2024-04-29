@@ -76,6 +76,10 @@
             label="企业类别"
             prop="companyCategory">
         </el-table-column>
+        <el-table-column
+            label="公司规模"
+            prop="companyScale">
+        </el-table-column>
         <el-table-column label="企业logo">
           <template v-slot="scope">
             <div>
@@ -135,6 +139,7 @@ export default {
         managementStatue: '',
         companyProfile: '',
         registerTime: '',
+        companyScale: '',
         logo: '',
         companyAddresses: [],
       },
@@ -163,8 +168,13 @@ export default {
         legalRepresentative: '',
         foundingTime: '',
         companyCategory: '',
+        registeredCapital: '',
+        managementStatue: '',
+        companyProfile: '',
+        registerTime: '',
+        companyScale: '',
         logo: '',
-        registeredCapital: ''
+        companyAddresses: [],
       }
     },
     handleCurrentChange(pageNum) {

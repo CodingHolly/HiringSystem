@@ -1,12 +1,13 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/hiring_system
+    url: jdbc:mysql://${ip}:3306/hiring_system
     username: root
     password: 000682
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
+ip: localhost
 
 server:
   port: 9090

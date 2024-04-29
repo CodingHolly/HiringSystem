@@ -134,8 +134,7 @@ public class AdminService implements IAdminService {
     //id查询
     @Override
     public Admin getById(Integer id) {
-        Admin admin = adminMapper.getById(id);
-        return admin;
+        return adminMapper.getById(id);
     }
 
 

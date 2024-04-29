@@ -1,9 +1,7 @@
 package com.holly.back_end.controller;
 
 import com.holly.back_end.common.Result;
-import com.holly.back_end.controller.dto.LoginDTO;
 import com.holly.back_end.controller.request.AdminPageRequest;
-import com.holly.back_end.controller.request.LoginRequest;
 import com.holly.back_end.entity.Admin;
 import com.holly.back_end.service.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -42,10 +42,6 @@
           style="width: 100%"
           stripe>
         <el-table-column
-            type="selection"
-            width="55">
-        </el-table-column>
-        <el-table-column
             label="序号"
             prop="id"
             width=60

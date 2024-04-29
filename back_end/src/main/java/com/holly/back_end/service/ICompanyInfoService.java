@@ -16,4 +16,6 @@ public interface ICompanyInfoService {
     List<CompanyInfoAddress> getAddressByCompanyName(String companyName);
 
     List<CompanyInfo> getAllCompanyCategories();
+
+    CompanyInfo getAllCompanyInfoByCompanyName(String companyName);
 }

@@ -5,7 +5,7 @@
     <div style="height: 60px; line-height: 60px; background-color: #ecf5ff; margin-bottom: 5px; display: flex">
       <div style="width: 300px">
         <img src="@/assets/css/imgs/logo.png" alt="" style="width: 40px; position: relative; top: 10px; left: 20px">
-        <span style="margin-left: 35px; font-size: 22px">系统管理员后台管理</span>
+        <span style="margin-left: 35px; font-size: 22px">系统后台管理</span>
       </div>
 <!--      下拉菜单-->
       <div style="flex: 1; text-align: right; padding-right: 40px">

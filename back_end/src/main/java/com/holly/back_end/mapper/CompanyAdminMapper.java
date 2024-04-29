@@ -6,4 +6,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CompanyAdminMapper {
     CompanyAdmin getByPhone(String phone);
+
+    CompanyAdmin getById(Integer id);
 }

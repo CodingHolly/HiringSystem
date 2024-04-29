@@ -46,4 +46,9 @@ public class CompanyInfoService implements ICompanyInfoService {
     public List<CompanyInfo> getAllCompanyCategories() {
         return companyInfoMapper.getAllCompanyCategories();
     }
+
+    @Override
+    public CompanyInfo getAllCompanyInfoByCompanyName(String companyName) {
+        return companyInfoMapper.getAllCompanyInfoByCompanyName(companyName);
+    }
 }
