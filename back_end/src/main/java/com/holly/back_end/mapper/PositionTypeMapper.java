@@ -17,4 +17,6 @@ public interface PositionTypeMapper {
     List<PositionType> listByCondition(BaseRequest baseRequest);
 
     List<PositionType> listCategory();
+
+    List<PositionType> listType();
 }

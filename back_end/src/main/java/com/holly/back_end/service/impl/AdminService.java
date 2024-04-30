@@ -85,7 +85,7 @@ public class AdminService implements IAdminService {
             admin.setUpdatetime(new Date());
             // 若修改了手机号，判断数据库中是否存在该手机号的用户
             Admin currentAdmin = adminMapper.getByPhone(admin.getPhone());
-            if (currentAdmin == null) {  //不存在
+            if (currentAdmin.getId().equals(admin.getId())) {  //不存在
                 //admin.setPassword(securePassword(admin.getPassword()));
                 adminMapper.update(admin);
             } else {    //若存在，则不能更新数据库，抛出错误

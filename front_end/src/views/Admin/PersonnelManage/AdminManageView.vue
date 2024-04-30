@@ -113,8 +113,8 @@
         <el-form-item prop="password" label="密码">
           <el-input v-model="form.password"></el-input>
         </el-form-item>
-<!--        <span-->
-<!--            style="margin-left: 100px; font-size: small; color: brown">注意：修改密码后系统会自动加密，此处展示加密密码</span>-->
+        <!--        <span-->
+        <!--            style="margin-left: 100px; font-size: small; color: brown">注意：修改密码后系统会自动加密，此处展示加密密码</span>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
@@ -161,7 +161,7 @@ export default {
         email: '',
         createtime: '',
         updatetime: '',
-        role:''
+        role: ''
       },
       //表单校验规则
       rules: {
@@ -201,12 +201,15 @@ export default {
     reset() {
       this.params = {
         pageNum: 1,
-        pageSize: 10,
+        pageSize: 8,
         id: '',
         uid: '',
         username: '',
         phone: '',
-        email: ''
+        email: '',
+        createtime: '',
+        updatetime: '',
+        role: ''
       }
       this.load()
     },

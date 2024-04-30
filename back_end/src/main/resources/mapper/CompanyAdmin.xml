@@ -3,7 +3,21 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.CompanyAdminMapper">
-
+    <update id="update">
+        update company_admin
+        set username = #{username},
+            phone = #{phone},
+            email = #{email},
+            password = #{password},
+            position_category = #{positionCategory},
+            position_type =#{positionType}
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete
+        from company_admin
+        where id = #{id}
+    </delete>
     <select id="getByPhone" resultType="com.holly.back_end.entity.CompanyAdmin">
         select *
         from company_admin
@@ -13,5 +27,24 @@
         select *
         from company_admin
         where id = #{id}
+    </select>
+    <select id="listByCondition" resultType="com.holly.back_end.entity.CompanyAdmin">
+        select *
+        from company_admin
+        <where>
+            <if test="username != null and username != ''">
+                username like concat('%', #{username} ,'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                phone like concat('%', #{phone} ,'%')
+            </if>
+            <if test="positionCategory != null and positionCategory != ''">
+                position_category like concat('%', #{positionCategory} ,'%')
+            </if>
+            <if test="positionType != null and positionType != ''">
+                position_type like concat('%', #{positionType} ,'%')
+            </if>
+        </where>
+        order by id desc
     </select>
 </mapper>

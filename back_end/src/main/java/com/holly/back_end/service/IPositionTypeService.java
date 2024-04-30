@@ -14,4 +14,6 @@ public interface IPositionTypeService {
     PageInfo<PositionType> page(BaseRequest baseRequest);
 
     List<PositionType> listCategory();
+
+    List<PositionType> listType();
 }

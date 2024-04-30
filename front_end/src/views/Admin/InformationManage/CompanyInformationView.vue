@@ -83,7 +83,7 @@
         <el-table-column label="企业logo">
           <template v-slot="scope">
             <div>
-              <el-image style="width: 40px;height: 40px" v-if="scope.row.logo"
+              <el-image style="width: 60px;height: 60px" v-if="scope.row.logo"
                         :src="scope.row.logo" :preview-src-list="[scope.row.logo]"></el-image>
             </div>
           </template>

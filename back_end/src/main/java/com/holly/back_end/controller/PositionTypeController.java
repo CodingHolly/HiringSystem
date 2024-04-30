@@ -40,10 +40,17 @@ public class PositionTypeController {
     /**
      *  展示所有一级分类
      */
-    @GetMapping("/listCategory")
+    @GetMapping("/list_category")
     public Result listCategory() {
-        List<PositionType> positionTypes = positionTypeService.listCategory();
+        List<PositionType> positionCategories = positionTypeService.listCategory();
+        return Result.success(positionCategories);
+    }
+    /**
+     *  展示所有二级分类
+     */
+    @GetMapping("/list_type")
+    public Result listType() {
+        List<PositionType> positionTypes = positionTypeService.listType();
         return Result.success(positionTypes);
     }
-
 }

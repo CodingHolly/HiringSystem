@@ -58,6 +58,7 @@
 
 <script>
 import Cookies from "js-cookie";
+import request from "@/utils/request";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -76,6 +77,11 @@ export default {
     goUserHome() {
       this.$router.push('/user/home')
     }
+  },
+  created() {
+    request.get('/user/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   }
 }
 </script>

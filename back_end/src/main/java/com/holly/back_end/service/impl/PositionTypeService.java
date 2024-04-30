@@ -41,4 +41,9 @@ public class PositionTypeService implements IPositionTypeService {
     public List<PositionType> listCategory() {
         return positionTypeMapper.listCategory();
     }
+
+    @Override
+    public List<PositionType> listType() {
+        return positionTypeMapper.listType();
+    }
 }

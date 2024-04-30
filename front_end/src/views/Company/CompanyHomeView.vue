@@ -32,11 +32,11 @@
         </el-card>
       </div>
       <div class="company-logo">
-        <el-card class="logo" :body-style="{display:'flex',padding:'5px'}">
+        <el-card class="logo" :body-style="{display:'flex',padding:'5px', justifyContent:'center'}">
           <div slot="header">
             <span>企业Logo</span>
           </div>
-          <div style="justify-content: center">
+          <div>
             <el-image v-if="companyInfo.logo" :src="companyInfo.logo" style="width: 70px; height: 70px;align-items: center"></el-image>
           </div>
         </el-card>
@@ -139,7 +139,7 @@ export default {
     }
   },
   created() {
-    request.get('/company/' + this.user.id).then(res => {
+    request.get('/company_admin/' + this.user.id).then(res => {
       this.user = res.data
     })
     request.get('/company_info/' + this.user.companyName).then(res => {

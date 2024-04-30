@@ -21,19 +21,25 @@
 </template>
 import request from "@/utils/request";
 <script>
+import Cookies from "js-cookie";
+
 export default {
   name: "UserHomeView",
   data() {
     return {
       categoryData:[],
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
     }
+  },
+  created() {
+    this.loadCategory()
   },
   mounted() {
     this.loadCategory()
   },
   methods: {
     loadCategory() {
-      this.request.get('/position_type/listCategory').then(res => {
+      this.request.get('/position_type/list_category').then(res => {
         if (res.code === '200') {
           this.categoryData = res.data
         } else {

@@ -17,4 +17,12 @@ public interface CompanyInfoMapper {
     List<CompanyInfo> getAllCompanyCategories();
 
     CompanyInfo getAllCompanyInfoByCompanyName(String companyName);
+
+    void saveInfo(CompanyInfo companyInfo);
+
+    void insertAddress(CompanyInfoAddress companyInfoAddress);
+
+    void updateAddress(CompanyInfoAddress companyInfoAddress);
+
+    void deleteAddressById(Integer id);
 }

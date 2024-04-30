@@ -43,7 +43,7 @@
               <i class="el-icon-menu"></i>
               <span>人员管理</span>
             </template>
-            <el-menu-item index="/company/company_manage">企业人员管理</el-menu-item>
+            <el-menu-item index="/company/company_manage">企业管理人员</el-menu-item>
           </el-submenu>
         </el-menu>
       </div>
@@ -68,7 +68,7 @@ export default {
     }
   },
   created() {
-    request.get('/company/' + this.user.id).then(res => {
+    request.get('/company_admin/' + this.user.id).then(res => {
       this.user = res.data
     })
   },

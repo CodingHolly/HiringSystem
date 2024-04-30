@@ -1,5 +1,8 @@
 package com.holly.back_end.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.Admin;
 import com.holly.back_end.entity.CompanyAdmin;
@@ -10,7 +13,12 @@ import com.holly.back_end.service.ICompanyAdminService;
 import com.holly.back_end.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -41,8 +49,8 @@ public class CompanyAdminService implements ICompanyAdminService {
             throw new ServiceException("手机号或密码错误");
         }
         //生成token
-        String tokenData = dbCompanyAdmin.getId()+"-"+ RoleEnum.COMPANY.name();
-        String token = TokenUtils.genToken(tokenData,dbCompanyAdmin.getPassword());
+        String tokenData = dbCompanyAdmin.getId() + "-" + RoleEnum.COMPANY.name();
+        String token = TokenUtils.genToken(tokenData, dbCompanyAdmin.getPassword());
         dbCompanyAdmin.setToken(token);
         return dbCompanyAdmin;
     }
@@ -50,5 +58,28 @@ public class CompanyAdminService implements ICompanyAdminService {
     @Override
     public CompanyAdmin getById(Integer id) {
         return companyAdminMapper.getById(id);
+    }
+
+    @Override
+    public PageInfo<CompanyAdmin> page(BaseRequest baseRequest) {
+        PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
+        List<CompanyAdmin> companyAdmins = companyAdminMapper.listByCondition(baseRequest);
+        return new PageInfo<>(companyAdmins);
+    }
+
+    @Override
+    public void save(CompanyAdmin companyAdmin) {
+        // 若修改了手机号，判断数据库中是否存在该手机号的用户
+        CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(companyAdmin.getPhone());
+        if (dbCompanyAdmin.getId().equals(companyAdmin.getId())) { // 不存在
+            companyAdminMapper.update(companyAdmin);
+        } else {
+            throw new ServiceException("该手机号已注册");
+        }
+    }
+
+    @Override
+    public void deleteById(Integer id) {
+        companyAdminMapper.deleteById(id);
     }
 }

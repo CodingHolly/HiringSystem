@@ -18,4 +18,10 @@ public interface ICompanyInfoService {
     List<CompanyInfo> getAllCompanyCategories();
 
     CompanyInfo getAllCompanyInfoByCompanyName(String companyName);
+
+    void saveInfo(CompanyInfo companyInfo);
+
+    void saveAddress(CompanyInfoAddress companyInfoAddress);
+
+    void deleteAddressById(Integer id);
 }

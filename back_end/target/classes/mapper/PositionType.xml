@@ -6,7 +6,7 @@
 
     <insert id="insert">
         insert into position_type(id, category, type, description)
-        values (#{id},#{category} ,#{type}, #{description})
+        values (#{id}, #{category}, #{type}, #{description})
     </insert>
     <update id="update">
         update position_type
@@ -16,7 +16,8 @@
         where id = #{id}
     </update>
     <select id="list" resultType="com.holly.back_end.entity.PositionType">
-        select * from position_type
+        select *
+        from position_type
     </select>
     <select id="listByCondition" resultType="com.holly.back_end.entity.PositionType">
         select *
@@ -31,7 +32,13 @@
         </where>
     </select>
     <select id="listCategory" resultType="com.holly.back_end.entity.PositionType">
-        select distinct category
+        select *, count(distinct category)
+        from position_type
+        group by category
+    </select>
+    <select id="listType" resultType="com.holly.back_end.entity.PositionType">
+        select type, id
         from position_type
     </select>
+
 </mapper>
