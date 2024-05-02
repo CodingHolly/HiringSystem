@@ -8,6 +8,9 @@
         <div style="display: flex; margin: 0 25px">
           <div style="flex: 2">
             <div style="display: flex; color: black; margin: 14px 0" v-for="(item, index) in categoryData" :key="index">
+              <div>
+                <el-image v-if="item.icon" :src="item.icon" style="width: 20px; height: 20px;align-items: center"></el-image>
+              </div>
               <div style="margin-left: 10px;font-size: 14px;">{{item.category}}</div>
             </div>
           </div>

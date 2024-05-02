@@ -82,4 +82,25 @@ public class CompanyAdminService implements ICompanyAdminService {
     public void deleteById(Integer id) {
         companyAdminMapper.deleteById(id);
     }
+
+    @Override
+    public void register(Account account) {
+        CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(account.getPhone());
+
+        //判断数据库中是否有该手机号的用户
+        if (dbCompanyAdmin == null) {
+            dbCompanyAdmin = new CompanyAdmin();
+            dbCompanyAdmin.setUsername(account.getUsername());
+            dbCompanyAdmin.setPassword(account.getPassword());
+            dbCompanyAdmin.setPhone(account.getPhone());
+            dbCompanyAdmin.setRole("COMPANY");
+            companyAdminMapper.insert(dbCompanyAdmin);
+        } else {
+            throw new ServiceException("该手机号已被注册");
+        }
+        //生成token
+        String tokenData = dbCompanyAdmin.getId() + "-" + RoleEnum.COMPANY.name();
+        String token = TokenUtils.genToken(tokenData, dbCompanyAdmin.getPassword());
+        dbCompanyAdmin.setToken(token);
+    }
 }

@@ -24,5 +24,9 @@ public class PositionType {
      * 分类描述
      */
     private String description;
+    /**
+     * 分类图标
+     * */
+    private String icon;
 
 }

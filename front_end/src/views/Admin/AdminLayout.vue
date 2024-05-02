@@ -40,7 +40,7 @@
             <el-menu-item index="/admin/company_information">企业信息</el-menu-item>
             <el-menu-item index="/admin/position_type">职位分类</el-menu-item>
             <el-menu-item index="/admin/position_information">职位信息</el-menu-item>
-            <el-menu-item index="/admin/comment_management">评论管理</el-menu-item>
+            <el-menu-item index="/admin/comment_management">留言管理</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title">
@@ -64,9 +64,15 @@
 
 <script>
 import Cookies from "js-cookie";
+import request from "@/utils/request";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Layout",
+  created() {
+    request.get('/admin/' + this.user.id).then(res => {
+      this.user = res.data
+    })
+  },
   data() {
     return {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
@@ -81,7 +87,8 @@ export default {
     goHome() {
       this.$router.push('/admin/home')
     }
-  }
+  },
+
 }
 </script>
 

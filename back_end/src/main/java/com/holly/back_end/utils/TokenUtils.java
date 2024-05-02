@@ -9,7 +9,9 @@ import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.Admin;
 import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.service.IAdminService;
+import com.holly.back_end.service.ICompanyAdminService;
 import com.holly.back_end.service.ICompanyInfoService;
+import com.holly.back_end.service.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -25,17 +27,28 @@ import java.util.Date;
 public class TokenUtils {
 
     private static IAdminService staticAdminService;
-//    private static ICompanyService staticCompanyService;
+    private static ICompanyAdminService staticCompanyAdminService;
+    private static IUserService staticUserService;
 
     @Resource
     private IAdminService adminService;
-//    private ICompanyService companyService;
+    @Resource
+    private ICompanyAdminService companyAdminService;
+    @Resource
+    private IUserService userService;
+
 
     @PostConstruct
     public void setUserService() {
         staticAdminService = adminService;
-//        staticCompanyService = companyService;
+        staticCompanyAdminService = companyAdminService;
+        staticUserService = userService;
     }
+
+
+
+
+
 
     /**
      * 生成token
@@ -66,10 +79,11 @@ public class TokenUtils {
                 String role = userRole.split("-")[1];
                 if (RoleEnum.ADMIN.name().equals(role)) {
                     return staticAdminService.getById(Integer.valueOf(userId));
+                } else if (RoleEnum.COMPANY.name().equals(role)) {
+                    return staticCompanyAdminService.getById(Integer.valueOf(userId));
+                } else if (RoleEnum.USER.name().equals(role)) {
+                    return staticUserService.getById(Integer.valueOf(userId));
                 }
-//                if (RoleEnum.COMPANY.name().equals(role)) {
-//                    return staticCompanyService.getById(Integer.valueOf(userId));
-//                }
             }
         } catch (Exception e) {
             log.error("获取当前登录信息失败", e);

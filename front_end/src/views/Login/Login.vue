@@ -30,7 +30,7 @@
         <div style="width: 400px; padding: 40px; background-color: white; border-radius: 5px">
           <div style="display: flex;margin-bottom: 50px; font-size: 20px">
             <div style="border-bottom: 2px solid #8cc5ff; padding-bottom: 10px">登录</div>
-            <a style="color: #333;text-decoration:none" href="/api/register">
+            <a style="color: #333;text-decoration:none" href="/register">
               <div style="margin-left: 10px;">注册</div>
             </a>
           </div>

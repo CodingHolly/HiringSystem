@@ -20,4 +20,6 @@ public interface IAdminService {
     void deleteById(Integer id);
 
     Admin login(Account account);
+
+    void register(Account account);
 }

@@ -17,4 +17,6 @@ public interface CompanyAdminMapper {
     void update(CompanyAdmin companyAdmin);
 
     void deleteById(Integer id);
+
+    void insert(CompanyAdmin dbCompanyAdmin);
 }

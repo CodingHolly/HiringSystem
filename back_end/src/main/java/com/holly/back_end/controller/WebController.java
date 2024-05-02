@@ -31,17 +31,38 @@ public class WebController {
     @PostMapping("/login")
     public Result login(@RequestBody Account account) {
         if (StrUtil.isEmpty(account.getPhone()) || StrUtil.isEmpty(account.getPassword()) || StrUtil.isEmpty(account.getRole())) {
-            throw  new ServiceException("登录信息不完整");
+            throw new ServiceException("登录信息不完整");
         }
-        if(RoleEnum.ADMIN.name().equals(account.getRole())) {
+        if (RoleEnum.ADMIN.name().equals(account.getRole())) {
             account = adminService.login(account);
         }
-        if(RoleEnum.COMPANY.name().equals(account.getRole())) {
+        if (RoleEnum.COMPANY.name().equals(account.getRole())) {
             account = companyAdminService.login(account);
         }
-        if (RoleEnum.USER.name().equals(account.getRole())){
+        if (RoleEnum.USER.name().equals(account.getRole())) {
             account = userService.login(account);
         }
         return Result.success(account);
     }
+
+    /**
+     * 注册
+     */
+    @PostMapping("/register")
+    public Result register(@RequestBody Account account) {
+        if (StrUtil.isEmpty(account.getPhone()) || StrUtil.isEmpty(account.getPassword()) || StrUtil.isEmpty(account.getRole())) {
+            throw new ServiceException("注册信息不完整");
+        }
+        if (RoleEnum.ADMIN.name().equals(account.getRole())) {
+            adminService.register(account);
+        }
+        if (RoleEnum.COMPANY.name().equals(account.getRole())) {
+            companyAdminService.register(account);
+        }
+        if (RoleEnum.USER.name().equals(account.getRole())) {
+            userService.register(account);
+        }
+        return Result.success();
+    }
+
 }

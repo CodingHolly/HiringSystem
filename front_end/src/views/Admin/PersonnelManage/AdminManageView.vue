@@ -3,8 +3,6 @@
   <div style="padding: 0 10px">
     <!--    搜索表单-->
     <div class="search">
-      <el-input style="width: 240px; margin-left: 10px" placeholder="请输入用户id" size="small"
-                v-model="params.uid"></el-input>
       <el-input style="width: 240px; margin-left: 15px" placeholder="请输入姓名" size="small"
                 v-model="params.username"></el-input>
       <el-input style="width: 240px; margin-left: 15px" placeholder="请输入手机号" size="small"
@@ -46,10 +44,6 @@
             prop="id"
             width=60
             sortable>
-        </el-table-column>
-        <el-table-column
-            label="用户id"
-            prop="uid">
         </el-table-column>
         <el-table-column
             label="姓名"
@@ -95,9 +89,6 @@
     <!--    弹框-->
     <el-dialog title="信息" :visible.sync="formVisible" width="40%" :close-on-click-modal="false" destroy-on-close>
       <el-form label-width="100px" :model="form" :rules="rules" ref="formRef">
-        <el-form-item prop="uid" label="用户id">
-          <el-input v-model="form.uid" disabled></el-input>
-        </el-form-item>
         <el-form-item prop="role" label="角色标识">
           <el-input v-model="form.role" disabled></el-input>
         </el-form-item>
@@ -113,8 +104,6 @@
         <el-form-item prop="password" label="密码">
           <el-input v-model="form.password"></el-input>
         </el-form-item>
-        <!--        <span-->
-        <!--            style="margin-left: 100px; font-size: small; color: brown">注意：修改密码后系统会自动加密，此处展示加密密码</span>-->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
@@ -155,7 +144,6 @@ export default {
         pageNum: 1,
         pageSize: 8,
         id: '',
-        uid: '',
         username: '',
         phone: '',
         email: '',

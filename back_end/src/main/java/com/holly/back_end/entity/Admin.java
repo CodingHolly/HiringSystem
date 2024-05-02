@@ -10,8 +10,6 @@ import java.util.Date;
  * */
 @Data
 public class Admin extends Account{
-    private String uid;
-    private String username;
     private String email;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createtime;

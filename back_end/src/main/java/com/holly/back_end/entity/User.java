@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Data
 public class User extends Account {
-    private String username;
     private Integer sex;
     private String jobSearchStatus;
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")

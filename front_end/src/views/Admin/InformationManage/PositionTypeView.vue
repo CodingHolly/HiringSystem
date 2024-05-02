@@ -59,6 +59,15 @@
             label="二级分类"
             prop="type">
         </el-table-column>
+        <el-table-column
+            label="分类图标">
+          <template v-slot="scope">
+            <div>
+              <el-image style="width: 40px;height: 40px" v-if="scope.row.icon"
+                        :src="scope.row.icon" :preview-src-list="[scope.row.icon]"></el-image>
+            </div>
+          </template>
+        </el-table-column>
 
         <el-table-column label="操作" width="300">
           <template v-slot="scope">
@@ -89,6 +98,21 @@
         <el-form-item prop="description" label="分类描述">
           <el-input v-model="form.description" type="textarea" :rows="4"></el-input>
         </el-form-item>
+        <el-form-item prop="icon" label="分类图标">
+          <div>
+            <el-image v-if="form.icon" :src="form.icon" style="width: 70px; height: 70px"></el-image>
+            <el-upload
+                :show-file-list="false"
+                action="http://localhost:9090/api/file/upload"
+                :headers="{token: user.token}"
+                :file-list="fileList"
+                list-type="picture"
+                :on-success="(res,file,fileList) => handleIconUpload(res,file,fileList)">
+              <el-button size="small" type="primary" plain>上传图标</el-button>
+            </el-upload>
+          </div>
+        </el-form-item>
+
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="formVisible = false">取 消</el-button>
@@ -113,11 +137,14 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default {
   name: "PositionTypeView",
   data() {
     return {
+      fileList:[],
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
       tableData: [],
       total: 0,
       formVisible: false,
@@ -131,6 +158,7 @@ export default {
         type: '',
         category: '',
         description: '',
+        icon: ''
       },
       rules: {
         category: [
@@ -141,6 +169,9 @@ export default {
   },
   created() {
     this.load()
+    request.get('/admin/' + this.user.id).then(res => {
+      this.user = res.data
+    })
   },
   methods: {
     handleSelectionChange(rows) {
@@ -166,6 +197,7 @@ export default {
         category: '', // 一级分类
         type: '',  // 二级分类
         description: '',
+        icon: '',
       }
       this.load()
     },
@@ -215,7 +247,10 @@ export default {
         })
       })
     },
-
+    handleIconUpload(response, file, fileList) {
+      this.form.icon = response.data
+      this.fileList = fileList
+    },
   }
 }
 </script>

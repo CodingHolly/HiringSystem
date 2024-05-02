@@ -59,14 +59,8 @@ public class AdminService implements IAdminService {
     @Override
     public void save(Admin admin) {
         if (admin.getId() == null) {    //没有id，新增
-            //设置uid
-            //管理员10开头
-            Date date = new Date(); //+yyyyMMdd
+
             admin.setCreatetime(new Date());
-            Random rand = new Random();
-            int randomNum = Math.abs(rand.nextInt(100000));
-            String last = String.format("%05d", randomNum);
-            admin.setUid("10" + DateUtil.format(date, "yyyyMMdd") + last);
             //设置角色
             admin.setRole("ADMIN");
             //设置默认密码666666
@@ -125,10 +119,32 @@ public class AdminService implements IAdminService {
             throw new ServiceException("手机号或密码错误");
         }
         //生成token
-        String tokenData = dbAdmin.getId()+"-"+ RoleEnum.ADMIN.name();
-        String token = TokenUtils.genToken(tokenData,dbAdmin.getPassword());
+        String tokenData = dbAdmin.getId() + "-" + RoleEnum.ADMIN.name();
+        String token = TokenUtils.genToken(tokenData, dbAdmin.getPassword());
         dbAdmin.setToken(token);
         return dbAdmin;
+    }
+
+    @Override
+    public void register(Account account) {
+        Admin dbAdmin = adminMapper.getByPhone(account.getPhone());
+
+        //判断数据库中是否有该手机号的用户
+        if (dbAdmin == null) {
+            dbAdmin = new Admin();
+            dbAdmin.setUsername(account.getUsername());
+            dbAdmin.setPassword(account.getPassword());
+            dbAdmin.setPhone(account.getPhone());
+            dbAdmin.setRole("ADMIN");
+            dbAdmin.setCreatetime(new Date());
+            adminMapper.insert(dbAdmin);
+        } else {
+            throw new ServiceException("该手机号已被注册");
+        }
+        //生成token
+        String tokenData = dbAdmin.getId() + "-" + RoleEnum.ADMIN.name();
+        String token = TokenUtils.genToken(tokenData, dbAdmin.getPassword());
+        dbAdmin.setToken(token);
     }
 
     //id查询

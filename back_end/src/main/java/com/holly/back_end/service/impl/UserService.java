@@ -1,6 +1,7 @@
 package com.holly.back_end.service.impl;
 
 import com.holly.back_end.entity.Account;
+import com.holly.back_end.entity.CompanyAdmin;
 import com.holly.back_end.entity.User;
 import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.exception.ServiceException;
@@ -53,5 +54,26 @@ public class UserService implements IUserService {
     @Override
     public User getById(Integer id) {
         return userMapper.getById(id);
+    }
+
+    @Override
+    public void register(Account account) {
+        User dbUser = userMapper.getByPhone(account.getPhone());
+
+        //判断数据库中是否有该手机号的用户
+        if (dbUser == null) {
+            dbUser = new User();
+            dbUser.setUsername(account.getUsername());
+            dbUser.setPassword(account.getPassword());
+            dbUser.setPhone(account.getPhone());
+            dbUser.setRole("USER");
+            userMapper.insert(dbUser);
+        } else {
+            throw new ServiceException("该手机号已被注册");
+        }
+        //生成token
+        String tokenData = dbUser.getId() + "-" + RoleEnum.USER.name();
+        String token = TokenUtils.genToken(tokenData, dbUser.getPassword());
+        dbUser.setToken(token);
     }
 }

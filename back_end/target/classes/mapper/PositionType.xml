@@ -5,14 +5,15 @@
 <mapper namespace="com.holly.back_end.mapper.PositionTypeMapper">
 
     <insert id="insert">
-        insert into position_type(id, category, type, description)
-        values (#{id}, #{category}, #{type}, #{description})
+        insert into position_type(id, category, type, description, icon)
+        values (#{id}, #{category}, #{type}, #{description}, #{icon})
     </insert>
     <update id="update">
         update position_type
         set type=#{type},
             category=#{category},
-            description=#{description}
+            description=#{description},
+            icon = #{icon}
         where id = #{id}
     </update>
     <select id="list" resultType="com.holly.back_end.entity.PositionType">

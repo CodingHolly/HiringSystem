@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.CompanyAdminMapper">
+    <insert id="insert">
+        insert into company_info (id, phone, username, password, company_name, role, position_category, email,
+                                  position_type)
+        values (#{id}, #{phone}, #{username}, #{password}, #{companyName}, #{role}, #{positionCategory}, #{positionType,
+                #{email}, #{positionType});
+    </insert>
     <update id="update">
         update company_admin
         set username = #{username},

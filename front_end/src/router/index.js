@@ -5,6 +5,7 @@ import Login from "@/views/Login/Login.vue";
 import AdminLayout from "@/views/Admin/AdminLayout.vue";
 import UserLayout from "@/views/User/UserLayout.vue";
 import CompanyLayout from "@/views/Company/CompanyLayout.vue";
+import Register from "@/views/Login/Register.vue";
 
 Vue.use(VueRouter)
 
@@ -13,7 +14,13 @@ const routes = [
     {
         path: '/',
         name: 'Login',
-        component: Login
+        component: Login,
+    },
+    //  ===== Register注册 =====
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register,
     },
     //  ===== Home后台管理主页 =====
     {

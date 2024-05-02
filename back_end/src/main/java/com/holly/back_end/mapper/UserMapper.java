@@ -8,4 +8,6 @@ public interface UserMapper {
     User getByPhone(String phone);
 
     User getById(Integer id);
+
+    void insert(User dbUser);
 }

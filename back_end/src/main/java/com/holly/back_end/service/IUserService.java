@@ -6,4 +6,6 @@ import com.holly.back_end.entity.User;
 public interface IUserService {
     User login(Account account);
     User getById(Integer id);
+
+   void register(Account account);
 }

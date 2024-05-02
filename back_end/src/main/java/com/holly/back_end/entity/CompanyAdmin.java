@@ -4,7 +4,6 @@ import lombok.Data;
 
 @Data
 public class CompanyAdmin extends Account{
-    private String username;
     private String companyName;
     private String positionCategory;
     private String positionType;

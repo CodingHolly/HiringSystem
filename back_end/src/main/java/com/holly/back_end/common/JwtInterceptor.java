@@ -10,7 +10,9 @@ import com.holly.back_end.entity.Admin;
 import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.exception.ServiceException;
 import com.holly.back_end.service.IAdminService;
+import com.holly.back_end.service.ICompanyAdminService;
 import com.holly.back_end.service.ICompanyInfoService;
+import com.holly.back_end.service.IUserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -30,8 +32,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 
     @Autowired
     private IAdminService adminService;
-//    @Autowired
-//    private ICompanyService companyService;
+    @Autowired
+    private ICompanyAdminService companyAdminService;
+    @Autowired
+    IUserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
@@ -56,7 +60,10 @@ public class JwtInterceptor implements HandlerInterceptor {
 //                account = adminService.getById(Integer.valueOf(userId));
 //            }
 //            if(RoleEnum.COMPANY.name().equals(role)) {
-//                account =
+//                account = companyAdminService.getById(Integer.valueOf(userId));
+//            }
+//            if(RoleEnum.USER.name().equals(role)) {
+//                account = userService.getById(Integer.valueOf(userId));
 //            }
 //        } catch (Exception e) {
 //            throw new ServiceException(ERROR_CODE_401, "无token，请重新登录");

@@ -12,7 +12,10 @@
         <div class="front-header-nav">
           <el-menu :default-active="$route.path" mode="horizontal" router>
             <el-menu-item index="/user/home">首页</el-menu-item>
-            <el-menu-item index="/user/person">个人中心</el-menu-item>
+            <el-menu-item index="/user/search_company">搜索 | 公司</el-menu-item>
+            <el-menu-item index="/user/search_position">搜索 | 职位</el-menu-item>
+            <el-menu-item index="/user/my_resume">我的简历</el-menu-item>
+            <el-menu-item index="/user/my_information">个人中心</el-menu-item>
           </el-menu>
         </div>
       </div>
@@ -76,6 +79,12 @@ export default {
     },
     goUserHome() {
       this.$router.push('/user/home')
+    },
+    myResume(){
+
+    },
+    myMessage() {
+
     }
   },
   created() {

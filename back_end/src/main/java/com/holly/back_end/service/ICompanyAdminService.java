@@ -19,4 +19,5 @@ public interface ICompanyAdminService {
 
     void deleteById(Integer id);
 
+    void register(Account account);
 }
