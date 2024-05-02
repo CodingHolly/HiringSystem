@@ -9,21 +9,21 @@
     </insert>
     <update id="saveInfo">
         update company_info
-        set company_name = #{companyName},
-            company_profile = #{companyProfile},
+        set company_name         = #{companyName},
+            company_profile      = #{companyProfile},
             legal_representative = #{legalRepresentative},
-            logo = #{logo},
-            company_scale = #{companyScale},
-            founding_time = #{foundingTime},
-            company_category = #{companyCategory},
-            registered_capital = #{registeredCapital},
-            register_address = #{registerAddress},
-            management_status = #{managementStatus}
+            logo                 = #{logo},
+            company_scale        = #{companyScale},
+            founding_time        = #{foundingTime},
+            company_category     = #{companyCategory},
+            registered_capital   = #{registeredCapital},
+            register_address     = #{registerAddress},
+            management_status    = #{managementStatus}
         where id = #{id}
     </update>
     <update id="updateAddress">
         update company_info_address
-        set company_name = #{companyName},
+        set company_name    = #{companyName},
             company_address = #{companyAddress}
         where id = #{id}
     </update>

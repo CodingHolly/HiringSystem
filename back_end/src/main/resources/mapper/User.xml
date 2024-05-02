@@ -4,8 +4,10 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.UserMapper">
     <insert id="insert">
-        insert into user (id, username, phone, password, role)
-        values (#{id}, #{username}, #{phone}, #{password}, #{role})
+        insert into user (id, username, phone, password, role, sex, job_search_status, birthday, identity, email,
+                          birthplace)
+        values (#{id}, #{username}, #{phone}, #{password}, #{role}, #{sex}, #{jobSearchStatus}, #{birthday},
+                #{identity}, #{email}, #{birthplace})
     </insert>
 
     <select id="getByPhone" resultType="com.holly.back_end.entity.User">
