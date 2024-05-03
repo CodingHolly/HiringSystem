@@ -7,9 +7,10 @@
                 v-model="params.username"></el-input>
       <el-input style="width: 200px; margin-left: 15px" placeholder="请输入手机号" size="small"
                 v-model="params.phone"></el-input>
-      <el-input style="width: 200px; margin-left: 15px" placeholder="请输入邮箱" size="small"
-                v-model="params.email"></el-input>
-      <el-select v-model="params.positionCategory" placeholder="请选择一级分类" style="width: 200px;margin-left: 15px" size="small">
+      <el-input style="width: 200px; margin-left: 15px" placeholder="请输入企业名称" size="small"
+                v-model="params.companyName"></el-input>
+      <el-select v-model="params.positionCategory" placeholder="请选择一级分类" style="width: 200px;margin-left: 15px"
+                 size="small">
         <el-option
             v-for="category in categories"
             :key="category.category"
@@ -17,7 +18,8 @@
             :value="category.category">
         </el-option>
       </el-select>
-      <el-select v-model="params.positionType" placeholder="请选择二级分类" style="width: 200px;margin-left: 15px" size="small">
+      <el-select v-model="params.positionType" placeholder="请选择二级分类" style="width: 200px;margin-left: 15px"
+                 size="small">
         <el-option
             v-for="type in types"
             :key="type.type"
@@ -101,21 +103,11 @@ export default {
       title: null,
       form: {},
       admin: JSON.parse(localStorage.getItem('admin') || '{}'),
-      params: {
-        pageNum: 1,
-        pageSize: 8,
-        id: '',
-        username: '',
-        phone: '',
-        email: '',
-        companyName: '',
-        positionCategory: '',
-        positionType: '',
-      },
+      params: {},
       //根据Cookie值中的信息，判断是否具有编辑当前企业管理员信息的权限
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
-      categories:[],
-      types:[],
+      categories: [],
+      types: [],
     }
   },
   created() {
@@ -145,18 +137,7 @@ export default {
     },
     //重置
     reset() {
-      this.params = {
-        pageNum: 1,
-        pageSize: 8,
-        id: '',
-        username: '',
-        phone: '',
-        email: '',
-        companyName: '',
-        password: '',
-        category: '',
-        type: '',
-      }
+      this.params = {}
       this.load()
     },
     //点击分页按钮，出发分页

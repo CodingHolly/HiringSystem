@@ -63,7 +63,7 @@
             label="分类图标">
           <template v-slot="scope">
             <div>
-              <el-image style="width: 40px;height: 40px" v-if="scope.row.icon"
+              <el-image style="width: 35px;height: 35px" v-if="scope.row.icon"
                         :src="scope.row.icon" :preview-src-list="[scope.row.icon]"></el-image>
             </div>
           </template>

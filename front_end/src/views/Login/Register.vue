@@ -32,8 +32,12 @@
               <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入用户名"
                         v-model="form.username"></el-input>
             </el-form-item>
+            <el-form-item prop="companyName" v-show="form.role==='COMPANY'">
+              <el-input size="large" prefix-icon="el-icon-office-building" placeholder="请输入企业名称"
+                        v-model="form.companyName"></el-input>
+            </el-form-item>
             <el-form-item prop="phone">
-              <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入手机号"
+              <el-input size="large" prefix-icon="el-icon-phone-outline" placeholder="请输入手机号"
                         v-model="form.phone"></el-input>
             </el-form-item>
             <el-form-item prop="password">
@@ -87,16 +91,28 @@ export default {
     register() {
       this.$refs["formRef"].validate((valid) => {
         if (valid) {
-          request.post('/register', this.form).then(res => {
-            if (res.code === '200') {
-              // localStorage.setItem("xm-user", JSON.stringfy(res.data))
-              Cookies.set('user', JSON.stringify(this.user)) // 设置Cookie
-              this.$router.push('/')
-              this.$notify.success('注册成功，请重新登录')
-            } else {
-              this.$notify.error(res.msg)
-            }
-          })
+          if (this.form.role === 'COMPANY') {
+            request.post('/register_company', this.form).then(res => {
+              if (res.code === '200') {
+                Cookies.set('user', JSON.stringify(this.user))
+                this.$router.push('/')
+                this.$notify.success('注册成功，请重新登录')
+              } else {
+                this.$notify.error(res.msg)
+              }
+            })
+          } else {
+            request.post('/register', this.form).then(res => {
+              if (res.code === '200') {
+                // localStorage.setItem("xm-user", JSON.stringfy(res.data))
+                Cookies.set('user', JSON.stringify(this.user)) // 设置Cookie
+                this.$router.push('/')
+                this.$notify.success('注册成功，请重新登录')
+              } else {
+                this.$notify.error(res.msg)
+              }
+            })
+          }
         }
       })
     },

@@ -9,7 +9,8 @@
                 v-model="params.phone"></el-input>
       <el-input style="width: 200px; margin-left: 15px" placeholder="请输入邮箱" size="small"
                 v-model="params.email"></el-input>
-      <el-select v-model="params.positionCategory" placeholder="请选择一级分类" style="width: 200px;margin-left: 15px" size="small">
+      <el-select v-model="params.positionCategory" placeholder="请选择一级分类" style="width: 200px;margin-left: 15px"
+                 size="small">
         <el-option
             v-for="category in categories"
             :key="category.category"
@@ -17,7 +18,8 @@
             :value="category.category">
         </el-option>
       </el-select>
-      <el-select v-model="params.positionType" placeholder="请选择二级分类" style="width: 200px;margin-left: 15px" size="small">
+      <el-select v-model="params.positionType" placeholder="请选择二级分类" style="width: 200px;margin-left: 15px"
+                 size="small">
         <el-option
             v-for="type in types"
             :key="type.type"
@@ -28,6 +30,19 @@
       <el-button style="margin-left: 15px" plain type="primary" icon="el-icon-search" size="small" @click="load">搜索
       </el-button>
       <el-button style="margin-left: 15px" size="small" @click="reset">重置</el-button>
+    </div>
+    <!--    新增按钮-->
+    <div class="operation">
+      <el-button
+          plain
+          class="add-button"
+          style="margin-left: 10px;margin-top: 20px"
+          type="primary"
+          icon="el-icon-edit"
+          size="small"
+          @click="handleAddAdmin">
+        新增
+      </el-button>
     </div>
 
     <!--    企业用户成员表格-->
@@ -43,7 +58,7 @@
         <el-table-column
             label="序号"
             prop="id"
-            width=60
+            width=80
             sortable>
         </el-table-column>
         <el-table-column
@@ -160,16 +175,7 @@ export default {
       formVisible: false, //弹框是否可见
       form: {},
       companyAdmin: JSON.parse(localStorage.getItem('companyAdmin') || '{}'),
-      params: {
-        pageNum: 1,
-        pageSize: 8,
-        id: '',
-        username: '',
-        phone: '',
-        email: '',
-        positionCategory: '',
-        positionType: '',
-      },
+      params: {},
       //表单校验规则
       rules: {
         username: [
@@ -184,8 +190,8 @@ export default {
       },
       //根据Cookie值中的信息，判断是否具有编辑当前企业管理员信息的权限
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
-      categories:[],
-      types:[],
+      categories: [],
+      types: [],
     }
   },
   created() {
@@ -199,7 +205,7 @@ export default {
     request.get('/position_type/list_type').then(res => {
       this.types = res.data
     })
-
+    this.load()
   },
   methods: {
     //加载页面
@@ -216,18 +222,8 @@ export default {
     },
     //重置
     reset() {
-      this.params = {
-        pageNum: 1,
-        pageSize: 8,
-        id: '',
-        username: '',
-        phone: '',
-        email: '',
-        companyName: '',
-        password: '',
-        category: '',
-        type: '',
-      }
+      this.params = {}
+      this.params.companyName = this.user.companyName
       this.load()
     },
     //点击分页按钮，出发分页
@@ -247,6 +243,7 @@ export default {
     },
     //点击保存按钮，触发新增或更新
     save() {
+      this.form.companyName = this.user.companyName
       this.request.post('/company_admin/save', this.form).then(res => {
         if (res.code === '200') {
           this.$message.success('保存成功')
@@ -272,6 +269,11 @@ export default {
           console.log('失败')
         })
       })
+    },
+    //点击新增按钮，弹出弹框
+    handleAddAdmin() {
+      this.form = {}
+      this.formVisible = true
     },
   }
 }

@@ -4,9 +4,6 @@ import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.CompanyAdmin;
-import com.holly.back_end.entity.PositionType;
-
-import java.util.List;
 
 public interface ICompanyAdminService {
     CompanyAdmin login(Account account);
@@ -19,5 +16,5 @@ public interface ICompanyAdminService {
 
     void deleteById(Integer id);
 
-    void register(Account account);
+    void register(CompanyAdmin companyAdmin);
 }

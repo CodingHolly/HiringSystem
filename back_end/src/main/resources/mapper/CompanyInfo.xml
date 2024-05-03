@@ -7,6 +7,13 @@
         insert into company_info_address(id, company_name, company_address)
         values (#{id}, #{companyName}, #{companyAddress})
     </insert>
+    <insert id="insert">
+        insert into company_info(id, company_name, company_profile, legal_representative, logo, company_scale,
+                                 founding_time, company_category, registered_capital, register_address,
+                                 management_status)
+        values (#{id}, #{companyName}, #{companyProfile}, #{legalRepresentative}, #{logo}, #{companyScale},
+                #{foundingTime}, #{companyCategory}, #{registeredCapital}, #{registerAddress}, #{managementStatus})
+    </insert>
     <update id="saveInfo">
         update company_info
         set company_name         = #{companyName},
@@ -44,10 +51,10 @@
                 company_info.company_name like concat('%', #{companyName}, '%')
             </if>
             <if test="companyAddress != null and companyAddress != ''">
-                company_info_address.company_address like concat('%', #{companyAddress}, '%')
+                and company_info_address.company_address like concat('%', #{companyAddress}, '%')
             </if>
             <if test="companyCategory != null and companyCategory != ''">
-                company_info.company_category like concat('%', #{companyCategory}, '%')
+                and company_info.company_category like concat('%', #{companyCategory}, '%')
             </if>
         </where>
         order by company_info.id desc

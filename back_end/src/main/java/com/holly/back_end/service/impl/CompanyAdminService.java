@@ -4,11 +4,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Account;
-import com.holly.back_end.entity.Admin;
 import com.holly.back_end.entity.CompanyAdmin;
+import com.holly.back_end.entity.CompanyInfo;
 import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.exception.ServiceException;
 import com.holly.back_end.mapper.CompanyAdminMapper;
+import com.holly.back_end.mapper.CompanyInfoMapper;
 import com.holly.back_end.service.ICompanyAdminService;
 import com.holly.back_end.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -16,15 +17,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
 public class CompanyAdminService implements ICompanyAdminService {
     @Autowired
     CompanyAdminMapper companyAdminMapper;
+    @Autowired
+    CompanyInfoMapper companyInfoMapper;
 
     @Override
     public CompanyAdmin login(Account account) {
@@ -69,13 +70,24 @@ public class CompanyAdminService implements ICompanyAdminService {
 
     @Override
     public void save(CompanyAdmin companyAdmin) {
-        // 若修改了手机号，判断数据库中是否存在该手机号的用户
-        CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(companyAdmin.getPhone());
-        if (dbCompanyAdmin.getId().equals(companyAdmin.getId())) { // 不存在
-            companyAdminMapper.update(companyAdmin);
-        } else {
-            throw new ServiceException("该手机号已注册");
+        if (companyAdmin.getId() == null) {
+            companyAdmin.setRole("COMPANY");
+            try {
+                companyAdminMapper.insert(companyAdmin);
+            } catch (DuplicateKeyException e) {
+                log.error("数据插入失败， phone:{}", companyAdmin.getPhone());
+                throw new ServiceException("该手机号已注册");
+            }
+        } else { // 编辑信息
+            // 若修改了手机号，判断数据库中是否存在该手机号的用户
+            CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(companyAdmin.getPhone());
+            if (dbCompanyAdmin.getId().equals(companyAdmin.getId())) { // 不存在
+                companyAdminMapper.update(companyAdmin);
+            } else {
+                throw new ServiceException("该手机号已注册");
+            }
         }
+
     }
 
     @Override
@@ -84,17 +96,24 @@ public class CompanyAdminService implements ICompanyAdminService {
     }
 
     @Override
-    public void register(Account account) {
-        CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(account.getPhone());
+    public void register(CompanyAdmin companyAdmin) {
+        CompanyAdmin dbCompanyAdmin = companyAdminMapper.getByPhone(companyAdmin.getPhone());
+        CompanyInfo dbCompanyInfo = companyInfoMapper.getAllCompanyInfoByCompanyName(companyAdmin.getCompanyName());
 
-        //判断数据库中是否有该手机号的用户
-        if (dbCompanyAdmin == null) {
+        //判断数据库中是否有该手机号的用户,是否存在该公司
+        if (dbCompanyAdmin == null && dbCompanyInfo == null) {
             dbCompanyAdmin = new CompanyAdmin();
-            dbCompanyAdmin.setUsername(account.getUsername());
-            dbCompanyAdmin.setPassword(account.getPassword());
-            dbCompanyAdmin.setPhone(account.getPhone());
+            dbCompanyAdmin.setCompanyName(companyAdmin.getCompanyName());
+            dbCompanyAdmin.setUsername(companyAdmin.getUsername());
+            dbCompanyAdmin.setPassword(companyAdmin.getPassword());
+            dbCompanyAdmin.setPhone(companyAdmin.getPhone());
             dbCompanyAdmin.setRole("COMPANY");
             companyAdminMapper.insert(dbCompanyAdmin);
+
+            //创建公司
+            dbCompanyInfo = new CompanyInfo();
+            dbCompanyInfo.setCompanyName(companyAdmin.getCompanyName());
+            companyInfoMapper.insert(dbCompanyInfo);
         } else {
             throw new ServiceException("该手机号已被注册");
         }

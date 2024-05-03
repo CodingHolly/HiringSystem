@@ -25,4 +25,6 @@ public interface CompanyInfoMapper {
     void updateAddress(CompanyInfoAddress companyInfoAddress);
 
     void deleteAddressById(Integer id);
+
+    void insert(CompanyInfo dbCompanyInfo);
 }

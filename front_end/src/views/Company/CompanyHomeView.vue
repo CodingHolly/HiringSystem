@@ -135,7 +135,6 @@ export default {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
       companyInfo: {},
       companyAddresses: [],
-
     }
   },
   created() {
@@ -186,33 +185,5 @@ export default {
   margin-right: 30px;
   flex: 2.5;
 }
-
-
-/*.company-name {*/
-/*  margin-right: 30px;*/
-/*  margin-top: 20px;*/
-/*}*/
-/*.company-legal-representative {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-founding-time {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-category {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-name {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-name {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-name {*/
-/*  margin-right: 30px;*/
-/*}*/
-/*.company-register-address {*/
-/*  margin-right: 30px;*/
-/*  margin-top: 40px;*/
-/*}*/
 
 </style>

@@ -176,6 +176,7 @@ export default {
         logo: '',
         companyAddresses: [],
       }
+      this.load()
     },
     handleCurrentChange(pageNum) {
       this.params.pageNum = pageNum

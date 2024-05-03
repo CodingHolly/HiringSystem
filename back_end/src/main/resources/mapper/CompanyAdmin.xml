@@ -42,15 +42,17 @@
                 username like concat('%', #{username} ,'%')
             </if>
             <if test="phone != null and phone != ''">
-                phone like concat('%', #{phone} ,'%')
+                and phone like concat('%', #{phone} ,'%')
             </if>
             <if test="positionCategory != null and positionCategory != ''">
-                position_category like concat('%', #{positionCategory} ,'%')
+                and position_category = #{positionCategory}
             </if>
             <if test="positionType != null and positionType != ''">
-                position_type like concat('%', #{positionType} ,'%')
+                and position_type =# {positionType}
+            </if>
+            <if test="companyName != null and companyName != ''">
+                and company_name = #{companyName}
             </if>
         </where>
-        order by id desc
     </select>
 </mapper>

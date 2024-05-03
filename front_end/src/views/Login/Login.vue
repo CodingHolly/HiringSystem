@@ -43,7 +43,7 @@
               </el-select>
             </el-form-item>
             <el-form-item prop="phone">
-              <el-input size="large" prefix-icon="el-icon-user" placeholder="请输入手机号"
+              <el-input size="large" prefix-icon="el-icon-phone-outline" placeholder="请输入手机号"
                         v-model="form.phone"></el-input>
             </el-form-item>
             <el-form-item prop="password">
@@ -115,7 +115,7 @@ export default {
       Cookies.set('user', JSON.stringify(this.loginUser)) //设置Cookie
       if (this.loginUser.role === 'USER') {
         location.href = '/user/home'
-      } else if (this.loginUser.role === 'COMPANY'){
+      } else if (this.loginUser.role === 'COMPANY') {
         location.href = '/company/home'
       } else {
         location.href = '/admin/home'

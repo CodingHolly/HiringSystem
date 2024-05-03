@@ -38,10 +38,10 @@
                 username like concat('%', #{username}, '%')
             </if>
             <if test="phone != null and phone != ''">
-                phone like concat('%', #{phone}, '%')
+               and phone like concat('%', #{phone}, '%')
             </if>
             <if test="email != null and email != ''">
-                email like concat('%', #{email}, '%')
+               and email like concat('%', #{email}, '%')
             </if>
         </where>
         order by id desc
