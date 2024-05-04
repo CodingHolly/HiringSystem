@@ -10,4 +10,6 @@ public interface UserMapper {
     User getById(Integer id);
 
     void insert(User dbUser);
+
+    void update(User user);
 }

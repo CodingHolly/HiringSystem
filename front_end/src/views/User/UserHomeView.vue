@@ -9,13 +9,40 @@
           <div style="flex: 2">
             <div style="display: flex; color: black; margin: 14px 0" v-for="(item, index) in categoryData" :key="index">
               <div>
-                <el-image v-if="item.icon" :src="item.icon" style="width: 20px; height: 20px;align-items: center"></el-image>
+                <el-image v-if="item.icon" :src="item.icon"
+                          style="width: 20px; height: 20px;align-items: center"></el-image>
               </div>
-              <div style="margin-left: 10px;font-size: 14px;">{{item.category}}</div>
+              <div style="margin-left: 10px;font-size: 14px;">{{ item.category }}</div>
             </div>
           </div>
-          <div style="flex: 5"></div>
-          <div style="flex: 3"></div>
+          <div style="flex: 5; margin-top: 15px">
+            <div>
+              <el-carousel height="300px" style="border-radius: 10px">
+                <el-carousel-item v-for="item in carousel_top" :key="item.key">
+                  <img :src="item" alt="" style="width: 100%;height: 300px;border-radius: 10px">
+                </el-carousel-item>
+              </el-carousel>
+            </div>
+            <div style="margin-top: 5px;display: flex">
+              <div style="flex: 1; margin-right: 2px">
+                <el-carousel height="200px" style="border-radius: 10px">
+                  <el-carousel-item v-for="item in carousel_left" :key="item.key">
+                    <img :src="item" alt="" style="width: 100%;height: 200px;border-radius: 10px">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+              <div style="flex: 1;margin-left: 2px">
+                <el-carousel height="200px" style="border-radius: 10px">
+                  <el-carousel-item v-for="item in carousel_right" :key="item.key">
+                    <img :src="item" alt="" style="width: 100%;height: 200px;border-radius: 10px">
+                  </el-carousel-item>
+                </el-carousel>
+              </div>
+            </div>
+          </div>
+          <div style="flex: 3">
+            <img src="@/assets/css/imgs/login_background3.jpg" alt="" style="width: 100%; margin-left: 5px;margin-top: 15px; border-radius: 5px">
+          </div>
         </div>
       </div>
       <div class="right"></div>
@@ -30,8 +57,24 @@ export default {
   name: "UserHomeView",
   data() {
     return {
-      categoryData:[],
-      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {}
+      categoryData: [],
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
+      carousel_top: [
+        require('@/assets/css/imgs/userHome1.jpg'),
+        require('@/assets/css/imgs/userHome2.jpg'),
+        require('@/assets/css/imgs/userHome3.jpg'),
+        require('@/assets/css/imgs/userHome4.jpg')
+      ],
+      carousel_left: [
+          require('@/assets/css/imgs/userHome5.jpg'),
+          require('@/assets/css/imgs/userHome6.jpg'),
+          require('@/assets/css/imgs/userHome7.jpg'),
+      ],
+      carousel_right: [
+          require('@/assets/css/imgs/userHome8.jpg'),
+          require('@/assets/css/imgs/userHome9.jpg'),
+          require('@/assets/css/imgs/userHome10.jpg'),
+      ]
     }
   },
   created() {

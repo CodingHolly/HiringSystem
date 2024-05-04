@@ -9,4 +9,6 @@ public interface IUserService {
     User getById(Integer id);
 
    void register(Account account);
+
+    void saveInfo(User user);
 }

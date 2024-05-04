@@ -76,4 +76,15 @@ public class UserService implements IUserService {
         String token = TokenUtils.genToken(tokenData, dbUser.getPassword());
         dbUser.setToken(token);
     }
+
+    @Override
+    public void saveInfo(User user) {
+        // 若修改了电话号码，检查数据库中是否有相同电话号码的用户
+        User dbUser = userMapper.getByPhone(user.getPhone());
+        if(dbUser.getId().equals(user.getId())) { // 不存在
+            userMapper.update(user);
+        } else {
+            throw new ServiceException("该手机号已被其他用户注册");
+        }
+    }
 }

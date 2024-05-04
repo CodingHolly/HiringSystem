@@ -77,6 +77,24 @@ const routes = [
             path: 'home',
             name: 'Home',
             component: () => import('@/views/User/UserHomeView.vue')
+        }, {
+            path: 'search_company',
+            component: () => import('@/views/User/SearchCompanyView.vue')
+        }, {
+            path: 'search_position',
+            component: () => import('@/views/User/SearchPositionView.vue')
+        }, {
+            path: 'my_resume',
+            component: () => import('@/views/User/MyResumeView.vue')
+        }, {
+            path: 'my_message',
+            component: () => import('@/views/User/MyMessageView.vue')
+        }, {
+            path: 'my_information',
+            component: () => import('@/views/User/MyInformationView.vue')
+        }, {
+            path: 'safety_and_member',
+            component: () => import('@/views/User/SafetyAndMemberView.vue')
         }]
     },
     //  ===== Company企业后台页面 =====

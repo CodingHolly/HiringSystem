@@ -28,19 +28,16 @@
         <div v-else>
           <el-dropdown>
             <div class="front-header-dropdown">
-              <div style="">
-                <span>{{ user.username }}</span><i class="el-icon-arrow-down" style="margin-left: 10px;"></i>
-              </div>
+              <el-image v-if="user.img" :src="user.img"
+                        style="width: 32px; height: 40px; align-items: center; border-radius: 100px; margin-right: 15px"></el-image>
+              <span>{{ user.username }}</span><i class="el-icon-arrow-down" style="margin-left: 10px;"></i>
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <div style="text-align: center" @click="goUserHome">招聘首页</div>
-              </el-dropdown-item>
-              <el-dropdown-item>
-                <div style="text-align: center" @click="myResume">我的简历</div>
-              </el-dropdown-item>
-              <el-dropdown-item>
                 <div style="text-align: center" @click="myMessage">消息通知</div>
+              </el-dropdown-item>
+              <el-dropdown-item>
+                <div style="text-align: center" @click="safetyAndMember">安全与会员</div>
               </el-dropdown-item>
               <el-dropdown-item>
                 <div style="text-align: center" @click="logout">退出登录</div>
@@ -77,15 +74,12 @@ export default {
       Cookies.remove('user')
       this.$router.push('/')
     },
-    goUserHome() {
-      this.$router.push('/user/home')
-    },
-    myResume(){
-
+    safetyAndMember() {
+      this.$router.push('/user/safety_and_member')
     },
     myMessage() {
-
-    }
+      this.$router.push('/user/my_message')
+    },
   },
   created() {
     request.get('/user/' + this.user.id).then(res => {
@@ -129,11 +123,10 @@ export default {
   text-align: right;
 }
 
-.el-dropdown {
-  display: inline-block;
-  position: relative;
-  color: #606266;
-  font-size: 14px;
+.front-header-dropdown {
+  display: flex;
+  align-items: center;
+  justify-content: right;
 }
 
 .el-icon-arrow-down {

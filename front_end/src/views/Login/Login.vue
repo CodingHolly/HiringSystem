@@ -62,7 +62,7 @@
     </div>
 
     <div style="width: 500px">
-      <img src="@/assets/css/imgs/login_background3.jpg" alt="" style="width: 100%">
+      <img src="@/assets/css/imgs/login_background2.jpg" alt="" style="width: 100%">
     </div>
 
   </div>

@@ -5,10 +5,24 @@
 <mapper namespace="com.holly.back_end.mapper.UserMapper">
     <insert id="insert">
         insert into user (id, username, phone, password, role, sex, job_search_status, birthday, identity, email,
-                          birthplace)
+                          birthplace, img)
         values (#{id}, #{username}, #{phone}, #{password}, #{role}, #{sex}, #{jobSearchStatus}, #{birthday},
-                #{identity}, #{email}, #{birthplace})
+                #{identity}, #{email}, #{birthplace}, #{img})
     </insert>
+    <update id="update">
+        update user
+        set username          = #{username},
+            phone             = #{phone},
+            password          = #{password},
+            sex               = #{sex},
+            job_search_status = #{jobSearchStatus},
+            birthday          = #{birthday},
+            birthplace        = #{birthplace},
+            identity          = #{identity},
+            email             = #{email},
+            img               = #{img}
+        where id = #{id}
+    </update>
 
     <select id="getByPhone" resultType="com.holly.back_end.entity.User">
         select *

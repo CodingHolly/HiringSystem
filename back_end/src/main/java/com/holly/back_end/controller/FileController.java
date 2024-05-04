@@ -1,6 +1,8 @@
 package com.holly.back_end.controller;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.io.FileUtil;
+import cn.hutool.core.lang.Dict;
 import com.holly.back_end.common.AuthAccess;
 import com.holly.back_end.common.Result;
 import jakarta.servlet.ServletOutputStream;
@@ -11,6 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/file")
@@ -57,5 +62,28 @@ public class FileController {
         outputStream.write(bytes); // 数组是一个字节数组，也就是字节流数组
         outputStream.flush();
         outputStream.close();
+    }
+
+    /**
+     * wang-editor编辑器文件上传接口
+     */
+    @PostMapping("/wang/upload")
+    public Map<String, Object> wangEditorUpload(MultipartFile file) {
+        String flag = System.currentTimeMillis() + "";
+        String filename = file.getOriginalFilename();
+        try {
+            //文件存储形式：时间戳-文件名
+            FileUtil.writeBytes(file.getBytes(), ROOT_PATH + flag + "-" + filename);
+            System.out.println(filename + "--上传成功");
+            Thread.sleep(1L);
+        } catch (Exception e) {
+            System.err.println(filename + "--文件上传失败");
+        }
+        String http = "http://" + ip + ":" + port + "/api/file/";
+        Map<String, Object> resMap = new HashMap<>();
+        //wangEditor上传图片成功后，需返回的参数
+        resMap.put("errno", 0);
+        resMap.put("data", CollUtil.newArrayList(Dict.create().set("url", http + flag + "-" + filename)));
+        return resMap;
     }
 }
