@@ -22,4 +22,6 @@ public interface IAdminService {
     Admin login(Account account);
 
     void register(Account account);
+
+    void upgrade(Integer id);
 }

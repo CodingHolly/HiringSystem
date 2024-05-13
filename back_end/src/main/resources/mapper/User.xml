@@ -5,9 +5,9 @@
 <mapper namespace="com.holly.back_end.mapper.UserMapper">
     <insert id="insert">
         insert into user (id, username, phone, password, role, sex, job_search_status, birthday, identity, email,
-                          birthplace, img)
+                          birthplace, img, is_vip)
         values (#{id}, #{username}, #{phone}, #{password}, #{role}, #{sex}, #{jobSearchStatus}, #{birthday},
-                #{identity}, #{email}, #{birthplace}, #{img})
+                #{identity}, #{email}, #{birthplace}, #{img}, #{isVip})
     </insert>
     <update id="update">
         update user
@@ -20,7 +20,8 @@
             birthplace        = #{birthplace},
             identity          = #{identity},
             email             = #{email},
-            img               = #{img}
+            img               = #{img},
+            is_vip            = #{isVip}
         where id = #{id}
     </update>
 
@@ -33,5 +34,26 @@
         select *
         from user
         where id = #{id}
+    </select>
+    <select id="listByCondition" resultType="com.holly.back_end.entity.User">
+        select *
+        from user
+        <where>
+            <if test="username != null and username !=''">
+                username like concat('%',{username},'%')
+            </if>
+            <if test="phone != null and phone != ''">
+                and phone like concat('%', #{phone}, '%')
+            </if>
+            <if test="email != null and email != ''">
+                and email like concat('%', #{email}, '%')
+            </if>
+            <if test="sex != null and sex != ''">
+                and sex = #{sex}
+            </if>
+            <if test="isVip != null and isVip != ''">
+                and is_vip = #{isVip}
+            </if>
+        </where>
     </select>
 </mapper>

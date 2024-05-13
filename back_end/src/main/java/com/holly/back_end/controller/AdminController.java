@@ -44,4 +44,10 @@ public class AdminController {
     public Result page(AdminPageRequest adminPageRequest) {
         return Result.success(adminService.page(adminPageRequest));
     }
+
+    @PostMapping("/upgrade/{id}")
+    public Result upgrade(@PathVariable Integer id) {
+        adminService.upgrade(id);
+        return Result.success();
+    }
 }

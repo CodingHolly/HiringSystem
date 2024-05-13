@@ -15,4 +15,5 @@ public class User extends Account {
     private String email;
     private String birthplace;
     private String img;
+    private String isVip;
 }

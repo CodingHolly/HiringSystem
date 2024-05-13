@@ -1,7 +1,6 @@
 // 系统管理员
 package com.holly.back_end.service.impl;
 
-import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.crypto.SecureUtil;
 import com.github.pagehelper.PageHelper;
@@ -9,9 +8,11 @@ import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.Admin;
+import com.holly.back_end.entity.User;
 import com.holly.back_end.enums.RoleEnum;
 import com.holly.back_end.exception.ServiceException;
 import com.holly.back_end.mapper.AdminMapper;
+import com.holly.back_end.mapper.UserMapper;
 import com.holly.back_end.service.IAdminService;
 import com.holly.back_end.utils.TokenUtils;
 import lombok.extern.slf4j.Slf4j;
@@ -21,13 +22,14 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 @Slf4j
 @Service
 public class AdminService implements IAdminService {
     @Autowired
     AdminMapper adminMapper;
+    @Autowired
+    UserMapper userMapper;
 
     private static final String DEFAULT_PASSWORD = "666666";
     private static final String PASSWORD_SALT = "work happily";
@@ -145,6 +147,13 @@ public class AdminService implements IAdminService {
         String tokenData = dbAdmin.getId() + "-" + RoleEnum.ADMIN.name();
         String token = TokenUtils.genToken(tokenData, dbAdmin.getPassword());
         dbAdmin.setToken(token);
+    }
+
+    @Override
+    public void upgrade(Integer id) {
+        User dbUser = userMapper.getById(id);
+        dbUser.setIsVip("VIP用户");
+        userMapper.update(dbUser);
     }
 
     //id查询

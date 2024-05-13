@@ -77,6 +77,12 @@
             </div>
           </el-card>
         </div>
+        <div style="display: flex">
+          <el-card style="margin: 5px 100px">
+            <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>会员升级</span></div>
+
+          </el-card>
+        </div>
       </div>
       <div class="right"></div>
     </div>
@@ -95,24 +101,24 @@ export default {
       statuses: [{
         value: '离校-随时到岗',
         label: '离校-随时到岗'
-        }, {
-          value: '在校-考虑机会',
-          label: '在校-考虑机会'
-        }, {
-          value: '在校-月内到岗',
-          label: '在校-月内到岗'
-        }, {
-          value: '在校-暂不考虑',
-          label: '在校-暂不考虑'
-        }],
-      identities:[{
+      }, {
+        value: '在校-考虑机会',
+        label: '在校-考虑机会'
+      }, {
+        value: '在校-月内到岗',
+        label: '在校-月内到岗'
+      }, {
+        value: '在校-暂不考虑',
+        label: '在校-暂不考虑'
+      }],
+      identities: [{
         value: '学生',
         label: '学生'
       }, {
         value: '职场人',
         label: '职场人'
       }],
-      fileList:[]
+      fileList: []
     }
   }
   ,

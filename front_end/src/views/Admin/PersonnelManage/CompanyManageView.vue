@@ -1,6 +1,6 @@
 <!--  企业用户管理页面-->
 <template>
-  <div style="padding: 30px 5px">
+  <div style="padding: 20px 5px">
     <!--    搜索表单-->
     <div class="search">
       <el-input style="width: 200px; margin-left: 15px" placeholder="请输入姓名" size="small"
