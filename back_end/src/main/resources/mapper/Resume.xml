@@ -4,15 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.ResumeMapper">
     <insert id="insert">
-        insert into resume(id, phone, personal_advantage, expected_position, work_experience, project_experience,
+        insert into resume(id, phone, personal_advantage, expected_position, expected_salary, expected_work_city,
+                           work_experience, project_experience,
                            education_experience)
-        values (#{id}, #{phone}, #{personalAdvantage}, #{expectedPosition}, #{workExperience}, #{projectExperience},
+        values (#{id}, #{phone}, #{personalAdvantage}, #{expectedPosition}, #{expectedSalary}, #{expectedWorkCity},
+                #{workExperience}, #{projectExperience},
                 #{educationExperience})
     </insert>
     <update id="update">
         update resume
         set personal_advantage=#{personalAdvantage},
             expected_position=#{expectedPosition},
+            expected_salary=#{expectedSalary},
+            expected_work_city=#{expectedWorkCity},
             work_experience=#{workExperience},
             project_experience=#{projectExperience},
             education_experience=#{educationExperience}

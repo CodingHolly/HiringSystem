@@ -11,6 +11,8 @@ public class Resume {
     private String phone;
     private String personalAdvantage;
     private String expectedPosition;
+    private String expectedSalary;
+    private String expectedWorkCity;
     private String workExperience;
     private String projectExperience;
     private String educationExperience;

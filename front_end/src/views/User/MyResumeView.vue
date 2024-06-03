@@ -53,10 +53,15 @@
                 <el-form-item label="邮箱" prop="email" style="margin-left: 85px">
                   <el-input v-model="user.email" style="width: 300px"></el-input>
                 </el-form-item>
-                <el-form-item label="出生地" prop="birthplace" style="margin-left: 35px">
-                  <el-input v-model="user.birthplace" style="width: 285px" placeholder="国家/省/市"></el-input>
+                <el-form-item label="出生城市" prop="birthplace" style="margin-left: 35px">
+                  <el-cascader
+                      style="width: 160px"
+                      :options="pcTextArr"
+                      v-model="birthPlace"
+                      @change="handleChangeBirthPlace">
+                  </el-cascader>
                 </el-form-item>
-                <el-form-item label="证件照" prop="logo" style="margin-left: 35px">
+                <el-form-item label="证件照" prop="logo" style="margin-left: 150px">
                   <div>
                     <el-image v-if="user.img" :src="user.img" style="width: 50px; height: 70px"></el-image>
                     <el-upload
@@ -81,21 +86,55 @@
           <el-card style="margin: 5px 100px">
             <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>简历信息</span></div>
             <div>
-              <el-form id="myResume">
+              <el-form id="myResume" :inline="true">
                 <el-form-item label="个人优势" prop="personalAdvantage" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.personalAdvantage" type="textarea" :rows="3" style="width: 780px"></el-input>
+                  <el-input v-model="resume.personalAdvantage" type="textarea" :rows="3"
+                            style="width: 780px"></el-input>
                 </el-form-item>
-                <el-form-item label="期望职位" prop="expectedPosition" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.expectedPosition" type="textarea" :rows="3" style="width: 780px"></el-input>
+                <el-form-item label="期望职位" prop="expectedPosition" style="margin-left: 20px">
+                  <el-select v-model="expectPosition" multiple placeholder="请选择职位名称"
+                             style="width: 150px;margin-left: 10px"
+                             size="small">
+                    <el-option
+                        v-for="type in types"
+                        :key="type.type"
+                        :label="type.type"
+                        :value="type.type"
+                        @click="handleChangePosition">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="期望薪资" prop="expectedSalary" style="margin-left: 15px">
+                  <el-select v-model="resume.expectedSalary" placeholder="请选择薪资水平"
+                             style="width: 150px;margin-left: 10px"
+                             size="small">
+                    <el-option
+                        v-for="salary in salaries"
+                        :key="salary.label"
+                        :label="salary.label"
+                        :value="salary.value">
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+                <el-form-item label="工作城市" prop="expectedWorkCity" style="margin-left: 15px">
+                  <el-cascader
+                      size="small"
+                      style="width: 160px"
+                      :options="pcTextArr"
+                      v-model="workCity"
+                      @change="handleChangeWorkCity">
+                  </el-cascader>
                 </el-form-item>
                 <el-form-item label="工作经历" prop="workExperience" style="margin-left: 20px; margin-right: 20px">
                   <el-input v-model="resume.workExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
                 </el-form-item>
                 <el-form-item label="项目经历" prop="projectExperience" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.projectExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
+                  <el-input v-model="resume.projectExperience" type="textarea" :rows="3"
+                            style="width: 780px"></el-input>
                 </el-form-item>
                 <el-form-item label="教育经历" prop="educationExperience" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.educationExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
+                  <el-input v-model="resume.educationExperience" type="textarea" :rows="3"
+                            style="width: 780px"></el-input>
                 </el-form-item>
               </el-form>
               <div slot="footer" style="text-align: center">
@@ -113,13 +152,19 @@
 <script>
 import request from "@/utils/request";
 import Cookies from "js-cookie";
+import {pcTextArr} from 'element-china-area-data'
 
 export default {
   name: "MyResumeView",
   data() {
     return {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
-      resume:{},
+      resume: {},
+      types: [],
+      pcTextArr,
+      birthPlace: [],
+      workCity: [],
+      expectPosition: [],
       statuses: [{
         value: '离校-随时到岗',
         label: '离校-随时到岗'
@@ -140,6 +185,37 @@ export default {
         value: '职场人',
         label: '职场人'
       }],
+      salaries: [{
+        value: '2000及以下',
+        label: '2000及以下'
+      }, {
+        value: '2000-3000',
+        label: '2000-3000'
+      }, {
+        value: '3000-4000',
+        label: '3000-4000'
+      }, {
+        value: '4000-5000',
+        label: '4000-5000'
+      }, {
+        value: '5000-6000',
+        label: '5000-6000'
+      }, {
+        value: '6000-7000',
+        label: '6000-7000'
+      }, {
+        value: '7000-8000',
+        label: '7000-8000'
+      }, {
+        value: '8000-9000',
+        label: '8000-9000'
+      }, {
+        value: '9000-10000',
+        label: '9000-10000'
+      }, {
+        value: '10000及以上',
+        label: '10000及以上'
+      },],
       fileList: []
     }
   }
@@ -148,11 +224,23 @@ export default {
     request.get('/user/' + this.user.id).then(res => {
       this.user = res.data
     })
-    request.get('/resume/'+ this.user.phone).then(res => {
+    request.get('/resume/' + this.user.phone).then(res => {
       if (res.data !== null) {
         this.resume = res.data
       }
+      if (this.resume.expectedWorkCity !== null) {
+        this.workCity = this.resume.expectedWorkCity.split('-')
+      }
+      if (this.user.birthplace !== null) {
+        this.birthPlace = this.user.birthplace.split('-')
+      }
+      if (this.resume.expectedPosition !== null) {
+        this.expectPosition = this.resume.expectedPosition.split('-')
+      }
       this.resume.phone = this.user.phone
+    })
+    request.get('/position_type/list_type').then(res => {
+      this.types = res.data
     })
   }
   ,
@@ -181,7 +269,29 @@ export default {
           this.$message.error(res.msg)
         }
       })
-    }
+    },
+    handleChangeWorkCity() {
+      let loc
+      loc = this.workCity[0]
+      loc += '-' + this.workCity[1]
+      this.resume.expectedWorkCity = loc
+      console.log(loc)
+    },
+    handleChangeBirthPlace() {
+      let loc
+      loc = this.birthPlace[0]
+      loc += '-' + this.birthPlace[1]
+      this.user.birthplace = loc
+      console.log(loc)
+    },
+    handleChangePosition() {
+      let pos
+      for (let i = 0; i < this.expectPosition.length; i++) {
+        pos += this.expectPosition[i] + '-'
+      }
+      this.resume.expectedPosition = pos
+      console.log(pos)
+    },
   }
 }
 </script>

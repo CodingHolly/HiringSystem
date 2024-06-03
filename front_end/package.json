@@ -11,6 +11,7 @@
     "axios": "^1.6.8",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
+    "element-china-area-data": "^6.1.0",
     "element-ui": "^2.15.14",
     "express": "^4.19.2",
     "js-cookie": "^3.0.5",
