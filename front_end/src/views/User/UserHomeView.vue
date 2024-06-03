@@ -3,7 +3,7 @@
     <div style="height: 60px; background-color: #C6E2FF"></div>
     <div style="display: flex">
       <div class="left"></div>
-      <div style="width:70%;background-color: white;height: 1000px">
+      <div style="width:70%;background-color: white;height: 625px">
         <div style="color: #355476; margin: 15px 0 15px 18px;font-size: 18px; font-weight: bold">招聘市场</div>
         <div style="display: flex; margin: 0 25px">
           <div style="flex: 2">

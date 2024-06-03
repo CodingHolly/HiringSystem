@@ -75,7 +75,7 @@ export default {
       this.$router.push('/')
     },
     safetyAndMember() {
-      this.$router.push('/user/safety_and_member')
+      this.$router.push('/user/my_information')
     },
     myMessage() {
       this.$router.push('/user/my_message')

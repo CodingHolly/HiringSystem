@@ -93,14 +93,14 @@
                 </el-form-item>
                 <el-form-item label="期望职位" prop="expectedPosition" style="margin-left: 20px">
                   <el-select v-model="expectPosition" multiple placeholder="请选择职位名称"
-                             style="width: 150px;margin-left: 10px"
-                             size="small">
+                             style="width: 150px; margin-left: 10px"
+                             size="small"
+                             @change="handleChangePosition">
                     <el-option
                         v-for="type in types"
-                        :key="type.type"
+                        :key="type.id"
                         :label="type.type"
-                        :value="type.type"
-                        @click="handleChangePosition">
+                        :value="type.type">
                     </el-option>
                   </el-select>
                 </el-form-item>
@@ -285,12 +285,14 @@ export default {
       console.log(loc)
     },
     handleChangePosition() {
-      let pos
-      for (let i = 0; i < this.expectPosition.length; i++) {
+      let pos = ""
+      for (let i = 0; i < this.expectPosition.length - 1; i++) {
         pos += this.expectPosition[i] + '-'
       }
+      pos += this.expectPosition[this.expectPosition.length - 1]
       this.resume.expectedPosition = pos
       console.log(pos)
+      console.log(this.expectPosition)
     },
   }
 }

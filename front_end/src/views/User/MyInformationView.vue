@@ -6,7 +6,7 @@
       <div style="width:70%;background-color: white;height: 2000px">
         <div style="display: flex">
           <el-card style="margin: 50px 100px">
-            <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>个人信息</span></div>
+            <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>账号信息</span></div>
             <div>
               <el-form ref="form" :model="user" :inline="true">
                 <el-form-item label="姓名" prop="username" style="margin-left: 35px">
@@ -15,46 +15,11 @@
                 <el-form-item label="电话号码" prop="phone" style="margin-left: 35px">
                   <el-input v-model="user.phone" style="width: 300px"></el-input>
                 </el-form-item>
-                <el-form-item label="性别" prop="sex" style="margin-left: 35px">
-                  <el-radio-group v-model="user.sex" @change="changeHandler">
-                    <el-radio-button label="男"></el-radio-button>
-                    <el-radio-button label="女"></el-radio-button>
-                  </el-radio-group>
-                </el-form-item>
-                <el-form-item label="身份" prop="identity" style="margin-left: 15px">
-                  <el-select v-model="user.identity" style="width: 125px;">
-                    <el-option
-                        v-for="option in identities"
-                        :key="option.value"
-                        :label="option.label"
-                        :value="option.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="当前求职状态" prop="jobSearchStatus" style="margin-left: 35px">
-                  <el-select v-model="user.jobSearchStatus" style="width: 200px;">
-                    <el-option
-                        v-for="status in statuses"
-                        :key="status.value"
-                        :label="status.label"
-                        :value="status.value">
-                    </el-option>
-                  </el-select>
-                </el-form-item>
-                <el-form-item label="出生年月日" prop="birthday" style="margin-left: 35px">
-                  <el-date-picker
-                      v-model="user.birthday"
-                      type="date"
-                      placeholder="选择日期"
-                      style="width: 210px"
-                      value-format="yyyy-MM-dd">
-                  </el-date-picker>
-                </el-form-item>
-                <el-form-item label="邮箱" prop="email" style="margin-left: 85px">
+                <el-form-item label="邮箱" prop="email" style="margin-left: 35px">
                   <el-input v-model="user.email" style="width: 300px"></el-input>
                 </el-form-item>
-                <el-form-item label="出生地" prop="birthplace" style="margin-left: 35px">
-                  <el-input v-model="user.birthplace" style="width: 285px" placeholder="国家/省/市"></el-input>
+                <el-form-item label="密码" prop="password" style="margin-left: 35px">
+                  <el-input v-model="user.password" style="width: 300px" show-password></el-input>
                 </el-form-item>
                 <el-form-item label="证件照" prop="logo" style="margin-left: 35px">
                   <div>
@@ -70,6 +35,7 @@
                     </el-upload>
                   </div>
                 </el-form-item>
+
               </el-form>
               <div slot="footer" style="text-align: center">
                 <el-button type="primary" plain @click="saveInfo">保 存</el-button>
@@ -79,25 +45,8 @@
         </div>
         <div style="display: flex">
           <el-card style="margin: 5px 100px">
-            <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>我的简历</span></div>
+            <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>会员中心</span></div>
             <div>
-              <el-form id="myResume">
-                <el-form-item label="个人优势" prop="personalAdvantage" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.personalAdvantage" type="textarea" :rows="3" style="width: 780px"></el-input>
-                </el-form-item>
-                <el-form-item label="期望职位" prop="expectedPosition" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.expectedPosition" type="textarea" :rows="3" style="width: 780px"></el-input>
-                </el-form-item>
-                <el-form-item label="工作经历" prop="workExperience" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.workExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
-                </el-form-item>
-                <el-form-item label="项目经历" prop="projectExperience" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.projectExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
-                </el-form-item>
-                <el-form-item label="教育经历" prop="educationExperience" style="margin-left: 20px; margin-right: 20px">
-                  <el-input v-model="resume.educationExperience" type="textarea" :rows="3" style="width: 780px"></el-input>
-                </el-form-item>
-              </el-form>
               <div slot="footer" style="text-align: center">
                 <el-button type="primary" plain @click="saveResume">保 存</el-button>
               </div>
