@@ -7,4 +7,5 @@ public class PositionInfoPageRequest extends BaseRequest{
     private String positionName;
     private String category;
     private String type;
+    private String isReleased;
 }

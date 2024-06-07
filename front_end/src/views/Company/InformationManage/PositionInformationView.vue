@@ -54,32 +54,21 @@
                 stripe>
         <el-table-column label="序号" prop="id" width=60></el-table-column>
         <el-table-column label="职位名称" prop="positionName"></el-table-column>
-        <el-table-column label="一级分类" prop="category" width=90></el-table-column>
-        <el-table-column label="二级分类" prop="type" width=90></el-table-column>
-        <el-table-column label="薪资" prop="salary" width=110></el-table-column>
-        <el-table-column label="福利" prop="welfare" width=80>
-          <template slot-scope="scope">
-            <el-button plain size="small" @click="showWelfare(scope.row)">详情</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="需要人数" prop="number" width=90></el-table-column>
-        <el-table-column label="职位描述" prop="profile" width=90>
-          <template slot-scope="scope">
-            <el-button plain size="small" @click="showProfile(scope.row)">详情</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="要求" prop="requirement" width=90>
-          <template slot-scope="scope">
-            <el-button plain size="small" @click="showRequirement(scope.row)">详情</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column label="负责人" prop="principal" width=80></el-table-column>
+        <el-table-column label="一级分类" prop="category" width="100px"></el-table-column>
+        <el-table-column label="二级分类" prop="type" width="100px"></el-table-column>
+        <el-table-column label="负责人" prop="principal" width="100px"></el-table-column>
+        <el-table-column label="发布者" prop="releasePerson" width="100px"></el-table-column>
+        <el-table-column label="发布时间" prop="releaseTime" width="120px"></el-table-column>
         <el-table-column label="操作">
           <template v-slot="scope">
             <el-button
                 size="small"
-                @click.native.prevent="handleEdit(scope.row)"
-                style="margin-right: 10px">编辑
+                type="info"
+                @click="showDetails(scope.row)">详情
+            </el-button>
+            <el-button
+                size="small"
+                @click.native.prevent="handleEdit(scope.row)">编辑
             </el-button>
             <el-button
                 size="small"
@@ -96,30 +85,37 @@
       </el-table>
     </div>
 
-    <!--    职位描述弹框-->
-    <el-dialog title="职位描述" :visible.sync="profileFormVisible" width="40%" :close-on-click-modal="false"
+    <!--    职位详情弹框-->
+    <el-dialog title="职位详情" :visible.sync="detailsFormVisible" width="40%" :close-on-click-modal="false"
                destroy-on-close>
-      <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px;">{{ currentProfile }}</div>
+      <el-form label-width="100px" :model="detailsForm">
+        <el-form-item label="薪资" prop="salary" style="margin-left: 20px">
+          <el-input v-model="detailsForm.salary" style="width: 200px"></el-input>
+        </el-form-item>
+        <el-form-item label="工作地点" style="margin-left: 20px">
+          <el-input v-model="detailsForm.workAddress" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="职位描述" prop="profile" style="margin-left: 20px">
+          <el-input v-model="detailsForm.profile" type="textarea" :rows="3" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="职位要求" prop="requirement" style="margin-left: 20px">
+          <el-input v-model="detailsForm.requirement" type="textarea" :rows="3" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
+          <el-input v-model="detailsForm.welfare" type="textarea" :rows="3" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="最后编辑者" prop="lastEditor" style="margin-left: 20px">
+          <el-input v-model="detailsForm.lastEditor" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="是否发布" prop="isReleased" style="margin-left: 20px">
+          <el-input v-model="detailsForm.isReleased" style="width: 200px" disabled></el-input>
+        </el-form-item>
+      </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="profileFormVisible = false">关 闭</el-button>
+        <el-button @click="detailsFormVisible = false">关 闭</el-button>
       </div>
     </el-dialog>
-    <!--    职位要求弹框-->
-    <el-dialog title="职位要求" :visible.sync="requirementFormVisible" width="40%" :close-on-click-modal="false"
-               destroy-on-close>
-      <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px;">{{ currentRequirement }}</div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="requirementFormVisible = false">关 闭</el-button>
-      </div>
-    </el-dialog>
-    <!--    职位福利弹框-->
-    <el-dialog title="职位福利" :visible.sync="welfareFormVisible" width="40%" :close-on-click-modal="false"
-               destroy-on-close>
-      <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px;">{{ currentWelfare }}</div>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="requirementFormVisible = false">关 闭</el-button>
-      </div>
-    </el-dialog>
+
     <!--    职位新增弹框-->
     <el-dialog title="职位信息" :visible.sync="addFormVisible" width="40%" :close-on-click-modal="false"
                destroy-on-close>
@@ -179,7 +175,7 @@
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
           <el-input v-model="form.welfare" type="textarea" :rows="3" style="width: 400px"></el-input>
         </el-form-item>
-        <el-form-item label="最后修改人" prop="lastEditor" style="margin-left: 20px">
+        <el-form-item label="最后编辑者" prop="lastEditor" style="margin-left: 20px">
           <el-input v-model="form.lastEditor" style="width: 200px" disabled></el-input>
         </el-form-item>
         <el-form-item label="是否发布" prop="isReleased" style="margin-left: 20px">
@@ -191,6 +187,7 @@
         <el-button type="primary" @click="save">确 定</el-button>
       </div>
     </el-dialog>
+
     <!--    分页-->
     <div style="margin-top: 20px ">
       <el-pagination
@@ -224,14 +221,10 @@ export default {
       companyInfo: {},
       companyAddresses: [],
       form: {},
+      detailsForm: {},
       addFormVisible: false,
-      profileFormVisible: false,
-      requirementFormVisible: false,
-      welfareFormVisible: false,
+      detailsFormVisible: false,
       tableData: [],
-      currentProfile: {},
-      currentRequirement: {},
-      currentWelfare: {},
     }
   },
   created() {
@@ -280,17 +273,9 @@ export default {
       this.form = {}
       this.addFormVisible = true
     },
-    showProfile(row) {
-      this.profileFormVisible = true
-      this.currentProfile = JSON.parse(JSON.stringify(row.profile))
-    },
-    showRequirement(row) {
-      this.requirementFormVisible = true
-      this.currentRequirement = JSON.parse(JSON.stringify(row.requirement))
-    },
-    showWelfare(row) {
-      this.welfareFormVisible = true
-      this.currentWelfare = JSON.parse(JSON.stringify(row.welfare))
+    showDetails(row) {
+      this.detailsFormVisible = true
+      this.detailsForm = JSON.parse(JSON.stringify(row))
     },
     save() {
       this.form.companyName = this.user.companyName

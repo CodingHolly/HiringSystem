@@ -1,9 +1,8 @@
 package com.holly.back_end.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
-import com.holly.back_end.controller.request.PositionInfoPageRequest;
-import com.holly.back_end.entity.Announcement;
 import com.holly.back_end.entity.PositionInfo;
 import com.holly.back_end.mapper.PositionInfoMapper;
 import com.holly.back_end.service.IPositionInfoService;
@@ -20,6 +19,7 @@ public class PositionInfoService implements IPositionInfoService {
     PositionInfoMapper positionInfoMapper;
 
     public PageInfo<PositionInfo> page(BaseRequest baseRequest) {
+        PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
         List<PositionInfo> positionInfos = positionInfoMapper.listByCondition(baseRequest);
         return new PageInfo<>(positionInfos);
     }
@@ -27,6 +27,7 @@ public class PositionInfoService implements IPositionInfoService {
     @Override
     public void save(PositionInfo positionInfo) {
         if (positionInfo.getId() == null) {
+            positionInfo.setIsReleased("未发布");
             positionInfoMapper.insert(positionInfo);
         } else {
             positionInfoMapper.update(positionInfo);

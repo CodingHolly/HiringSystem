@@ -55,4 +55,10 @@
             </if>
         </where>
     </select>
+    <select id="getByCompanyName" resultType="com.holly.back_end.entity.CompanyAdmin">
+        select * from company_admin
+        <where>
+            company_name =#{companyName}
+        </where>
+    </select>
 </mapper>
