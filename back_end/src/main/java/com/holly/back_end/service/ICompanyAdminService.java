@@ -5,6 +5,8 @@ import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.CompanyAdmin;
 
+import java.util.List;
+
 public interface ICompanyAdminService {
     CompanyAdmin login(Account account);
 
@@ -17,4 +19,6 @@ public interface ICompanyAdminService {
     void deleteById(Integer id);
 
     void register(CompanyAdmin companyAdmin);
+
+    List<CompanyAdmin> getByCompanyName(String companyName);
 }

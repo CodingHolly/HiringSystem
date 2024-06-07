@@ -250,7 +250,6 @@ export default {
         label: '其他行业'
       }],
       fileList: [],
-
     }
   },
   created() {

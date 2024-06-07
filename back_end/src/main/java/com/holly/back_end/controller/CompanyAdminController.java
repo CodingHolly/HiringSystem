@@ -39,4 +39,9 @@ public class CompanyAdminController {
         return Result.success();
     }
 
+    @GetMapping("/admin/{companyName}")
+    public Result getAdminsByCompanyName(@PathVariable(value = "companyName") String companyName) {
+        List<CompanyAdmin> companyAdmins = companyAdminService.getByCompanyName(companyName);
+        return Result.success(companyAdmins);
+    }
 }

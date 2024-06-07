@@ -122,4 +122,9 @@ public class CompanyAdminService implements ICompanyAdminService {
         String token = TokenUtils.genToken(tokenData, dbCompanyAdmin.getPassword());
         dbCompanyAdmin.setToken(token);
     }
+
+    @Override
+    public List<CompanyAdmin> getByCompanyName(String companyName) {
+        return companyAdminMapper.getByCompanyName(companyName);
+    }
 }

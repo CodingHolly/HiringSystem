@@ -19,4 +19,6 @@ public interface CompanyAdminMapper {
     void deleteById(Integer id);
 
     void insert(CompanyAdmin dbCompanyAdmin);
+
+    List<CompanyAdmin> getByCompanyName(String companyName);
 }

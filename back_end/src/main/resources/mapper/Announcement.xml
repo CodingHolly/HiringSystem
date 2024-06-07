@@ -18,7 +18,9 @@
     </update>
 
     <delete id="deleteById">
-        delete from announcement where id=#{id}
+        delete
+        from announcement
+        where id = #{id}
     </delete>
 
     <select id="list" resultType="com.holly.back_end.entity.Announcement">

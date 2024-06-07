@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.holly.back_end.mapper.PositionInfoMapper">
+    <insert id="insert">
+        insert into position_info(id, positon_name, company_name, category, type, salary, number, work_address,
+                                  requirement, profile, welfare, principal, last_editor)
+        values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
+                #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor})
+    </insert>
+    <update id="update">
+        update position_info
+        set position_name = #{positionName},
+            company_name  = #{companyName},
+            category      = #{category},
+            type          = #{type},
+            salary        = #{salary},
+            number        = #{number},
+            work_address  = #{workAddress},
+            requirement   = #{requirement},
+            profile       = #{profile},
+            welfare       = #{welfare},
+            principal     = #{principal},
+            is_released   = #{isReleased},
+            last_editor   = #{lastEditor}
+        where id = #{id}
+    </update>
+    <delete id="deleteById">
+        delete
+        from position_info
+        where id = #{id}
+    </delete>
+    <select id="listByCondition" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        <where>
+            <if test="positionName != null and positionName != ''">
+                position_name like concat('%', #{positionName}, '%')
+            </if>
+            <if test="category != null and category != ''">
+                and category like concat('%', #{category}, '%')
+            </if>
+            <if test="type != null and type != ''">
+                and type like concat('%', #{type}, '%')
+            </if>
+        </where>
+        order by id desc
+    </select>
+</mapper>

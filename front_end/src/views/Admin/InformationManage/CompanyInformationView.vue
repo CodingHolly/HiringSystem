@@ -9,8 +9,7 @@
                 v-model="params.companyAddress"></el-input>
       <el-select v-model="params.companyCategory" placeholder="请选择公司类别"
                  style="width: 200px; margin-left: 15px"
-                 size="small"
-                 >
+                 size="small">
         <el-option
             v-for="item in categories"
             :key="item.id"
