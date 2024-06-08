@@ -92,6 +92,9 @@ const routes = [
         }, {
             path: 'my_information',
             component: () => import('@/views/User/MyInformationView.vue')
+        }, {
+            path: 'position_details',
+            component: () =>import('@/views/User/PositionDetailsView.vue')
         }]
     },
     //  ===== Company企业后台页面 =====

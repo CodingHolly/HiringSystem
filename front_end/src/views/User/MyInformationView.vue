@@ -9,22 +9,22 @@
             <div slot="header" style="font-size: 20px; color: #355476; font-weight: bold"><span>账号信息</span></div>
             <div>
               <el-form ref="form" :model="user" :inline="true">
-                <el-form-item label="姓名" prop="username" style="margin-left: 35px">
-                  <el-input v-model="user.username" style="width: 300px"></el-input>
+                <el-form-item label="姓名" prop="username" style="margin-left: 100px">
+                  <el-input v-model="user.username" style="width: 200px"></el-input>
                 </el-form-item>
                 <el-form-item label="电话号码" prop="phone" style="margin-left: 35px">
-                  <el-input v-model="user.phone" style="width: 300px"></el-input>
+                  <el-input v-model="user.phone" style="width: 200px"></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email" style="margin-left: 35px">
-                  <el-input v-model="user.email" style="width: 300px"></el-input>
+                <el-form-item label="邮箱" prop="email" style="margin-left: 100px">
+                  <el-input v-model="user.email" style="width: 200px"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password" style="margin-left: 35px">
-                  <el-input v-model="user.password" style="width: 200px" show-password></el-input>
-                  <el-button type="text" style="margin-left: 10px; color: gray" @click="passwordFormVisible = true">
+                  <el-input v-model="user.password" style="width: 200px" show-password disabled></el-input>
+                  <el-button type="text" style="margin-left: 10px; color: gray;font-size: small" @click="passwordFormVisible = true">
                     修改密码
                   </el-button>
                 </el-form-item>
-                <el-form-item label="证件照" prop="logo" style="margin-left: 35px">
+                <el-form-item label="证件照" prop="logo" style="margin-left: 100px">
                   <div>
                     <el-image v-if="user.img" :src="user.img" style="width: 50px; height: 70px"></el-image>
                     <el-upload

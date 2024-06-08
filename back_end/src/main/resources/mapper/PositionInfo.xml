@@ -5,30 +5,33 @@
 <mapper namespace="com.holly.back_end.mapper.PositionInfoMapper">
     <insert id="insert">
         insert into position_info(id, position_name, company_name, category, type, salary, number, work_address,
+                                  basic_requirement,
                                   requirement, profile, welfare, principal, is_released, last_editor, release_person,
                                   release_time, is_full)
         values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
+                #{basicRequirement},
                 #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor}, #{releasePerson},
                 #{releaseTime}, #{isFull})
     </insert>
     <update id="update">
         update position_info
-        set position_name  = #{positionName},
-            company_name   = #{companyName},
-            category       = #{category},
-            type           = #{type},
-            salary         = #{salary},
-            number         = #{number},
-            work_address   = #{workAddress},
-            requirement    = #{requirement},
-            profile        = #{profile},
-            welfare        = #{welfare},
-            principal      = #{principal},
-            is_released    = #{isReleased},
-            last_editor    = #{lastEditor},
-            release_person = #{releasePerson},
-            release_time   = #{releaseTime},
-            is_full        = #{isFull}
+        set position_name     = #{positionName},
+            company_name      = #{companyName},
+            category          = #{category},
+            type              = #{type},
+            salary            = #{salary},
+            number            = #{number},
+            work_address      = #{workAddress},
+            basic_requirement = #{basicRequirement},
+            requirement       = #{requirement},
+            profile           = #{profile},
+            welfare           = #{welfare},
+            principal         = #{principal},
+            is_released       = #{isReleased},
+            last_editor       = #{lastEditor},
+            release_person    = #{releasePerson},
+            release_time      = #{releaseTime},
+            is_full           = #{isFull}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -60,5 +63,20 @@
             </if>
         </where>
         order by id desc
+    </select>
+    <select id="getById" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        where id = #{id}
+    </select>
+    <select id="selectTop6" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        order by id desc limit 6
+    </select>
+    <select id="selectById" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        where id = #{id}
     </select>
 </mapper>

@@ -15,6 +15,7 @@ public class PositionInfo {
     private String salary;
     private Integer number;
     private String workAddress;
+    private String basicRequirement;
     private String requirement;
     private String profile;
     private String welfare;

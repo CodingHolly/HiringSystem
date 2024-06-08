@@ -3,13 +3,16 @@ package com.holly.back_end.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
+import com.holly.back_end.controller.request.ReleaseRequest;
 import com.holly.back_end.entity.PositionInfo;
+import com.holly.back_end.exception.ServiceException;
 import com.holly.back_end.mapper.PositionInfoMapper;
 import com.holly.back_end.service.IPositionInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -37,6 +40,29 @@ public class PositionInfoService implements IPositionInfoService {
 
     @Override
     public void deleteById(Integer id) {
-     positionInfoMapper.deleteById(id);
+        positionInfoMapper.deleteById(id);
+    }
+
+    @Override
+    public void release(ReleaseRequest releaseRequest) {
+        PositionInfo positionInfo = positionInfoMapper.getById(releaseRequest.getId());
+        if (positionInfo.getIsReleased().equals("已发布")) {
+            throw new ServiceException("该职位已发布");
+        } else {
+            positionInfo.setIsReleased("已发布");
+            positionInfo.setReleasePerson(releaseRequest.getUsername());
+            positionInfo.setReleaseTime(new Date());
+            positionInfoMapper.update(positionInfo);
+        }
+    }
+
+    @Override
+    public List<PositionInfo> selectTop6() {
+        return positionInfoMapper.selectTop6();
+    }
+
+    @Override
+    public PositionInfo selectById(Integer id) {
+        return positionInfoMapper.selectById(id);
     }
 }

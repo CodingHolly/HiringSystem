@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 10px">
+  <div style="padding: 20px 10px">
     <!--    搜索表单-->
     <div class="search">
       <el-input style="width: 240px; margin-left: 15px" placeholder="请输入职位名称" size="small"
@@ -51,7 +51,7 @@
       <el-button
           plain
           class="add-button"
-          style="margin-left: 10px;margin-top: 20px"
+          style="margin-left: 15px;margin-top: 20px"
           type="primary"
           icon="el-icon-edit"
           size="small"
@@ -76,8 +76,8 @@
         <el-table-column label="二级分类" prop="type" width="100px"></el-table-column>
         <el-table-column label="负责人" prop="principal" width="100px"></el-table-column>
         <el-table-column label="发布者" prop="releasePerson" width="100px"></el-table-column>
-        <el-table-column label="发布时间" prop="releaseTime" width="120px"></el-table-column>
-        <el-table-column label="操作">
+        <el-table-column label="发布时间" prop="releaseTime" width="160px"></el-table-column>
+        <el-table-column label="操作" width="300px">
           <template v-slot="scope">
             <el-button
                 size="small"
@@ -86,6 +86,7 @@
             </el-button>
             <el-button
                 size="small"
+                type="success"
                 @click.native.prevent="handleEdit(scope.row)">编辑
             </el-button>
             <el-button
@@ -116,7 +117,10 @@
         <el-form-item label="职位描述" prop="profile" style="margin-left: 20px">
           <el-input v-model="detailsForm.profile" type="textarea" :rows="3" style="width: 400px"></el-input>
         </el-form-item>
-        <el-form-item label="职位要求" prop="requirement" style="margin-left: 20px">
+        <el-form-item label="基本要求" prop="basicRequirement" style="margin-left: 20px">
+          <el-input v-model="detailsForm.basicRequirement" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="具体要求" prop="requirement" style="margin-left: 20px">
           <el-input v-model="detailsForm.requirement" type="textarea" :rows="3" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
@@ -190,11 +194,14 @@
         <el-form-item label="职位描述" prop="profile" style="margin-left: 20px">
           <el-input v-model="form.profile" type="textarea" :rows="3" style="width: 400px"></el-input>
         </el-form-item>
+        <el-form-item label="基本要求" prop="basicRequirement" style="margin-left: 20px">
+          <el-input v-model="form.basicRequirement" style="width: 400px" placeholder="3-4个词"></el-input>
+        </el-form-item>
         <el-form-item label="职位要求" prop="requirement" style="margin-left: 20px">
           <el-input v-model="form.requirement" type="textarea" :rows="3" style="width: 400px"></el-input>
         </el-form-item>
         <el-form-item label="需要人数" prop="number" style="margin-left: 20px">
-          <el-input v-model="form.number" style="width: 200px"></el-input>
+          <el-input v-model="form.number" style="width: 200px" placeholder="请填写数字"></el-input>
         </el-form-item>
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
           <el-input v-model="form.welfare" type="textarea" :rows="3" style="width: 400px"></el-input>
@@ -249,6 +256,7 @@ export default {
       addFormVisible: false,
       detailsFormVisible: false,
       tableData: [],
+      releaseData: {},
       options: [{
         label: '未发布',
         value: '未发布'
@@ -348,7 +356,9 @@ export default {
     },
     release(id) {
       this.$confirm('您确定要发布该职位吗？', '确认发布', {type: "warning"}).then(() => {
-        this.request.delete('/position_info/release/' + id).then(res => {
+        this.releaseData.id = id
+        this.releaseData.username = this.user.username
+        this.request.post('/position_info/release', this.releaseData).then(res => {
           if (res.code === '200') {
             this.$message.success('操作成功')
             this.load()

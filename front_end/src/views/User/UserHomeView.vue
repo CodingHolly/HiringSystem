@@ -41,17 +41,29 @@
             </div>
           </div>
           <div style="flex: 3">
-            <img src="@/assets/css/imgs/login_background3.jpg" alt="" style="width: 100%; margin-left: 5px;margin-top: 15px; border-radius: 5px">
+            <img src="@/assets/css/imgs/login_background3.jpg" alt=""
+                 style="width: 100%; margin-left: 5px;margin-top: 15px; border-radius: 5px">
           </div>
         </div>
-        <div style="margin: 40px 0 0 15px; height: 40px;color: #355476;font-size: 20px; font-weight: bold">热门职位</div>
-        <div style="margin-left: 20px;margin-top: 10px">
+        <div style="margin: 40px 0 0 15px; height: 40px;color: #355476;font-size: 20px; font-weight: bold">热门职位
+        </div>
+        <div style="margin: 10px 50px 20px 30px">
           <el-row>
-            <el-col :span="5">
-              <img src="@/assets/css/imgs/logo.png" alt="" style="width: 100%; height: 150px; border-radius: 10px;border: #cccccc 1px">
-              <div style="margin-top: 10px;font-weight: 500; font-size: 16px; width: 180px; color: black; text-overflow: ellipsis;overflow: hidden; white-space: nowrap">
-                山东省青岛市俩打开咖喱宫颈癌歌曲爱二哥
-              </div>
+            <el-col :span="2" v-for="(item, index) in positionData" :key="index">
+              <el-card shadow="hover">
+                <div class="header">
+                  <span class="name" style="flex: 5"
+                        @click="navTo('/user/position_details?id=' + item.id)">{{ item.positionName }}</span>
+                  <span class="salary" style="flex: 5">{{ item.salary }}</span>
+                </div>
+                <div class="basicRequirement">
+                  <span>{{ item.basicRequirement }}</span>
+                </div>
+                <div class="bottom">
+                  <span class="companyName" style="flex: 5">{{ item.companyName }}</span>
+                  <span class="position-info" style="flex: 5">{{ item.isFull }}</span>
+                </div>
+              </el-card>
             </el-col>
           </el-row>
         </div>
@@ -60,8 +72,9 @@
     </div>
   </div>
 </template>
-import request from "@/utils/request";
+
 <script>
+import request from "@/utils/request";
 import Cookies from "js-cookie";
 
 export default {
@@ -77,15 +90,16 @@ export default {
         require('@/assets/css/imgs/userHome4.jpg')
       ],
       carousel_left: [
-          require('@/assets/css/imgs/userHome5.jpg'),
-          require('@/assets/css/imgs/userHome6.jpg'),
-          require('@/assets/css/imgs/userHome7.jpg'),
+        require('@/assets/css/imgs/userHome5.jpg'),
+        require('@/assets/css/imgs/userHome6.jpg'),
+        require('@/assets/css/imgs/userHome7.jpg'),
       ],
       carousel_right: [
-          require('@/assets/css/imgs/userHome8.jpg'),
-          require('@/assets/css/imgs/userHome9.jpg'),
-          require('@/assets/css/imgs/userHome10.jpg'),
-      ]
+        require('@/assets/css/imgs/userHome8.jpg'),
+        require('@/assets/css/imgs/userHome9.jpg'),
+        require('@/assets/css/imgs/userHome10.jpg'),
+      ],
+      positionData: [],
     }
   },
   created() {
@@ -93,16 +107,29 @@ export default {
   },
   mounted() {
     this.loadCategory()
+    this.loadPosition()
   },
   methods: {
     loadCategory() {
-      this.request.get('/position_type/list_category').then(res => {
+      request.get('/position_type/list_category').then(res => {
         if (res.code === '200') {
           this.categoryData = res.data
         } else {
           this.$message.error(res.msg)
         }
       })
+    },
+    loadPosition() {
+      request.get('/position_info/selectTop6').then(res => {
+        if (res.code === '200') {
+          this.positionData = res.data
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    navTo(url) {
+      location.href = url
     }
   }
 }
@@ -127,9 +154,53 @@ export default {
   background-repeat: no-repeat;
   background-color: #C6E2FF
 }
-.el-col-5 {
-  width: 20%;
-  max-width: 20%;
-  padding: 10px 10px;
+
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.el-col-2 {
+  width: 50%;
+  padding: 20px 20px;
+}
+
+.salary {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fe574a;
+  line-height: 22px;
+  text-align: right;
+  max-width: none;
+}
+
+.basicRequirement {
+  font-size: 13px;
+  color: #8d92a1;
+  padding-right: 0;
+  height: 22px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 12px;
+}
+
+.bottom {
+  display: flex;
+  font-size: 15px;
+  color: #666;
+  padding-right: 0;
+  height: 22px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-top: 12px;
+}
+
+.position-info {
+  text-align: right;
+  color: #8d92a1;
+  font-size: 13px;
 }
 </style>

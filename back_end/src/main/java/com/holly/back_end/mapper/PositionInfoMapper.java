@@ -15,4 +15,10 @@ public interface PositionInfoMapper {
     void update(PositionInfo positionInfo);
 
     void deleteById(Integer id);
+
+    PositionInfo getById(Integer id);
+
+    List<PositionInfo> selectTop6();
+
+    PositionInfo selectById(Integer id);
 }

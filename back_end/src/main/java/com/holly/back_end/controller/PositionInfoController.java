@@ -2,10 +2,13 @@ package com.holly.back_end.controller;
 
 import com.holly.back_end.common.Result;
 import com.holly.back_end.controller.request.PositionInfoPageRequest;
+import com.holly.back_end.controller.request.ReleaseRequest;
 import com.holly.back_end.entity.PositionInfo;
 import com.holly.back_end.service.impl.PositionInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/position_info")
@@ -28,5 +31,23 @@ public class PositionInfoController {
     public Result delete(@PathVariable Integer id) {
         positionInfoService.deleteById(id);
         return Result.success();
+    }
+
+    @PostMapping("/release")
+    public Result release(@RequestBody ReleaseRequest releaseRequest) {
+        positionInfoService.release(releaseRequest);
+        return Result.success();
+    }
+
+    @GetMapping("/selectTop6")
+    public Result selectTop6() {
+        List<PositionInfo> positionInfos = positionInfoService.selectTop6();
+        return Result.success(positionInfos);
+    }
+
+    @GetMapping("/selectById")
+    public Result selectById(@RequestParam Integer id) {
+        PositionInfo positionInfo = positionInfoService.selectById(id);
+        return Result.success(positionInfo);
     }
 }
