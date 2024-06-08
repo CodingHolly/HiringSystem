@@ -24,6 +24,11 @@
             is_vip            = #{isVip}
         where id = #{id}
     </update>
+    <update id="updatePassword">
+        update user
+        set password =#{newPassword}
+        where phone = #{phone}
+    </update>
 
     <select id="getByPhone" resultType="com.holly.back_end.entity.User">
         select *
@@ -55,5 +60,11 @@
                 and is_vip = #{isVip}
             </if>
         </where>
+    </select>
+    <select id="getByPhoneAndPassword" resultType="com.holly.back_end.entity.User">
+        select *
+        from user
+        where phone = #{phone}
+          and password = # {password}
     </select>
 </mapper>

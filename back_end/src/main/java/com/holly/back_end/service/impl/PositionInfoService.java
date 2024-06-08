@@ -28,6 +28,7 @@ public class PositionInfoService implements IPositionInfoService {
     public void save(PositionInfo positionInfo) {
         if (positionInfo.getId() == null) {
             positionInfo.setIsReleased("未发布");
+            positionInfo.setIsFull("未招满");
             positionInfoMapper.insert(positionInfo);
         } else {
             positionInfoMapper.update(positionInfo);

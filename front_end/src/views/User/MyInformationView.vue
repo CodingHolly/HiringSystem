@@ -19,7 +19,10 @@
                   <el-input v-model="user.email" style="width: 300px"></el-input>
                 </el-form-item>
                 <el-form-item label="密码" prop="password" style="margin-left: 35px">
-                  <el-input v-model="user.password" style="width: 300px" show-password></el-input>
+                  <el-input v-model="user.password" style="width: 200px" show-password></el-input>
+                  <el-button type="text" style="margin-left: 10px; color: gray" @click="passwordFormVisible = true">
+                    修改密码
+                  </el-button>
                 </el-form-item>
                 <el-form-item label="证件照" prop="logo" style="margin-left: 35px">
                   <div>
@@ -53,6 +56,20 @@
             </div>
           </el-card>
         </div>
+
+        <!--        密码修改弹窗-->
+        <el-dialog title="密码修改" :visible.sync="passwordFormVisible" width="30%" :close-on-click-modal="false"
+                   destroy-on-clos>
+          <el-form label-width="100px" :model="passwordForm" :rules="passwordRules" ref="passwordForm">
+            <el-form-item label="新密码：" prop="newPassword" label-width="100px">
+              <el-input v-model="passwordForm.newPassword" type="password" autocomplete="off" style="width: 200px"></el-input>
+            </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="passwordFormVisible = false">取 消</el-button>
+            <el-button type="primary" @click.native="savePassword">确 定</el-button>
+          </div>
+        </el-dialog>
       </div>
       <div class="right"></div>
     </div>
@@ -68,7 +85,8 @@ export default {
   data() {
     return {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
-      resume:{},
+      resume: {},
+      passwordForm: {},
       statuses: [{
         value: '离校-随时到岗',
         label: '离校-随时到岗'
@@ -89,7 +107,14 @@ export default {
         value: '职场人',
         label: '职场人'
       }],
-      fileList: []
+      fileList: [],
+      passwordFormVisible: false,
+      passwordRules: {
+        newPassword: [
+          {required: true, message: '请输入新密码', trigger: 'blur'},
+          {min: 3, max: 10, message: '长度在3-10个字符', trigger: 'blur'}
+        ]
+      },
     }
   }
   ,
@@ -97,7 +122,7 @@ export default {
     request.get('/user/' + this.user.id).then(res => {
       this.user = res.data
     })
-    request.get('/resume/'+ this.user.phone).then(res => {
+    request.get('/resume/' + this.user.phone).then(res => {
       this.resume = res.data
     })
   }
@@ -125,6 +150,21 @@ export default {
           this.$message.success('保存成功')
         } else {
           this.$message.error(res.msg)
+        }
+      })
+    },
+    savePassword() {
+      this.$refs['passwordForm'].validate((valid) => {
+        if (valid) {
+          this.passwordForm.phone = this.user.phone
+          request.post('/user/password', this.passwordForm).then(res => {
+            if (res.code === '200') {
+              this.$notify.success("修改成功, 请重新登录")
+              this.$router.push('/')
+            } else {
+              this.$notify.error("修改失败")
+            }
+          })
         }
       })
     }

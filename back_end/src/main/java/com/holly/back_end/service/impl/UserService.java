@@ -3,6 +3,8 @@ package com.holly.back_end.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
+import com.holly.back_end.controller.request.LoginRequest;
+import com.holly.back_end.controller.request.PasswordRequest;
 import com.holly.back_end.entity.Account;
 import com.holly.back_end.entity.CompanyAdmin;
 import com.holly.back_end.entity.User;
@@ -99,5 +101,13 @@ public class UserService implements IUserService {
         PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
         List<User> users = userMapper.listByCondition(baseRequest);
         return new PageInfo<>(users);
+    }
+
+    @Override
+    public void changePassword(PasswordRequest passwordRequest) {
+        int result = userMapper.updatePassword(passwordRequest);
+        if (result <= 0) {
+            throw new ServiceException("修改密码失败");
+        }
     }
 }

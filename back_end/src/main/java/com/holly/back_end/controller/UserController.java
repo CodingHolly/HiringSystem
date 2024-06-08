@@ -1,6 +1,7 @@
 package com.holly.back_end.controller;
 
 import com.holly.back_end.common.Result;
+import com.holly.back_end.controller.request.PasswordRequest;
 import com.holly.back_end.controller.request.UserPageRequest;
 import com.holly.back_end.entity.User;
 import com.holly.back_end.service.impl.UserService;
@@ -30,5 +31,11 @@ public class UserController {
     @GetMapping("/page")
     public Result page(UserPageRequest userPageRequest) {
         return Result.success(userService.page(userPageRequest));
+    }
+
+    @PostMapping("/password")
+    public Result password(@RequestBody PasswordRequest passwordRequest) {
+        userService.changePassword(passwordRequest);
+        return Result.success();
     }
 }

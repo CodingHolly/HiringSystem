@@ -4,12 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.holly.back_end.mapper.PositionInfoMapper">
     <insert id="insert">
-        insert into position_info(id, positon_name, company_name, category, type, salary, number, work_address,
+        insert into position_info(id, position_name, company_name, category, type, salary, number, work_address,
                                   requirement, profile, welfare, principal, is_released, last_editor, release_person,
-                                  release_time)
+                                  release_time, is_full)
         values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
                 #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor}, #{releasePerson},
-                #{releaseTime})
+                #{releaseTime}, #{isFull})
     </insert>
     <update id="update">
         update position_info
@@ -27,7 +27,8 @@
             is_released    = #{isReleased},
             last_editor    = #{lastEditor},
             release_person = #{releasePerson},
-            release_time   = #{releaseTime}
+            release_time   = #{releaseTime},
+            is_full        = #{isFull}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -43,16 +44,19 @@
                 position_name like concat('%', #{positionName}, '%')
             </if>
             <if test="category != null and category != ''">
-                and category like concat('%', #{category}, '%')
+                and category = #{category}
             </if>
             <if test="type != null and type != ''">
-                and type like concat('%', #{type}, '%')
+                and type = #{type}
             </if>
             <if test="companyName != null and companyName != ''">
-                and company_name = #{companyName}
+                and company_name like concat('%', #{companyName}, '%')
             </if>
             <if test="isReleased != null and isReleased != ''">
                 and is_released = #{isReleased}
+            </if>
+            <if test="isFull != null and isFull != ''">
+                and is_full = #{isFull}
             </if>
         </where>
         order by id desc

@@ -22,6 +22,24 @@
             :value="type.type">
         </el-option>
       </el-select>
+      <el-select v-model="params.isReleased" placeholder="请选择是否发布" style="width: 150px;margin-left: 15px"
+                 size="small">
+        <el-option
+            v-for="opt in options"
+            :key="opt.value"
+            :label="opt.value"
+            :value="opt.value">
+        </el-option>
+      </el-select>
+      <el-select v-model="params.isFull" placeholder="请选择是否招满" style="width: 150px;margin-left: 15px"
+                 size="small">
+        <el-option
+            v-for="opt in full"
+            :key="opt.value"
+            :label="opt.value"
+            :value="opt.value">
+        </el-option>
+      </el-select>
       <el-button style="margin-left: 15px" plain type="primary" size="small" @click="load">
         <i class="el-icon-search"></i>搜索
       </el-button>
@@ -110,6 +128,9 @@
         <el-form-item label="是否发布" prop="isReleased" style="margin-left: 20px">
           <el-input v-model="detailsForm.isReleased" style="width: 200px" disabled></el-input>
         </el-form-item>
+        <el-form-item label="是否招满" prop="isFull" style="margin-left: 20px">
+          <el-input v-model="detailsForm.isFull" style="width: 200px" disabled></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="detailsFormVisible = false">关 闭</el-button>
@@ -121,7 +142,7 @@
                destroy-on-close>
       <el-form label-width="100px" :model="form">
         <el-form-item label="职位名称" prop="positionName" style="margin-left: 20px">
-          <el-input v-model="form.positionName" style="width: 200px"></el-input>
+          <el-input v-model="form.positionName" style="width: 300px"></el-input>
         </el-form-item>
         <el-form-item label="负责人" prop="principal" style="margin-left: 20px">
           <el-select v-model="form.principal">
@@ -171,6 +192,9 @@
         </el-form-item>
         <el-form-item label="职位要求" prop="requirement" style="margin-left: 20px">
           <el-input v-model="form.requirement" type="textarea" :rows="3" style="width: 400px"></el-input>
+        </el-form-item>
+        <el-form-item label="需要人数" prop="number" style="margin-left: 20px">
+          <el-input v-model="form.number" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
           <el-input v-model="form.welfare" type="textarea" :rows="3" style="width: 400px"></el-input>
@@ -225,6 +249,20 @@ export default {
       addFormVisible: false,
       detailsFormVisible: false,
       tableData: [],
+      options: [{
+        label: '未发布',
+        value: '未发布'
+      }, {
+        label: '已发布',
+        value: '已发布'
+      }],
+      full: [{
+        label: '未招满',
+        value: '未招满'
+      }, {
+        label: '已招满',
+        value: '已招满'
+      }]
     }
   },
   created() {
