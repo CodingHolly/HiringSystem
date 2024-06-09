@@ -13,19 +13,16 @@
               <p style="margin-top: -5px">
                 <span class="text-desc text-city">
                   <img src="@/assets/css/imgs/city.png" alt=""
-                       style="width: 20px;height: 20px;margin-right: 6px;vertical-align: middle;">{{
-                    positionData.city
-                  }}</span>
+                       style="width: 20px;height: 20px;margin-right: 6px;vertical-align: middle;">
+                  {{ positionData.city }}</span>
                 <span class="text-desc text-experience">
                   <img src="@/assets/css/imgs/experience.png" alt=""
-                       style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">{{
-                    positionData.experience
-                  }}</span>
+                       style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">
+                  {{positionData.experience }}</span>
                 <span class="text-desc text-degree">
                   <img src="@/assets/css/imgs/degree.png" alt=""
-                       style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">{{
-                    positionData.degree
-                  }}</span>
+                       style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">
+                  {{ positionData.degree }}</span>
               </p>
               <div class="job-op">
                 <div class="btn-container">
