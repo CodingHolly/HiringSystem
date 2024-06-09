@@ -21,4 +21,6 @@ public interface CompanyAdminMapper {
     void insert(CompanyAdmin dbCompanyAdmin);
 
     List<CompanyAdmin> getByCompanyName(String companyName);
+
+    CompanyAdmin getAdminByUsername(String username);
 }

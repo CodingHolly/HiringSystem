@@ -8,4 +8,5 @@ public class CompanyAdmin extends Account{
     private String positionCategory;
     private String positionType;
     private String email;
+    private String avatar;
 }

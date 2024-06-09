@@ -66,6 +66,15 @@
             prop="username">
         </el-table-column>
         <el-table-column
+            label="头像">
+          <template v-slot="scope">
+            <div>
+              <el-image style="width: 35px;height: 35px" v-if="scope.row.avatar"
+                        :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"></el-image>
+            </div>
+          </template>
+        </el-table-column>
+        <el-table-column
             label="电话号码"
             prop="phone">
         </el-table-column>
@@ -109,6 +118,20 @@
         </el-form-item>
         <el-form-item prop="username" label="姓名">
           <el-input v-model="form.username" style="width: auto"></el-input>
+        </el-form-item>
+        <el-form-item prop="avatar" label="头像">
+          <div>
+            <el-image v-if="form.avatar" :src="form.avatar" style="width: 60px; height: 60px"></el-image>
+            <el-upload
+                :show-file-list="false"
+                action="http://localhost:9090/api/file/upload"
+                :headers="{token: companyAdmin.token}"
+                :file-list="fileList"
+                list-type="picture"
+                :on-success="(res,file,fileList) => handleIconUpload(res,file,fileList)">
+              <el-button size="small" type="primary" plain>上传头像</el-button>
+            </el-upload>
+          </div>
         </el-form-item>
         <el-form-item prop="phone" label="电话号码">
           <el-input v-model="form.phone" autocomplete="off" style="width: auto"></el-input>
@@ -170,6 +193,7 @@ export default {
   data() {
     return {
       tableData: [],
+      fileList:[],
       total: 0,
       title: null,
       formVisible: false, //弹框是否可见
@@ -274,6 +298,11 @@ export default {
     handleAddAdmin() {
       this.form = {}
       this.formVisible = true
+    },
+    //上传头像
+    handleIconUpload(response, file, fileList) {
+      this.form.avatar = response.data
+      this.fileList = fileList
     },
   }
 }

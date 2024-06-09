@@ -21,4 +21,6 @@ public interface ICompanyAdminService {
     void register(CompanyAdmin companyAdmin);
 
     List<CompanyAdmin> getByCompanyName(String companyName);
+
+    CompanyAdmin getAdminByUsername(String userame);
 }

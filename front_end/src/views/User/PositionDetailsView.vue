@@ -69,7 +69,9 @@
             <p>
               <i class="el-icon-location-information"
                  style="margin-right: 5px;"></i>
-              <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">{{ companyData.registerAddress }}</span>
+              <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">{{
+                  companyData.registerAddress
+                }}</span>
             </p>
           </div>
         </div>
@@ -90,6 +92,57 @@
             <div class="job-sec-text">
               {{ positionData.requirement }}
             </div>
+            <div class="job-boss-info">
+              <div class="detail-figure">
+                <img :src=principalInfo.avatar>
+              </div>
+              <h2 class="name">{{ principalInfo.username }}</h2>
+              <div class="boss-info-attr">
+                {{ principalInfo.companyName }}
+                <em class="vdot">·</em>
+                {{ principalInfo.positionType }}
+              </div>
+            </div>
+          </div>
+          <div class="job-detail-section job-detail-company">
+            <div class="detail-section-item company-info-box">
+              <h3>公司介绍</h3>
+              <div class="job-sec-text text">
+                {{ companyData.companyProfile }}
+              </div>
+            </div>
+            <div class="detail-section-item business-info-box">
+              <h3>工商信息</h3>
+              <div class="level-list-box">
+                <ul class="level-list">
+                  <li class="company-name">
+                    <span>公司名称</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.companyName }}</p>
+                  </li>
+                  <li class="company-user">
+                    <span>法定代表人</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.legalRepresentative }}</p>
+                  </li>
+                  <li class="res-time">
+                    <span>成立日期</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.foundingTime }}</p>
+                  </li>
+                  <li class="company-type">
+                    <span>企业类型</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.companyCategory }}</p>
+                  </li>
+                  <li class="manage-state">
+                    <span>经营状态</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.managementStatue }}</p>
+                  </li>
+                  <li class="company-fund">
+                    <span>注册资金</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.registeredCapital }}</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="detail-section-item company-address"></div>
           </div>
         </div>
       </div>
@@ -113,6 +166,7 @@ export default {
       companyAddresses: [],
       positionWelfareList: [],
       positionKeywordList: [],
+      principalInfo: {},
     }
   },
   mounted() {
@@ -145,6 +199,12 @@ export default {
       })
       request.get('/company_info/address/' + this.positionData.companyName).then(res => {
         this.companyAddresses = res.data
+      })
+      this.loadPrincipalInfo()
+    },
+    loadPrincipalInfo() {
+      request.get('/company_admin/position_info/' + this.positionData.principal).then(res => {
+        this.principalInfo = res.data
       })
     }
   }
@@ -287,6 +347,7 @@ export default {
 .job-box {
   margin-top: 12px;
   background: 0 0;
+  height: auto;
 }
 
 .job-detail {
@@ -302,7 +363,7 @@ export default {
   position: relative;
   background: #fff;
   border-radius: 12px;
-  padding: 0 30px 20px 30px;
+  padding: 5px 30px 20px 30px;
 }
 
 .detail-content-header {
@@ -330,7 +391,7 @@ ul {
   margin-block-end: 1em;
   margin-inline-start: 0;
   margin-inline-end: 0;
-  padding-inline-start: 0px;
+  padding-inline-start: 0;
   unicode-bidi: isolate;
 }
 
@@ -363,7 +424,6 @@ li {
 .job-sec-text {
   white-space: pre-wrap;
   word-break: break-all;
-  margin-top: 20px;
   margin-bottom: 20px;
   line-height: 28px;
   color: #333;
@@ -381,7 +441,6 @@ li {
 
 .sider-company {
   border-radius: 12px;
-
   padding-bottom: 20px;
   background: #fff;
   margin-bottom: 16px;
@@ -429,8 +488,146 @@ li {
   margin-bottom: 8px;
 }
 
-.side-img {
+.job-boss-info {
+  border-top: 1px solid #ededed;
+  padding-top: 20px;
+}
+
+.detail-figure {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  border: 1px solid #f6fdfd;
+  border-radius: 100%;
+  float: left;
+  position: static;
+}
+
+.detail-figure img {
+  width: 56px;
+  height: 56px;
+  display: block;
+  margin-right: 0;
+  border-radius: 100%;
+  vertical-align: top;
+  border: none;
+}
+
+.job-boss-info .name {
+  font-size: 20px;
+  font-weight: 500;
+  color: #222;
+  line-height: 0;
+  display: flex;
+  align-items: center;
+}
+
+.boss-info-attr {
+  font-size: 15px;
+  color: #666;
+  line-height: 21px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+}
+
+.vdot {
+  display: inline-block;
+  padding: 0 10px 0 7px;
+}
+
+em {
+  font-style: normal;
+}
+
+.job-detail-section + .job-detail-section {
+  margin-top: 16px;
+}
+
+.job-detail-section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #222;
+  line-height: 25px;
+  margin-bottom: 20px;
+}
+
+.job-sec-text {
+  white-space: pre-wrap;
+  word-break: break-all;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  line-height: 28px;
+  color: #333;
+  font-size: 15px;
+  text-align: justify;
+  letter-spacing: 0;
+}
+
+.text {
+  max-height: none;
+  overflow: hidden;
+}
+
+.detail-section-item {
+  margin-bottom: 20px;
+}
+
+.level-list-box {
+  background: #f8f8f8;
   border-radius: 12px;
-  margin-bottom: 16px !important;
+  padding: 20px;
+}
+
+.level-list {
+  height: auto;
+  overflow: hidden;
+  margin-top: 0;
+}
+
+.level-list li {
+  float: left;
+  padding-right: 5px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  box-sizing: border-box;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.level-list li span {
+  display: block;
+  font-size: 14px;
+  color: #999;
+  line-height: 20px;
+  margin-bottom: 8px
+}
+
+.level-list span {
+  display: inline-block;
+  margin-right: 7px;
+  color: #8d92a1;
+}
+
+.company-name {
+  width: 400px;
+}
+.company-type {
+  width: 400px;
+}
+.company-user{
+  width: 210px;
+}
+.manage-state{
+  width: 210px;
+}
+.company-fund {
+  width: 150px;
+}
+.res-time {
+  width: 150px;
 }
 </style>

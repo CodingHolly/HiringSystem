@@ -28,7 +28,7 @@
                 category like concat('%', #{category}, '%')
             </if>
             <if test="type != null and type != ''">
-               and type like concat('%', #{type}, '%')
+                and type like concat('%', #{type}, '%')
             </if>
         </where>
     </select>

@@ -5,18 +5,19 @@
 <mapper namespace="com.holly.back_end.mapper.CompanyAdminMapper">
     <insert id="insert">
         insert into company_admin (id, phone, username, password, company_name, role, position_category, email,
-                                  position_type)
+                                   position_type, avatar)
         values (#{id}, #{phone}, #{username}, #{password}, #{companyName}, #{role}, #{positionCategory},
-                #{email}, #{positionType})
+                #{email}, #{positionType}, #{avatar})
     </insert>
     <update id="update">
         update company_admin
-        set username = #{username},
-            phone = #{phone},
-            email = #{email},
-            password = #{password},
+        set username          = #{username},
+            phone             = #{phone},
+            email             = #{email},
+            password          = #{password},
             position_category = #{positionCategory},
-            position_type =#{positionType}
+            position_type     = #{positionType},
+            avatar            = #{avatar}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -63,5 +64,10 @@
         <where>
             company_name =#{companyName}
         </where>
+    </select>
+    <select id="getAdminByUsername" resultType="com.holly.back_end.entity.CompanyAdmin">
+        select *
+        from company_admin
+        where username = #{username}
     </select>
 </mapper>

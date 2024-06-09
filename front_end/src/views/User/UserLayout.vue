@@ -28,8 +28,6 @@
         <div v-else>
           <el-dropdown>
             <div class="front-header-dropdown">
-              <el-image v-if="user.img" :src="user.img"
-                        style="width: 32px; height: 40px; align-items: center; border-radius: 100px; margin-right: 15px"></el-image>
               <span>{{ user.username }}</span><i class="el-icon-arrow-down" style="margin-left: 10px;"></i>
             </div>
             <el-dropdown-menu slot="dropdown">

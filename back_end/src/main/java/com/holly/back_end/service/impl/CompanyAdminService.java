@@ -127,4 +127,9 @@ public class CompanyAdminService implements ICompanyAdminService {
     public List<CompanyAdmin> getByCompanyName(String companyName) {
         return companyAdminMapper.getByCompanyName(companyName);
     }
+
+    @Override
+    public CompanyAdmin getAdminByUsername(String username) {
+        return companyAdminMapper.getAdminByUsername(username);
+    }
 }

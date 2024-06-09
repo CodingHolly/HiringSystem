@@ -44,4 +44,11 @@ public class CompanyAdminController {
         List<CompanyAdmin> companyAdmins = companyAdminService.getByCompanyName(companyName);
         return Result.success(companyAdmins);
     }
+
+    @GetMapping("/position_info/{username}")
+    public Result getAdminByUsername(@PathVariable (value = "username") String username) {
+        CompanyAdmin companyAdmin = companyAdminService.getAdminByUsername(username);
+        return Result.success(companyAdmin);
+
+    }
 }
