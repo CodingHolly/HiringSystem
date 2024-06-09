@@ -31,7 +31,7 @@
             :value="opt.value">
         </el-option>
       </el-select>
-      <el-select v-model="params.isFull" placeholder="请选择是否招满" style="width: 150px;margin-left: 15px"
+      <el-select v-model="params.jobStatus" placeholder="请选择是否招满" style="width: 150px;margin-left: 15px"
                  size="small">
         <el-option
             v-for="opt in full"
@@ -89,7 +89,7 @@
         <el-form-item label="职位描述" prop="profile" style="margin-left: 20px">
           <el-input v-model="detailsForm.profile" type="textarea" :rows="3" style="width: 400px" disabled></el-input>
         </el-form-item>
-        <el-form-item label="职位要求" prop="requirement" style="margin-left: 20px">
+        <el-form-item label="任职要求" prop="requirement" style="margin-left: 20px">
           <el-input v-model="detailsForm.requirement" type="textarea" :rows="3" style="width: 400px" disabled></el-input>
         </el-form-item>
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
@@ -100,6 +100,21 @@
         </el-form-item>
         <el-form-item label="是否发布" prop="isReleased" style="margin-left: 20px">
           <el-input v-model="detailsForm.isReleased" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="招聘状态" prop="jobStatus" style="margin-left: 20px">
+          <el-input v-model="detailsForm.jobStatus" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="工作城市" prop="city" style="margin-left: 20px">
+          <el-input v-model="detailsForm.city" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="经历时间要求" prop="experience" style="margin-left: 20px">
+          <el-input v-model="detailsForm.experience" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="学历要求" prop="degree" style="margin-left: 20px">
+          <el-input v-model="detailsForm.degree" style="width: 200px" disabled></el-input>
+        </el-form-item>
+        <el-form-item label="职位关键词" prop="keywordList" style="margin-left: 20px">
+          <el-input v-model="detailsForm.keywordList" style="width: 200px" disabled></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -148,11 +163,11 @@ export default {
         value:'已发布'
       }],
       full: [{
-        label: '未招满',
-        value: '未招满'
+        label: '招聘中',
+        value: '招聘中'
       }, {
-        label: '已招满',
-        value: '已招满'
+        label: '停止招聘',
+        value: '停止招聘'
       }]
     }
   },

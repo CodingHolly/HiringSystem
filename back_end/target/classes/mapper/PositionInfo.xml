@@ -5,33 +5,34 @@
 <mapper namespace="com.holly.back_end.mapper.PositionInfoMapper">
     <insert id="insert">
         insert into position_info(id, position_name, company_name, category, type, salary, number, work_address,
-                                  basic_requirement,
                                   requirement, profile, welfare, principal, is_released, last_editor, release_person,
-                                  release_time, is_full)
+                                  release_time, job_status, city, experience, degree, keyword_list)
         values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
-                #{basicRequirement},
                 #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor}, #{releasePerson},
-                #{releaseTime}, #{isFull})
+                #{releaseTime}, #{jobStatus}, #{city}, #{experience}, #{degree}, #{keywordList})
     </insert>
     <update id="update">
         update position_info
-        set position_name     = #{positionName},
-            company_name      = #{companyName},
-            category          = #{category},
-            type              = #{type},
-            salary            = #{salary},
-            number            = #{number},
-            work_address      = #{workAddress},
-            basic_requirement = #{basicRequirement},
-            requirement       = #{requirement},
-            profile           = #{profile},
-            welfare           = #{welfare},
-            principal         = #{principal},
-            is_released       = #{isReleased},
-            last_editor       = #{lastEditor},
-            release_person    = #{releasePerson},
-            release_time      = #{releaseTime},
-            is_full           = #{isFull}
+        set position_name  = #{positionName},
+            company_name   = #{companyName},
+            category       = #{category},
+            type           = #{type},
+            salary         = #{salary},
+            number         = #{number},
+            work_address   = #{workAddress},
+            requirement    = #{requirement},
+            profile        = #{profile},
+            welfare        = #{welfare},
+            principal      = #{principal},
+            is_released    = #{isReleased},
+            last_editor    = #{lastEditor},
+            release_person = #{releasePerson},
+            release_time   = #{releaseTime},
+            job_status     = #{jobStatus},
+            city           = #{city},
+            experience     = #{experience},
+            degree         = #{degree},
+            keyword_list   = #{keywordList}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -58,8 +59,8 @@
             <if test="isReleased != null and isReleased != ''">
                 and is_released = #{isReleased}
             </if>
-            <if test="isFull != null and isFull != ''">
-                and is_full = #{isFull}
+            <if test="jobStatus != null and jobStatus != ''">
+                and job_status = #{jobStatus}
             </if>
         </where>
         order by id desc

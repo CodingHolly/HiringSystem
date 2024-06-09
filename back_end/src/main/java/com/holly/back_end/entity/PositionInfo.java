@@ -15,7 +15,6 @@ public class PositionInfo {
     private String salary;
     private Integer number;
     private String workAddress;
-    private String basicRequirement;
     private String requirement;
     private String profile;
     private String welfare;
@@ -25,5 +24,9 @@ public class PositionInfo {
     private String releasePerson;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date releaseTime;
-    private String isFull;
+    private String jobStatus;
+    private String city;
+    private String experience;
+    private String degree;
+    private String keywordList;
 }
