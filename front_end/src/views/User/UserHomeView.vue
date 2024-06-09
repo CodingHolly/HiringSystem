@@ -50,18 +50,20 @@
         <div style="margin: 10px 50px 20px 30px">
           <el-row>
             <el-col :span="2" v-for="(item, index) in positionData" :key="index">
-              <el-card shadow="hover">
+              <el-card shadow="hover" :body-style="{height:'100%', width:'100%', boxSizing:'border-box'}">
                 <div class="header">
-                  <span class="name" style="flex: 5"
-                        @click="navTo('/user/position_details?id=' + item.id)">{{ item.positionName }}</span>
+                    <span class="name" style="flex: 5"
+                          @click="navTo('/user/position_details?id=' + item.id)">{{ item.positionName }}</span>
                   <span class="salary" style="flex: 5">{{ item.salary }}</span>
                 </div>
-                <div class="basicRequirement">
-                  <span>{{ item.basicRequirement }}</span>
+                <div class="job-text">
+                  <span>{{ item.city }}</span>
+                  <span>{{ item.experience }}</span>
+                  <span>{{ item.degree }}</span>
                 </div>
                 <div class="bottom">
-                  <span class="companyName" style="flex: 5">{{ item.companyName }}</span>
-                  <span class="position-info" style="flex: 5">{{ item.isFull }}</span>
+                  <span class="companyName" style="flex: 5;margin-top: 5px">{{ item.companyName }}</span>
+                  <span class="position-info" style="flex: 5;margin-top: 5px">{{ item.jobStatus }}</span>
                 </div>
               </el-card>
             </el-col>
@@ -159,6 +161,7 @@ export default {
   display: flex;
   align-items: center;
   width: 100%;
+  padding-top: -2px;
 }
 
 .el-col-2 {
@@ -173,17 +176,6 @@ export default {
   line-height: 22px;
   text-align: right;
   max-width: none;
-}
-
-.basicRequirement {
-  font-size: 13px;
-  color: #8d92a1;
-  padding-right: 0;
-  height: 22px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  margin-top: 12px;
 }
 
 .bottom {
@@ -202,5 +194,28 @@ export default {
   text-align: right;
   color: #8d92a1;
   font-size: 13px;
+}
+
+.job-text span {
+  margin-right: 10px;
+  display: inline-block;
+  font-size: 13px;
+  font-weight: 400;
+  color: #666;
+  line-height: 20px;
+  padding: 2px 10px;
+  border-radius: 4px;
+  background: #f8f8f8;
+}
+
+.job-text {
+  margin-top: 15px;
+  white-space: normal;
+  padding-right: 0;
+  height: 25px;
+  line-height: 25px;
+  overflow: hidden;
+  word-break: break-all;
+  max-width: none;
 }
 </style>

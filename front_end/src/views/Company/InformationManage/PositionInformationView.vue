@@ -142,7 +142,7 @@
           <el-input v-model="detailsForm.degree" style="width: 200px" disabled></el-input>
         </el-form-item>
         <el-form-item label="职位关键词" prop="keywordList" style="margin-left: 20px">
-          <el-input v-model="detailsForm.keywordList" style="width: 200px" disabled></el-input>
+          <el-input v-model="detailsForm.keywordList" style="width: 400px" disabled></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -210,7 +210,7 @@
           <el-input v-model="form.number" style="width: 200px" placeholder="请填写数字"></el-input>
         </el-form-item>
         <el-form-item label="福利" prop="welfare" style="margin-left: 20px">
-          <el-input v-model="form.welfare" type="textarea" :rows="3" style="width: 400px"></el-input>
+          <el-input v-model="form.welfare" type="textarea" :rows="2" style="width: 400px" placeholder="用空格分割"></el-input>
         </el-form-item>
         <el-form-item label="最后编辑者" prop="lastEditor" style="margin-left: 20px">
           <el-input v-model="form.lastEditor" style="width: 200px" disabled></el-input>
@@ -228,7 +228,7 @@
           <el-input v-model="form.degree" style="width: 200px"></el-input>
         </el-form-item>
         <el-form-item label="职位关键词" prop="keywordList" style="margin-left: 20px">
-          <el-input v-model="form.keywordList" style="width: 200px"></el-input>
+          <el-input v-model="form.keywordList" style="width: 400px"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

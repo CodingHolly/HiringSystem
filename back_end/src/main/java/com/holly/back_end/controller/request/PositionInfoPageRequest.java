@@ -8,6 +8,6 @@ public class PositionInfoPageRequest extends BaseRequest{
     private String category;
     private String type;
     private String isReleased;
-    private String isFull;
+    private String jobStatus;
     private String companyName;
 }
