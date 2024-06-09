@@ -69,9 +69,8 @@
             <p>
               <i class="el-icon-location-information"
                  style="margin-right: 5px;"></i>
-              <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">{{
-                  companyData.registerAddress
-                }}</span>
+              <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">
+                {{ companyData.registerAddress }}</span>
             </p>
           </div>
         </div>
@@ -615,18 +614,23 @@ em {
 .company-name {
   width: 400px;
 }
+
 .company-type {
   width: 400px;
 }
-.company-user{
+
+.company-user {
   width: 210px;
 }
-.manage-state{
+
+.manage-state {
   width: 210px;
 }
+
 .company-fund {
   width: 150px;
 }
+
 .res-time {
   width: 150px;
 }
