@@ -75,4 +75,9 @@
         from company_info
         where company_name = #{companyName}
     </select>
+    <select id="getLogoByName" resultType="java.lang.String">
+        select logo
+        from company_info
+        where company_name = #{companyName}
+    </select>
 </mapper>

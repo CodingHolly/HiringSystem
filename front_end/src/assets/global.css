@@ -3,6 +3,17 @@ body {
     padding: 0;
     background-color: #eee;
 }
+
 * {
     box-sizing: border-box;
+}
+
+a {
+    color: #666666;
+    text-decoration: none;
+
+}
+
+a:hover {
+    color: #1E90FF;
 }

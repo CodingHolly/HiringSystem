@@ -23,4 +23,6 @@ public interface IPositionInfoService {
     PositionInfo selectById(Integer id);
 
     void interest(UserInterest userInterest);
+
+    List<PositionInfo> selectByCategoryId(Integer id);
 }

@@ -94,10 +94,13 @@ const routes = [
             component: () => import('@/views/User/MyInformationView.vue')
         }, {
             path: 'position_details',
-            component: () =>import('@/views/User/PositionDetailsView.vue')
+            component: () => import('@/views/User/PositionDetailsView.vue')
         }, {
             path: 'submit_message',
             component: () => import('@/views/User/SubmitMessageView.vue')
+        }, {
+            path: 'position_category',
+            component: () => import('@/views/User/PositionCategoryView.vue')
         }]
     },
     //  ===== Company企业后台页面 =====

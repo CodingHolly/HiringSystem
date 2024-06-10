@@ -20,7 +20,7 @@
               <el-table-column label="投递时间" prop="submitTime" width="200px"></el-table-column>
               <el-table-column label="回复信息">
                 <template slot-scope="scope">
-                  <el-button size="small" type="text" style="color: #333333"
+                  <el-button size="small" style="color: #333333" type="text"
                              @click="showComment(scope.row.comment)">查看
                   </el-button>
                 </template>
@@ -38,9 +38,9 @@
                   :total="total">
               </el-pagination>
             </div>
-            <el-dialog title="回复信息" :visbible.sync="commentFormVisible" width="40%" :close-on-click-modal="false"
+            <el-dialog title="回复信息" :visible.sync="commentFormVisible" width="40%" :close-on-click-modal="false"
                        destroy-on-close>
-              <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px"> {{ commentDetails }}</div>
+              <div style="margin-left: 10px; margin-bottom: 10px; font-size: 14px"> {{ this.commentDetails }}</div>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="commentFormVisible = false">关 闭</el-button>
               </div>
@@ -89,6 +89,7 @@ export default {
     showComment(details) {
       this.commentFormVisible = true
       this.commentDetails = details
+      console.log(this.commentDetails)
     }
   }
 }

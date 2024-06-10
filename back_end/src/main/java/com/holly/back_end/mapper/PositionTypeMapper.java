@@ -19,4 +19,6 @@ public interface PositionTypeMapper {
     List<PositionType> listCategory();
 
     List<PositionType> listType();
+
+    String selectCategoryById(Integer id);
 }

@@ -30,4 +30,5 @@ public class PositionInfo {
     private String degree;
     private String keywordList;
     private Integer interest;
+    private String companyLogo;
 }

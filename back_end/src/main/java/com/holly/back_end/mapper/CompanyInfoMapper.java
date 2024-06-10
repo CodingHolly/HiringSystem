@@ -27,4 +27,6 @@ public interface CompanyInfoMapper {
     void deleteAddressById(Integer id);
 
     void insert(CompanyInfo dbCompanyInfo);
+
+    String getLogoByName(String companyName);
 }

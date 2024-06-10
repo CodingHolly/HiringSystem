@@ -21,4 +21,6 @@ public interface PositionInfoMapper {
     List<PositionInfo> selectTop6();
 
     PositionInfo selectById(Integer id);
+
+    List<PositionInfo> selectByCategory(String category);
 }

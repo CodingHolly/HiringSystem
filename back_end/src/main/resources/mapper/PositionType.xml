@@ -41,5 +41,10 @@
         select type, id
         from position_type
     </select>
+    <select id="selectCategoryById" resultType="java.lang.String">
+        select distinct category
+        from position_type
+        where id = #{id}
+    </select>
 
 </mapper>

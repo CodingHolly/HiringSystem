@@ -57,4 +57,10 @@ public class PositionInfoController {
         positionInfoService.interest(userInterest);
         return Result.success();
     }
+
+    @GetMapping("/selectByCategoryId")
+    public Result selectByCategoryId(@RequestParam Integer id) {
+        List<PositionInfo> positionInfos = positionInfoService.selectByCategoryId(id);
+        return Result.success(positionInfos);
+    }
 }

@@ -4,10 +4,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.controller.request.ReleaseRequest;
+import com.holly.back_end.entity.CompanyInfo;
 import com.holly.back_end.entity.PositionInfo;
+import com.holly.back_end.entity.PositionType;
 import com.holly.back_end.entity.UserInterest;
 import com.holly.back_end.exception.ServiceException;
+import com.holly.back_end.mapper.CompanyInfoMapper;
 import com.holly.back_end.mapper.PositionInfoMapper;
+import com.holly.back_end.mapper.PositionTypeMapper;
 import com.holly.back_end.mapper.UserMapper;
 import com.holly.back_end.service.IPositionInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +30,12 @@ public class PositionInfoService implements IPositionInfoService {
     @Autowired
     UserMapper userMapper;
 
+    @Autowired
+    PositionTypeMapper positionTypeMapper;
+
+    @Autowired
+    CompanyInfoMapper companyInfoMapper;
+
     public PageInfo<PositionInfo> page(BaseRequest baseRequest) {
         PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
         List<PositionInfo> positionInfos = positionInfoMapper.listByCondition(baseRequest);
@@ -35,6 +45,7 @@ public class PositionInfoService implements IPositionInfoService {
     @Override
     public void save(PositionInfo positionInfo) {
         if (positionInfo.getId() == null) {
+            positionInfo.setCompanyLogo(companyInfoMapper.getLogoByName(positionInfo.getCompanyName()));
             positionInfo.setIsReleased("未发布");
             positionInfo.setJobStatus("招聘中");
             positionInfo.setInterest(0);
@@ -83,5 +94,11 @@ public class PositionInfoService implements IPositionInfoService {
         } else {
             throw new ServiceException("该岗位已标记为感兴趣，请勿重复添加");
         }
+    }
+
+    @Override
+    public List<PositionInfo> selectByCategoryId(Integer id) {
+        String category = positionTypeMapper.selectCategoryById(id);
+        return positionInfoMapper.selectByCategory(category);
     }
 }

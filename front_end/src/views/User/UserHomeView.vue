@@ -12,7 +12,10 @@
                 <el-image v-if="item.icon" :src="item.icon"
                           style="width: 20px; height: 20px;align-items: center"></el-image>
               </div>
-              <div style="margin-left: 10px;font-size: 14px;">{{ item.category }}</div>
+              <div style="margin-left: 10px;font-size: 14px;">
+                <a href="#" @click="navTo('/user/position_category?id='+item.id)">{{ item.category }}</a>
+<!--                {{ item.category }}-->
+              </div>
             </div>
           </div>
           <div style="flex: 5; margin-top: 15px">
