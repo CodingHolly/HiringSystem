@@ -6,10 +6,10 @@
     <insert id="insert">
         insert into position_info(id, position_name, company_name, category, type, salary, number, work_address,
                                   requirement, profile, welfare, principal, is_released, last_editor, release_person,
-                                  release_time, job_status, city, experience, degree, keyword_list,interest)
+                                  release_time, job_status, city, experience, degree, keyword_list,interest, company_logo)
         values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
                 #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor}, #{releasePerson},
-                #{releaseTime}, #{jobStatus}, #{city}, #{experience}, #{degree}, #{keywordList},#{interest})
+                #{releaseTime}, #{jobStatus}, #{city}, #{experience}, #{degree}, #{keywordList},#{interest},#{companyLogo})
     </insert>
     <update id="update">
         update position_info
@@ -33,7 +33,8 @@
             experience     = #{experience},
             degree         = #{degree},
             keyword_list   = #{keywordList},
-            interest       = #{interest}
+            interest       = #{interest},
+            company_logo   =#{companyLogo}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -80,5 +81,10 @@
         select *
         from position_info
         where id = #{id}
+    </select>
+    <select id="selectByCategory" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        where category = #{category}
     </select>
 </mapper>
