@@ -25,4 +25,6 @@ public interface IPositionInfoService {
     void interest(UserInterest userInterest);
 
     List<PositionInfo> selectByCategoryId(Integer id);
+
+    List<PositionInfo> selectByWords(String searchWords);
 }

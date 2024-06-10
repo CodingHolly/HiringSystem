@@ -101,4 +101,9 @@ public class PositionInfoService implements IPositionInfoService {
         String category = positionTypeMapper.selectCategoryById(id);
         return positionInfoMapper.selectByCategory(category);
     }
+
+    @Override
+    public List<PositionInfo> selectByWords(String searchWords) {
+        return positionInfoMapper.selectByWords(searchWords);
+    }
 }

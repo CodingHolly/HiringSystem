@@ -63,4 +63,10 @@ public class PositionInfoController {
         List<PositionInfo> positionInfos = positionInfoService.selectByCategoryId(id);
         return Result.success(positionInfos);
     }
+
+    @GetMapping("/selectByWords/{searchWords}")
+    public Result selectByWords(@PathVariable(value = "searchWords") String searchWords) {
+        List<PositionInfo> positionInfos = positionInfoService.selectByWords(searchWords);
+        return Result.success(positionInfos);
+    }
 }

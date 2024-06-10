@@ -36,4 +36,11 @@ public class SubmitResumeService implements ISubmitResumeService {
         List<SubmitResume> submitResumes = submitResumeMapper.listAll(baseRequest);
         return new PageInfo<>(submitResumes);
     }
+
+    @Override
+    public PageInfo<SubmitResume> companyPage(BaseRequest baseRequest) {
+        PageHelper.startPage(baseRequest.getPageNum(), baseRequest.getPageSize());
+        List<SubmitResume> submitResumes = submitResumeMapper.listThisCompany(baseRequest);
+        return new PageInfo<>(submitResumes);
+    }
 }

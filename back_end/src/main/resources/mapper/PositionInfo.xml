@@ -87,4 +87,13 @@
         from position_info
         where category = #{category}
     </select>
+    <select id="selectByWords" resultType="com.holly.back_end.entity.PositionInfo">
+        select *
+        from position_info
+        <where>
+            <if test="searchWords != null and searchWords != ''">
+                position_name like concat('%',#{searchWords},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

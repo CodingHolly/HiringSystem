@@ -239,6 +239,7 @@ export default {
       })
     },
     handleSubmit() {
+      this.resumeInfo.username = this.user.username
       this.resumeInfo.userPhone = this.user.phone
       this.resumeInfo.hrPhone = this.principalInfo.phone
       this.resumeInfo.positionId = this.positionId

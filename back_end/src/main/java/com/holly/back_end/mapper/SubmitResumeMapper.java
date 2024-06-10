@@ -13,4 +13,6 @@ public interface SubmitResumeMapper {
     void insert(SubmitResume submitResume);
 
     List<SubmitResume> listAll(BaseRequest baseRequest);
+
+    List<SubmitResume> listThisCompany(BaseRequest baseRequest);
 }

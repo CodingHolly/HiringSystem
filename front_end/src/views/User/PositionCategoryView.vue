@@ -1,8 +1,8 @@
 <template>
   <div class="page-job-wrapper" style="padding-top: 0">
     <div class="job-search-wrapper">
-      <el-input class="search-input-box" v-model="searchCategory" placeholder="搜 索 职 位"></el-input>
-      <el-button class="search-btn">搜索</el-button>
+      <el-input class="search-input-box" v-model="searchWords" placeholder="搜 索 职 位"></el-input>
+      <el-button class="search-btn" @click="searchPosition">搜索</el-button>
     </div>
     <div class="page-job-inner">
       <div class="page-job-content clearfix">
@@ -16,7 +16,8 @@
           </div>
           <div class="search-job-result">
             <ul class="job-list-box">
-              <li v-for="(item,index) in positionInfo" :key="index" class="job-card-wrapper">
+              <li v-for="(item,index) in positionInfo" :key="index" class="job-card-wrapper"
+                  @click="navTo('/user/position_details?id='+item.id)">
                 <div class="job-card-body clearfix">
                   <div class="job-card-left">
                     <div class="job-title clearfix">
@@ -39,11 +40,10 @@
                       <h3 class="company-name">{{ item.companyName }}</h3>
                     </div>
                   </div>
-
                 </div>
                 <div class="job-card-footer clearfix">
                   <span class="tag-list">{{ item.keywordList }}</span>
-                  <div class="welfare">{{item.welfare}}</div>
+                  <div class="welfare">{{ item.welfare }}</div>
                 </div>
               </li>
             </ul>
@@ -51,28 +51,41 @@
         </div>
         <div class="job-side-wrapper">
           <div class="user-info-wrapper">
-            <div class="title">个人基本信息</div>
+            <div class="title" @click="myResume()">个人基本信息</div>
             <div class="info-card-body">
               <div class="user-img">
                 <img :src=user.img alt="">
+                <div>
+                  <i class="el-icon-user" style="margin-right: 5px"></i>
+                  <span>{{ user.username }}</span>
+                </div>
+                <div style="margin-top: 12px">
+                  <i class="el-icon-phone" style="margin-right: 5px"></i>
+                  <span style="font-size: 13px">{{ user.phone }}</span>
+                </div>
               </div>
               <p>
-                <i class="el-icon-user" style="margin-right: 5px"></i>
-                <span>{{ user.username }}</span>
+                <i class="el-icon-monitor" style="margin-right: 5px"></i>
+                <span>{{ user.email }}</span>
+              </p>
+              <p>
+                <i class="el-icon-postcard" style="margin-right: 5px"></i>
+                <span>{{ user.birthday }}</span>
               </p>
               <p>
                 <i class="el-icon-office-building" style="margin-right: 5px"></i>
                 <span>{{ user.birthplace }}</span>
               </p>
               <p>
-                <i class="el-icon-location-information"
-                   style="margin-right: 5px;"></i>
-                <span style="overflow: hidden;white-space: nowrap;text-overflow: ellipsis">
-                {{ user.registerAddress }}</span>
+                <i class="el-icon-suitcase" style="margin-right: 5px"></i>
+                <span>{{ user.identity }}</span>
+              </p>
+              <p>
+                <i class="el-icon-coin" style="margin-right: 5px"></i>
+                <span>{{ user.jobSearchStatus }}</span>
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -90,7 +103,7 @@ export default {
     return {
       user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
       categoryId: categoryId,
-      searchCategory: '',
+      searchWords: '',
       positionInfo: [],
     }
   },
@@ -106,6 +119,26 @@ export default {
           this.$message.error(res.msg)
         }
       })
+    },
+    navTo(url) {
+      location.href = url
+    },
+    myResume() {
+      this.$router.push('/user/my_resume')
+    },
+    searchPosition() {
+      if(this.searchWords !== ''){
+        request.get('/position_info/selectByWords/'+ this.searchWords).then(res => {
+          if(res.code === '200') {
+            this.positionInfo = res.data
+          } else {
+            this.$message.error(res.msg)
+          }
+        })
+      } else {
+        this.loadPosition()
+      }
+
     }
   }
 }
@@ -396,7 +429,8 @@ li {
   line-height: 18px;
   white-space: nowrap;
 }
-.welfare{
+
+.welfare {
   float: left;
   width: 362px;
   font-size: 13px;
@@ -408,11 +442,13 @@ li {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.job-side-wrapper{
+
+.job-side-wrapper {
   float: right;
   width: 284px;
 }
-.user-info-wrapper{
+
+.user-info-wrapper {
   position: relative;
   width: 284px;
   background: linear-gradient(180deg, #00bebd, #00a6a7) hsla(0, 0%, 100%, .21);
@@ -421,6 +457,7 @@ li {
   padding-left: 12px;
   padding-right: 12px;
 }
+
 .user-info-wrapper .title {
   text-align: center;
   font-size: 18px;
@@ -428,9 +465,10 @@ li {
   color: #fff;
   line-height: 25px;
   padding-top: 20px;
-  padding-bottom: 2px;
+  padding-bottom: 20px;
 }
-.info-card-body{
+
+.info-card-body {
   position: relative;
   z-index: 1;
   background: linear-gradient(180deg, rgba(245, 252, 252, .8), #fcfbfa);
@@ -440,9 +478,9 @@ li {
   padding: 20px 18px;
 }
 
-.user-img img {
+.info-card-body img {
   width: 48px;
-  height: 60px;
+  height: 62px;
   margin-right: 16px;
   border: 1px solid #f3f5fb;
   border-radius: 8px;
@@ -457,5 +495,16 @@ li {
   color: #333;
   line-height: 21px;
   margin-bottom: 8px;
+}
+
+.user-img {
+  align-items: center;
+  padding: 10px 24px;
+  margin-bottom: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #222;
+  line-height: 22px;
+  overflow: hidden;
 }
 </style>

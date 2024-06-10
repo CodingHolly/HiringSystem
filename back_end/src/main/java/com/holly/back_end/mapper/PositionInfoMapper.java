@@ -23,4 +23,6 @@ public interface PositionInfoMapper {
     PositionInfo selectById(Integer id);
 
     List<PositionInfo> selectByCategory(String category);
+
+    List<PositionInfo> selectByWords(String searchWords);
 }
