@@ -18,7 +18,7 @@
                 <span class="text-desc text-experience">
                   <img src="@/assets/css/imgs/experience.png" alt=""
                        style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">
-                  {{positionData.experience }}</span>
+                  {{ positionData.experience }}</span>
                 <span class="text-desc text-degree">
                   <img src="@/assets/css/imgs/degree.png" alt=""
                        style="width: 20px;height: 20px;margin-right: 6px; vertical-align: middle;">
@@ -129,16 +129,33 @@
                   </li>
                   <li class="manage-state">
                     <span>经营状态</span>
-                    <p style="font-size: 14px;color: #333333">{{ companyData.managementStatue }}</p>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.managementStatus }}</p>
                   </li>
                   <li class="company-fund">
                     <span>注册资金</span>
                     <p style="font-size: 14px;color: #333333">{{ companyData.registeredCapital }}</p>
                   </li>
+                  <li class="register-addr">
+                    <span>注册地址</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.registerAddress }}</p>
+                  </li>
+                  <li class="company-scale">
+                    <span>企业规模</span>
+                    <p style="font-size: 14px;color: #333333">{{ companyData.companyScale }}</p>
+                  </li>
                 </ul>
               </div>
             </div>
-            <div class="detail-section-item company-address"></div>
+            <div class="detail-section-item company-address">
+              <h3>工作地址</h3>
+              <div class="job-location">
+                <div class="location-address">
+                  <img src="@/assets/css/imgs/location.png" alt=""
+                       style="width: 20px;height: 20px;margin-right: 3px; vertical-align: middle;">
+                  {{ positionData.workAddress }}
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -163,6 +180,9 @@ export default {
       positionWelfareList: [],
       positionKeywordList: [],
       principalInfo: {},
+      interestInfo: {},
+      resumeInfo:{},
+
     }
   },
   mounted() {
@@ -194,13 +214,42 @@ export default {
         }
       })
       request.get('/company_info/address/' + this.positionData.companyName).then(res => {
-        this.companyAddresses = res.data
+        if (res.code === '200') {
+          this.companyAddresses = res.data
+          this.loadPrincipalInfo()
+        }
       })
-      this.loadPrincipalInfo()
     },
     loadPrincipalInfo() {
       request.get('/company_admin/position_info/' + this.positionData.principal).then(res => {
-        this.principalInfo = res.data
+        if (res.code === '200') {
+          this.principalInfo = res.data
+        }
+      })
+    },
+    handleInterest() {
+      this.interestInfo.phone = this.user.phone
+      this.interestInfo.interestId = this.positionId
+      request.post('/position_info/interest', this.interestInfo).then(res => {
+        if (res.code === '200') {
+          this.$message.success('添加成功！可在个人中心查看')
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    },
+    handleSubmit() {
+      this.resumeInfo.userPhone = this.user.phone
+      this.resumeInfo.hrPhone = this.principalInfo.phone
+      this.resumeInfo.positionId = this.positionId
+      this.resumeInfo.companyName = this.companyData.companyName
+      this.resumeInfo.positionName = this.positionData.positionName
+      request.post('/submit_resume/submit', this.resumeInfo).then(res => {
+        if(res.code === '200') {
+          this.$message.success('投递成功！')
+        } else {
+          this.$message.error(res.msg)
+        }
       })
     }
   }
@@ -586,7 +635,7 @@ em {
   float: left;
   padding-right: 5px;
   margin-top: 0;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
   box-sizing: border-box;
   display: inline-block;
   white-space: nowrap;
@@ -616,7 +665,15 @@ em {
   width: 400px;
 }
 
+.register-addr {
+  width: 400px;
+}
+
 .company-user {
+  width: 210px;
+}
+
+.company-scale {
   width: 210px;
 }
 
@@ -630,5 +687,27 @@ em {
 
 .res-time {
   width: 150px;
+}
+
+.job-location {
+  border-radius: 12px;
+  border: 1px solid #ededed;
+  box-shadow: none;
+  overflow: hidden;
+  margin-top: 20px;
+  font-size: 13px;
+  position: relative;
+}
+
+.location-address {
+  font-size: 16px;
+  color: #333333;
+  line-height: 22px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: block;
+  padding: 12px 20px 12px 30px;
+  border-bottom: 1px #ecedef solid;
 }
 </style>

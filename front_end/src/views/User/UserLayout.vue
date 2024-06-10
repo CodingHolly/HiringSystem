@@ -32,10 +32,10 @@
             </div>
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>
-                <div style="text-align: center" @click="myMessage">消息通知</div>
+                <div style="text-align: center" @click="myMessage">我的留言</div>
               </el-dropdown-item>
               <el-dropdown-item>
-                <div style="text-align: center" @click="safetyAndMember">安全与会员</div>
+                <div style="text-align: center" @click="submitMessage">投递信息</div>
               </el-dropdown-item>
               <el-dropdown-item>
                 <div style="text-align: center" @click="logout">退出登录</div>
@@ -72,8 +72,8 @@ export default {
       Cookies.remove('user')
       this.$router.push('/')
     },
-    safetyAndMember() {
-      this.$router.push('/user/my_information')
+    submitMessage() {
+      this.$router.push('/user/submit_message')
     },
     myMessage() {
       this.$router.push('/user/my_message')

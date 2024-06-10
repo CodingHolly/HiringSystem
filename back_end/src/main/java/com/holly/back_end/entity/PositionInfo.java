@@ -29,4 +29,5 @@ public class PositionInfo {
     private String experience;
     private String degree;
     private String keywordList;
+    private Integer interest;
 }

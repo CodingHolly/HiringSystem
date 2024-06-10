@@ -6,10 +6,10 @@
     <insert id="insert">
         insert into position_info(id, position_name, company_name, category, type, salary, number, work_address,
                                   requirement, profile, welfare, principal, is_released, last_editor, release_person,
-                                  release_time, job_status, city, experience, degree, keyword_list)
+                                  release_time, job_status, city, experience, degree, keyword_list,interest)
         values (#{id}, #{positionName}, #{companyName}, #{category}, #{type}, #{salary}, #{number}, #{workAddress},
                 #{requirement}, #{profile}, #{welfare}, #{principal}, #{isReleased}, #{lastEditor}, #{releasePerson},
-                #{releaseTime}, #{jobStatus}, #{city}, #{experience}, #{degree}, #{keywordList})
+                #{releaseTime}, #{jobStatus}, #{city}, #{experience}, #{degree}, #{keywordList},#{interest})
     </insert>
     <update id="update">
         update position_info
@@ -32,7 +32,8 @@
             city           = #{city},
             experience     = #{experience},
             degree         = #{degree},
-            keyword_list   = #{keywordList}
+            keyword_list   = #{keywordList},
+            interest       = #{interest}
         where id = #{id}
     </update>
     <delete id="deleteById">
@@ -73,7 +74,7 @@
     <select id="selectTop6" resultType="com.holly.back_end.entity.PositionInfo">
         select *
         from position_info
-        order by id desc limit 6
+        order by interest desc limit 6
     </select>
     <select id="selectById" resultType="com.holly.back_end.entity.PositionInfo">
         select *

@@ -3,6 +3,7 @@ package com.holly.back_end.mapper;
 import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.controller.request.PasswordRequest;
 import com.holly.back_end.entity.User;
+import com.holly.back_end.entity.UserInterest;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -23,4 +24,8 @@ public interface UserMapper {
     List<User> listByCondition(BaseRequest baseRequest);
 
     int updatePassword(PasswordRequest passwordRequest);
+
+    void interest(UserInterest userInterest);
+
+    UserInterest getByPhoneAndInterestId(String phone, Integer interestId);
 }

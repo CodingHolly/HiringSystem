@@ -9,6 +9,10 @@
         values (#{id}, #{username}, #{phone}, #{password}, #{role}, #{sex}, #{jobSearchStatus}, #{birthday},
                 #{identity}, #{email}, #{birthplace}, #{img}, #{isVip})
     </insert>
+    <insert id="interest">
+        insert into user_interest(id, phone, interest_id)
+        values (#{id}, #{phone}, #{interestId})
+    </insert>
     <update id="update">
         update user
         set username          = #{username},
@@ -66,5 +70,11 @@
         from user
         where phone = #{phone}
           and password = # {password}
+    </select>
+    <select id="getByPhoneAndInterestId" resultType="com.holly.back_end.entity.UserInterest">
+        select *
+        from user_interest
+        where phone = #{phone}
+          and interest_id = #{interestId}
     </select>
 </mapper>

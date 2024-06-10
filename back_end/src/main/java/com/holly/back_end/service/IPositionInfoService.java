@@ -5,6 +5,7 @@ import com.holly.back_end.controller.request.BaseRequest;
 import com.holly.back_end.controller.request.PositionInfoPageRequest;
 import com.holly.back_end.controller.request.ReleaseRequest;
 import com.holly.back_end.entity.PositionInfo;
+import com.holly.back_end.entity.UserInterest;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IPositionInfoService {
     List<PositionInfo> selectTop6();
 
     PositionInfo selectById(Integer id);
+
+    void interest(UserInterest userInterest);
 }

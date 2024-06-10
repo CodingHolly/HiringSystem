@@ -77,6 +77,7 @@
         <el-table-column label="负责人" prop="principal" width="100px"></el-table-column>
         <el-table-column label="发布者" prop="releasePerson" width="100px"></el-table-column>
         <el-table-column label="发布时间" prop="releaseTime" width="160px"></el-table-column>
+        <el-table-column label="兴趣人数" prop="interest" width="100px"></el-table-column>
         <el-table-column label="操作" width="300px">
           <template v-slot="scope">
             <el-button

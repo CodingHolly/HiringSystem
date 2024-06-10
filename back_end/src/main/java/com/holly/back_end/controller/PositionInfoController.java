@@ -4,6 +4,7 @@ import com.holly.back_end.common.Result;
 import com.holly.back_end.controller.request.PositionInfoPageRequest;
 import com.holly.back_end.controller.request.ReleaseRequest;
 import com.holly.back_end.entity.PositionInfo;
+import com.holly.back_end.entity.UserInterest;
 import com.holly.back_end.service.impl.PositionInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -49,5 +50,11 @@ public class PositionInfoController {
     public Result selectById(@RequestParam Integer id) {
         PositionInfo positionInfo = positionInfoService.selectById(id);
         return Result.success(positionInfo);
+    }
+
+    @PostMapping("/interest")
+    public Result interest(@RequestBody UserInterest userInterest) {
+        positionInfoService.interest(userInterest);
+        return Result.success();
     }
 }
