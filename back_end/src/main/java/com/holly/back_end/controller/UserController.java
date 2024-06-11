@@ -38,4 +38,10 @@ public class UserController {
         userService.changePassword(passwordRequest);
         return Result.success();
     }
+
+    @GetMapping("/phone/{phone}")
+    public Result getByPhone(@PathVariable(value = "phone") String phone) {
+        User user = userService.getByPhone(phone);
+        return Result.success(user);
+    }
 }

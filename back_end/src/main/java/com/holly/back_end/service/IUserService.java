@@ -21,4 +21,6 @@ public interface IUserService {
     PageInfo<User> page(BaseRequest baseRequest);
 
     void changePassword(PasswordRequest passwordRequest);
+
+    User getByPhone(String phone);
 }

@@ -11,4 +11,8 @@ public interface ISubmitResumeService {
     PageInfo<SubmitResume> page(BaseRequest baseRequest);
 
     PageInfo<SubmitResume> companyPage(BaseRequest baseRequest);
+
+    SubmitResume selectById(Integer id);
+
+    void saveComment(SubmitResume submitResume);
 }

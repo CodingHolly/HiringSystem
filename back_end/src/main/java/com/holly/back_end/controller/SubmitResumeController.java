@@ -30,4 +30,15 @@ public class SubmitResumeController {
         return Result.success(submitResumeService.companyPage(handleResumePageRequest));
     }
 
+    @GetMapping("/user_resume/{id}")
+    public Result selectById(@PathVariable Integer id) {
+        SubmitResume submitResume = submitResumeService.selectById(id);
+        return Result.success(submitResume);
+    }
+
+    @PostMapping("/save_comment")
+    public Result saveComment(@RequestBody SubmitResume submitResume) {
+        submitResumeService.saveComment(submitResume);
+        return Result.success();
+    }
 }

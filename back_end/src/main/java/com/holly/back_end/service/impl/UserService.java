@@ -110,4 +110,9 @@ public class UserService implements IUserService {
             throw new ServiceException("修改密码失败");
         }
     }
+
+    @Override
+    public User getByPhone(String phone) {
+        return userMapper.getByPhone(phone);
+    }
 }

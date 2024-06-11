@@ -41,11 +41,95 @@
         <el-table-column label="联系方式" prop="userPhone"></el-table-column>
         <el-table-column label="职位名称" prop="positionName"></el-table-column>
         <el-table-column label="投递时间" prop="submitTime"></el-table-column>
-        <el-table-column label="二级分类" prop="type"></el-table-column>
-        <el-table-column label="简历信息"></el-table-column>
-        <el-table-column label="回复信息" prop="comment"></el-table-column>
+        <el-table-column label="简历信息">
+          <template slot-scope="scope">
+            <el-button plain size="small" @click="showResume(scope.row.userPhone)">详情</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="回复信息">
+          <template slot-scope="scope">
+            <el-button plain size="small" @click="showComment(scope.row.id)">详情</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column label="回复时间" prop="commentTime"></el-table-column>
       </el-table>
     </div>
+
+    <!--    简历地址弹窗-->
+    <el-dialog title="个人简历" :visible.sync="resumeFormVisible" width="60%" :close-on-click-modal="false"
+               destroy-on-close>
+      <div>
+        <el-descriptions class="margin-top" :column="3" border v-model="submitPersonInfo">
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-user"></i>
+              姓名
+            </template>
+            {{ submitPersonInfo.username }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-mobile-phone"></i>
+              手机号
+            </template>
+            {{ submitPersonInfo.phone }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-search"></i>
+              性别
+            </template>
+            {{ submitPersonInfo.sex }}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-tickets"></i>
+              邮箱
+            </template>
+            {{submitPersonInfo.email}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-suitcase"></i>
+              求职状态
+            </template>
+            {{submitPersonInfo.jobSearchStatus}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-help"></i>
+              出生年月
+            </template>
+            {{submitPersonInfo.birthday}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-postcard"></i>
+              身份
+            </template>
+            {{submitPersonInfo.identity}}
+          </el-descriptions-item>
+          <el-descriptions-item>
+            <template slot="label">
+              <i class="el-icon-postcard"></i>
+              出生地
+            </template>
+            {{submitPersonInfo.birthplace}}
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="resumeFormVisible = false">关 闭</el-button>
+      </div>
+    </el-dialog>
+
+    <el-dialog title="回复信息" :visible.sync="commentFormVisible" width="40%" :close-on-click-modal="false">
+      <el-input v-model="comment" style="width: 400px; margin-left: 70px"></el-input>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="saveComment" size="medium">提 交</el-button>
+        <el-button @click="commentFormVisible = false" size="medium">关 闭</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,6 +149,12 @@ export default {
       params: {},
       categories: [],
       types: [],
+      userResume: {},
+      resumeFormVisible: false,
+      resumeForm: {},
+      submitPersonInfo: {},
+      commentFormVisible: false,
+      comment: '',
     }
   },
   created() {
@@ -102,6 +192,45 @@ export default {
       this.params.pageNum = pageNum
       this.load()
     },
+    showResume(userPhone) {
+      request.get('/resume/' + userPhone).then(res => {
+        if (res.code === '200') {
+          this.userResume = res.data
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+      request.get('/user/phone/' + userPhone).then(res => {
+        if (res.code === '200') {
+          this.submitPersonInfo = res.data
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+      this.resumeFormVisible = true
+    },
+    showComment(id) {
+      request.get('/submit_resume/user_resume/' + id).then(res => {
+        if (res.code === '200') {
+          this.userResume = res.data
+          this.comment = this.userResume.comment
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+      this.commentFormVisible = true
+    },
+    saveComment() {
+      this.userResume.comment = this.comment
+      request.post('/submit_resume/save_comment', this.userResume).then(res => {
+        if (res.code === '200') {
+          this.$message.success('保存成功！')
+          this.commentFormVisible = false
+        } else {
+          this.$message.error(res.msg)
+        }
+      })
+    }
   },
 
 }
@@ -110,5 +239,9 @@ export default {
 <style scoped>
 .el-pagination {
   text-align: right;
+}
+
+.dialog-footer {
+  margin-right: 10px;
 }
 </style>

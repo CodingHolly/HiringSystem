@@ -43,4 +43,15 @@ public class SubmitResumeService implements ISubmitResumeService {
         List<SubmitResume> submitResumes = submitResumeMapper.listThisCompany(baseRequest);
         return new PageInfo<>(submitResumes);
     }
+
+    @Override
+    public SubmitResume selectById(Integer id) {
+        return submitResumeMapper.selectById(id);
+    }
+
+    @Override
+    public void saveComment(SubmitResume submitResume) {
+        submitResume.setCommentTime(new Date());
+        submitResumeMapper.update(submitResume);
+    }
 }

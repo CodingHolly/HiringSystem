@@ -3,7 +3,7 @@
     <div style="height: 60px; background-color: #C6E2FF"></div>
     <div style="display: flex">
       <div class="left"></div>
-      <div style="width:70%;background-color: white;height: 2000px">
+      <div style="width:70%;background-color: white;height: 1000px">
         <div style="display: flex; justify-content: center">
           <div style="margin-top: 40px">
             <el-table :data="tableData"
@@ -25,6 +25,7 @@
                   </el-button>
                 </template>
               </el-table-column>
+              <el-table-column label="回复时间" prop="commentTime" width="200px"></el-table-column>
             </el-table>
             <!--    分页-->
             <div style="margin-top: 20px ">
@@ -55,11 +56,13 @@
 
 <script>
 import request from "@/utils/request";
+import Cookies from "js-cookie";
 
 export default {
   name: "SubmitMessageView",
   data() {
     return {
+      user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
       tableData: [],
       params: {},
       total: 0,
@@ -72,6 +75,7 @@ export default {
   },
   methods: {
     load() {
+      this.params.userPhone = this.user.phone
       request.get('/submit_resume/page', {
         params: this.params
       }).then(res => {

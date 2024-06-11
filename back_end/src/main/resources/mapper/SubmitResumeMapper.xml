@@ -5,10 +5,22 @@
 <mapper namespace="com.holly.back_end.mapper.SubmitResumeMapper">
     <insert id="insert">
         insert into submit_resume(id, username, user_phone, hr_phone, position_id, comment, submit_time, company_name,
-                                  position_name)
+                                  position_name, comment_time)
         values (#{id}, #{username}, #{userPhone}, #{hrPhone}, #{positionId}, #{comment}, #{submitTime}, #{companyName},
-                #{positionName})
+                #{positionName}, #{commentTime})
     </insert>
+    <update id="update">
+        update submit_resume
+        set username     = #{username},
+            user_phone   = #{userPhone},
+            hr_phone     = #{hrPhone},
+            comment      = #{comment},
+            submit_time  = #{submitTime},
+            company_name = #{companyName},
+            position_name= #{positionName},
+            comment_time = #{commentTime}
+        where id = #{id}
+    </update>
     <select id="getByUserPhoneAndPositionId" resultType="com.holly.back_end.entity.SubmitResume">
         select *
         from submit_resume
@@ -40,5 +52,10 @@
                 and type = #{type}
             </if>
         </where>
+    </select>
+    <select id="selectById" resultType="com.holly.back_end.entity.SubmitResume">
+        select *
+        from submit_resume
+        where id = #{id}
     </select>
 </mapper>

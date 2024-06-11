@@ -15,4 +15,8 @@ public interface SubmitResumeMapper {
     List<SubmitResume> listAll(BaseRequest baseRequest);
 
     List<SubmitResume> listThisCompany(BaseRequest baseRequest);
+
+    SubmitResume selectById(Integer id);
+
+    void update(SubmitResume submitResume);
 }

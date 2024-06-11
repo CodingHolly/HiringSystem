@@ -17,4 +17,6 @@ public class SubmitResume {
     private Date submitTime;
     private String companyName;
     private String positionName;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+    private Date commentTime;
 }
