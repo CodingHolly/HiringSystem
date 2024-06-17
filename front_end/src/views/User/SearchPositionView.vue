@@ -259,6 +259,7 @@ li {
   border-radius: 12px;
   transition: all .2s linear;
   cursor: pointer;
+  margin-bottom: 16px;
 }
 
 .job-card-left {

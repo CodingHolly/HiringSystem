@@ -59,64 +59,99 @@
     <el-dialog title="个人简历" :visible.sync="resumeFormVisible" width="60%" :close-on-click-modal="false"
                destroy-on-close>
       <div>
-        <el-descriptions class="margin-top" :column="3" border v-model="submitPersonInfo">
+        <el-row :gutter="0" class="person-info" style="display: flex; margin-bottom: 30px">
+          <el-col :sm="18" :xs="24">
+            <el-descriptions :column="2" border v-model="submitPersonInfo" title="基本信息">
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-user"></i>
+                  姓名
+                </template>
+                {{ submitPersonInfo.username }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-mobile-phone"></i>
+                  手机号
+                </template>
+                {{ submitPersonInfo.phone }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-search"></i>
+                  性别
+                </template>
+                {{ submitPersonInfo.sex }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-tickets"></i>
+                  邮箱
+                </template>
+                {{ submitPersonInfo.email }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-suitcase"></i>
+                  求职状态
+                </template>
+                {{ submitPersonInfo.jobSearchStatus }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-help"></i>
+                  出生年月
+                </template>
+                {{ submitPersonInfo.birthday }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-postcard"></i>
+                  身份
+                </template>
+                {{ submitPersonInfo.identity }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template slot="label">
+                  <i class="el-icon-postcard"></i>
+                  出生地
+                </template>
+                {{ submitPersonInfo.birthplace }}
+              </el-descriptions-item>
+            </el-descriptions>
+          </el-col>
+          <el-col :sm="6" :xs="24" class="person-info-img" style="align-items: stretch">
+            <div class="imgBox"
+                 style="border: 1px solid #ebeef5; border-left: none; width: 100%; height: 100%;position: relative">
+              <img class="my-img" fit="fill" :src=submitPersonInfo.img alt=""
+                   style="position: absolute;width: 70%; height: 98%">
+            </div>
+          </el-col>
+        </el-row>
+
+        <el-descriptions title="其他信息" :column="1" border v-model="userResume">
           <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-user"></i>
-              姓名
-            </template>
-            {{ submitPersonInfo.username }}
+            <template slot="label">期望职位</template>
+            {{ userResume.expectedPosition }}
           </el-descriptions-item>
           <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-mobile-phone"></i>
-              手机号
-            </template>
-            {{ submitPersonInfo.phone }}
+            <template slot="label">个人优势</template>
+            {{ userResume.personalAdvantage }}
           </el-descriptions-item>
           <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-search"></i>
-              性别
-            </template>
-            {{ submitPersonInfo.sex }}
+            <template slot="label">教育经历</template>
+            {{ userResume.educationExperience }}
           </el-descriptions-item>
           <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-tickets"></i>
-              邮箱
-            </template>
-            {{submitPersonInfo.email}}
+            <template slot="label">项目经历</template>
+            {{ userResume.projectExperience }}
           </el-descriptions-item>
           <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-suitcase"></i>
-              求职状态
-            </template>
-            {{submitPersonInfo.jobSearchStatus}}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-help"></i>
-              出生年月
-            </template>
-            {{submitPersonInfo.birthday}}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-postcard"></i>
-              身份
-            </template>
-            {{submitPersonInfo.identity}}
-          </el-descriptions-item>
-          <el-descriptions-item>
-            <template slot="label">
-              <i class="el-icon-postcard"></i>
-              出生地
-            </template>
-            {{submitPersonInfo.birthplace}}
+            <template slot="label">工作经历</template>
+            {{ userResume.workExperience }}
           </el-descriptions-item>
         </el-descriptions>
+
       </div>
       <div slot="footer" class="dialog-footer">
         <el-button @click="resumeFormVisible = false">关 闭</el-button>
