@@ -2,7 +2,6 @@ package com.holly.back_end.service;
 
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.controller.request.BaseRequest;
-import com.holly.back_end.controller.request.PositionInfoPageRequest;
 import com.holly.back_end.controller.request.ReleaseRequest;
 import com.holly.back_end.entity.PositionInfo;
 import com.holly.back_end.entity.UserInterest;

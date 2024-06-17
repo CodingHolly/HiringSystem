@@ -1,13 +1,11 @@
 package com.holly.back_end.controller;
 
-import cn.hutool.json.JSONArray;
 import com.github.pagehelper.PageInfo;
 import com.holly.back_end.common.Result;
 import com.holly.back_end.controller.request.CompanyInfoPageRequest;
 import com.holly.back_end.entity.CompanyInfo;
 import com.holly.back_end.entity.CompanyInfoAddress;
 import com.holly.back_end.service.ICompanyInfoService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

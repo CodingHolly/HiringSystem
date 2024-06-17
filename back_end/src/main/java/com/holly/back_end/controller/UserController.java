@@ -8,9 +8,6 @@ import com.holly.back_end.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.rmi.server.RemoteRef;
-import java.util.List;
-
 @RestController
 @RequestMapping("/user")
 public class UserController {

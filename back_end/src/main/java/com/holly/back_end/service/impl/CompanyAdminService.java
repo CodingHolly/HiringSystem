@@ -115,7 +115,7 @@ public class CompanyAdminService implements ICompanyAdminService {
             dbCompanyInfo.setCompanyName(companyAdmin.getCompanyName());
             companyInfoMapper.insert(dbCompanyInfo);
         } else {
-            throw new ServiceException("该手机号已被注册");
+            throw new ServiceException("该公司已被注册");
         }
         //生成token
         String tokenData = dbCompanyAdmin.getId() + "-" + RoleEnum.COMPANY.name();
